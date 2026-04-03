@@ -89,6 +89,16 @@
   /* Optional: make font-sans = Inter globally */
   --font-sans: var(--font-inter);
 }
+
+@layer base {
+  body {
+    @apply m-0 bg-grayscale-100 font-sans text-grayscale-900;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+}
 /* component  text styling*/
 @layer components {
   /* Large, bold typography for hero sections and main  */
