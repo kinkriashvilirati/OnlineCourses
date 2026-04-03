@@ -1,6 +1,13 @@
 import { Link } from "react-router";
 import navLogo from "../../assets/icons/icon-set/nav_logo.svg";
-export function GuestNavigation() {
+
+type GuestNavigationProps = {
+  onOpenRegisterModal: () => void;
+};
+
+export function GuestNavigation({
+  onOpenRegisterModal,
+}: GuestNavigationProps) {
   return (
     <header className="fixed h-27 inset-x-0 top-0 z-50 border-b border-grayscale-200 bg-grayscale-100 px-44.25 flex items-center ">
       <nav className=" flex h-15 items-center w-full justify-between  ">
@@ -12,8 +19,10 @@ export function GuestNavigation() {
         </Link>
 
         <div className="flex items-center gap-10 ">
-          <Link to={"/courses"}>
-            <div className="flex items-center gap-2 text-body-l text-grayscale-600 transition-colors duration-200 hover:text-purple-500">
+          <Link
+            className="flex items-center gap-2 text-body-l text-grayscale-600 transition-colors duration-200 hover:text-purple-500"
+            to={"/courses"}
+          >
               <svg
                 width="21"
                 height="25"
@@ -29,10 +38,7 @@ export function GuestNavigation() {
                 />
               </svg>
 
-              <button className="cursor-pointer" type="button">
-                Browse Courses
-              </button>
-            </div>
+              <span>Browse Courses</span>
           </Link>
 
           <div className="flex  items-center gap-3">
@@ -44,6 +50,7 @@ export function GuestNavigation() {
             </button>
             <button
               className="button-primary text-button-m  py-3 px-4 "
+              onClick={onOpenRegisterModal}
               type="button"
             >
               Sign Up
