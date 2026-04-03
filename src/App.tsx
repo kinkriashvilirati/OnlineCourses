@@ -1,9 +1,5 @@
 function App() {
-  return (
-    <div className="bg-red-500">
-      <h1>Online Courses</h1>
-    </div>
-  );
+  return <></>;
 }
 
 export default App;

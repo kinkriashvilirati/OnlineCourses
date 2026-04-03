@@ -1,1 +1,234 @@
 @import "tailwindcss";
+
+:root {
+  /* bluish color */
+  --ui-purple-50: #eeedfc;
+  --ui-purple-100: #dddbfa;
+  --ui-purple-200: #b7b3f4;
+  --ui-purple-300: #958fef;
+  --ui-purple-400: #736bea;
+  --ui-purple-500: #4f46e5;
+  --ui-purple-600: #281ed2;
+  --ui-purple-700: #1e169d;
+  --ui-purple-800: #130e67;
+  --ui-purple-900: #0a0836;
+  --ui-purple-950: #05041b;
+  /* Greyscale */
+  --ui-grayscale-50: #ffffff;
+  --ui-grayscale-100: #f5f5f5;
+  --ui-grayscale-200: #d1d1d1;
+  --ui-grayscale-300: #adadad;
+  --ui-grayscale-400: #8a8a8a;
+  --ui-grayscale-500: #666666;
+  --ui-grayscale-600: #525252;
+  --ui-grayscale-700: #3d3d3d;
+  --ui-grayscale-800: #292929;
+  --ui-grayscale-900: #141414;
+  --ui-grayscale-950: #0a0a0a;
+
+  /* helper */
+  --ui-helper-error: #f4161a;
+  --ui-helper-errorLight: #f66466;
+  --ui-helper-warning: #f4a316;
+  --ui-helper-success: #1dc31d;
+  --ui-helper-successLight: #1dc31d1a;
+}
+
+@theme inline {
+  --color-purple-50: var(--ui-purple-50);
+  --color-purple-100: var(--ui-purple-100);
+  --color-purple-200: var(--ui-purple-200);
+  --color-purple-300: var(--ui-purple-300);
+  --color-purple-400: var(--ui-purple-400);
+  --color-purple-500: var(--ui-purple-500);
+  --color-purple-600: var(--ui-purple-600);
+  --color-purple-700: var(--ui-purple-700);
+  --color-purple-800: var(--ui-purple-800);
+  --color-purple-900: var(--ui-purple-900);
+  --color-purple-950: var(--ui-purple-950);
+
+  --color-grayscale-50: var(--ui-grayscale-50);
+  --color-grayscale-100: var(--ui-grayscale-100);
+  --color-grayscale-200: var(--ui-grayscale-200);
+  --color-grayscale-300: var(--ui-grayscale-300);
+  --color-grayscale-400: var(--ui-grayscale-400);
+  --color-grayscale-500: var(--ui-grayscale-500);
+  --color-grayscale-600: var(--ui-grayscale-600);
+  --color-grayscale-700: var(--ui-grayscale-700);
+  --color-grayscale-800: var(--ui-grayscale-800);
+  --color-grayscale-900: var(--ui-grayscale-900);
+  --color-grayscale-950: var(--ui-grayscale-950);
+
+  --color-helper-error: var(--ui-helper-error);
+  --color-helper-errorLight: var(--ui-helper-errorLight);
+  --color-helper-warning: var(--ui-helper-warning);
+  --color-helper-success: var(--ui-helper-success);
+  --color-helper-successLight: var(--ui-helper-successLight);
+}
+/* fonts */
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-VariableFont_opsz,wght.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-Italic-VariableFont_opsz,wght.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@theme inline {
+  /* 2) Creates Tailwind utility: font-inter */
+  --font-inter: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Optional: make font-sans = Inter globally */
+  --font-sans: var(--font-inter);
+}
+/* component  text styling*/
+@layer components {
+  /* Large, bold typography for hero sections and main  */
+  .text-display {
+    @apply font-inter text-[24px] font-semibold text-purple-400;
+  }
+  /* Secondary hero titles or large section introductio */
+  .text-display-xl {
+    @apply font-inter text-[48px] font-bold text-black;
+  }
+  /* Semibold hierarchy for section titles and content organization */
+  .text-headings {
+    @apply font-inter text-[24px] font-semibold text-purple-400;
+  }
+  .text-h1 {
+    /* Secondary hero titles or large section introductio */
+    @apply font-inter text-[40px] font-semibold text-black;
+  }
+  .text-h2 {
+    /* Section titles such as 'Continue Learning', 'Start Learning Today', and page section headers. */
+    @apply font-inter text-[40px] font-semibold text-black;
+  }
+  .text-h3 {
+    /*Content titles such as course titles, card titles, and important UI headings.*/
+    @apply font-inter text-[24px] font-semibold text-black;
+  }
+  .text-h4 {
+    /* Small section headers, sidebar titles, filter group titles, and compact UI sections. */
+    @apply font-inter text-[20px] font-semibold text-black;
+  }
+
+  .text-body {
+    /* Paragraph, description text for primary content and buttons */
+    @apply font-inter text-[24px] font-semibold text-purple-400;
+  }
+  .text-body-light-xl {
+    /*Primary paragraph text, descriptions, modal content, and general readable content.*/
+    @apply font-inter text-[24px] font-light text-black;
+  }
+  .text-body-xl {
+    /*Primary paragraph text, descriptions, modal content, and general readable content.*/
+    @apply font-inter text-[24px] font-semibold text-black;
+  }
+  .text-body-l {
+    /* Primary UI text including main buttons, navigation links, dropdown values, and key actions. */
+    @apply font-inter text-[20px] font-medium text-black;
+  }
+  .text-body-m {
+    /* Primary paragraph text, descriptions, modal content, and general readable content. */
+    @apply font-inter text-[18px] font-medium text-black;
+  }
+  .text-body-s {
+    /* Secondary text such as instructor names, supporting descriptions, and metadata context. */
+    @apply font-inter text-[16px] font-medium text-black;
+  }
+  .text-body-xs {
+    /* Secondary text such as instructor names, supporting descriptions, and metadata context. */
+    @apply font-inter text-[14px] font-medium text-black;
+  }
+  /* micro texts */
+  .text-helper-medium {
+    /* Form field labels such as 'Email', 'Password', and input titles. */
+    @apply font-inter text-[12px] font-medium text-black;
+  }
+  .text-helper-regular {
+    /* Form helper text and validation messages such as errors, hints, and instructions. */
+    @apply font-inter text-[12px] font-normal text-black;
+  }
+
+  /* underlines */
+  .text-underline-m {
+    /* For Ghost Buttons */
+    @apply font-inter text-[20px] font-semibold text-black underline;
+  }
+  .text-underline-s {
+    /* descriptions and introductory text */
+    @apply font-inter text-[14px] font-semibold text-black underline;
+  }
+
+  /* buttons text */
+  .text-button-m {
+    /* Primary UI text including main buttons, navigation links, dropdown values, and key actions. */
+    @apply font-inter text-[20px] font-semibold text-black;
+  }
+  .text-button-s {
+    /* Secondary text such as instructor names, supporting descriptions, and metadata context. */
+    @apply font-inter text-[16px] font-semibold text-black;
+  }
+}
+
+/* component button */
+@layer components {
+  .button-primary {
+    /* should be width (hug114px) height hug 58px */
+    @apply py-3 px-5 bg-purple-500 cursor-pointer rounded-lg duration-300 border-2 border-purple-500 text-grayscale-50;
+  }
+  .button-primary:hover {
+    @apply bg-purple-600  border-purple-600;
+  }
+  .button-primary:focus {
+    @apply bg-purple-600  border-purple-700;
+  }
+  .button-primary:active {
+    @apply bg-purple-700  border-purple-700;
+  }
+  .button-primary:disabled {
+    @apply bg-grayscale-300 text-grayscale-400 cursor-not-allowed border-grayscale-300;
+  }
+  /* secondary */
+  .button-outline {
+    /* should be width (96px) height hug 48px */
+    @apply py-2 px-4 bg-grayscale-50 cursor-pointer rounded-lg duration-300 border-2 border-purple-300 text-purple-500;
+  }
+  .button-outline:hover {
+    @apply bg-purple-600 text-grayscale-50 border-purple-600;
+  }
+  .button-outline:focus {
+    @apply bg-purple-600  text-grayscale-50   border-purple-700;
+  }
+  .button-outline:active {
+    @apply bg-purple-700  text-grayscale-50   border-purple-700;
+  }
+  .button-outline:disabled {
+    @apply bg-grayscale-300  text-grayscale-400 cursor-not-allowed border-grayscale-300;
+  }
+  /* ghost */
+  .button-ghost {
+    /* should be width (96px) height hug 48px */
+    @apply py-2 px-3 bg-grayscale-50 cursor-pointer duration-300 border-b-2 border-purple-500 text-purple-500 transition-all;
+  }
+  .button-ghost:hover {
+    @apply border-purple-600 text-purple-600;
+  }
+  .button-ghost:focus {
+    @apply border-purple-700 text-purple-700 border-dashed;
+  }
+  .button-ghost:active {
+    @apply border-purple-700 text-purple-700;
+  }
+  .button-ghost:disabled {
+    @apply text-grayscale-300 cursor-not-allowed border-grayscale-300;
+  }
+}
