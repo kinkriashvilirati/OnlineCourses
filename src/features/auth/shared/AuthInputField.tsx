@@ -2,8 +2,9 @@ import { useState } from "react";
 import eyeClosed from "../../../assets/icons/icon-set/eye_closed.svg";
 import eyeOpen from "../../../assets/icons/icon-set/eye_open.svg";
 
-type RegisterInputFieldProps = {
+type AuthInputFieldProps = {
   allowPasswordToggle?: boolean;
+  autoComplete?: string;
   error?: string;
   id: string;
   label: string;
@@ -13,8 +14,9 @@ type RegisterInputFieldProps = {
   value: string;
 };
 
-export function RegisterInputField({
+export function AuthInputField({
   allowPasswordToggle = false,
+  autoComplete,
   error,
   id,
   label,
@@ -22,11 +24,10 @@ export function RegisterInputField({
   placeholder,
   type,
   value,
-}: RegisterInputFieldProps) {
+}: AuthInputFieldProps) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const isPasswordField = type === "password";
-  const inputType =
-    isPasswordField && isPasswordVisible ? "text" : type;
+  const inputType = isPasswordField && isPasswordVisible ? "text" : type;
 
   return (
     <div>
@@ -38,8 +39,9 @@ export function RegisterInputField({
       </label>
       <div className="relative">
         <input
+          autoComplete={autoComplete}
           className={[
-            "duration-300 h-12 w-full rounded-lg border-[1.5px] bg-grayscale-50 px-4 text-body-xs text-grayscale-700 outline-none transition-colors placeholder:text-grayscale-400 hover:border-grayscale-300 hover:placeholder:text-grayscale-200",
+            "h-12 w-full rounded-lg border-[1.5px] bg-grayscale-50 px-4 text-body-xs text-grayscale-700 outline-none transition-colors duration-500 placeholder:text-grayscale-400 hover:border-grayscale-300 hover:placeholder:text-grayscale-200",
             allowPasswordToggle && isPasswordField ? "pr-12" : "",
             error
               ? "border-helper-error focus:border-helper-error"
@@ -54,11 +56,11 @@ export function RegisterInputField({
 
         {allowPasswordToggle && isPasswordField ? (
           <button
-            aria-label={
-              isPasswordVisible ? "Hide password" : "Show password"
-            }
+            aria-label={isPasswordVisible ? "Hide password" : "Show password"}
             className="absolute right-4 top-1/2 flex -translate-y-1/2 cursor-pointer items-center justify-center"
-            onClick={() => setIsPasswordVisible((currentValue) => !currentValue)}
+            onClick={() =>
+              setIsPasswordVisible((currentValue) => !currentValue)
+            }
             type="button"
           >
             <img

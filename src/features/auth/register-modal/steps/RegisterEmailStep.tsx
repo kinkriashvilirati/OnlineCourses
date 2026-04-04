@@ -1,4 +1,4 @@
-import { RegisterInputField } from "../RegisterInputField";
+import { AuthInputField } from "../../shared/AuthInputField";
 
 type RegisterEmailStepProps = {
   email: string;
@@ -12,7 +12,7 @@ export function RegisterEmailStep({
   onChange,
 }: RegisterEmailStepProps) {
   return (
-    <RegisterInputField
+    <AuthInputField
       error={error}
       id="register-email"
       label="Email*"

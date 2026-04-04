@@ -1,4 +1,4 @@
-import { RegisterInputField } from "../RegisterInputField";
+import { AuthInputField } from "../../shared/AuthInputField";
 
 type RegisterPasswordStepProps = {
   confirmPassword: string;
@@ -19,7 +19,7 @@ export function RegisterPasswordStep({
 }: RegisterPasswordStepProps) {
   return (
     <div className="space-y-4">
-      <RegisterInputField
+      <AuthInputField
         allowPasswordToggle
         error={passwordError}
         id="register-password"
@@ -30,7 +30,7 @@ export function RegisterPasswordStep({
         value={password}
       />
 
-      <RegisterInputField
+      <AuthInputField
         allowPasswordToggle
         error={confirmPasswordError}
         id="register-confirm-password"

@@ -107,7 +107,7 @@
   }
   /* Secondary hero titles or large section introductio */
   .text-display-xl {
-    @apply font-inter text-[48px] font-bold text-black;
+    @apply font-inter text-[48px] font-bold;
   }
   /* Semibold hierarchy for section titles and content organization */
   .text-headings {
@@ -115,19 +115,19 @@
   }
   .text-h1 {
     /* Secondary hero titles or large section introductio */
-    @apply font-inter text-[40px] font-semibold text-black;
+    @apply font-inter text-[40px] font-semibold;
   }
   .text-h2 {
     /* Section titles such as 'Continue Learning', 'Start Learning Today', and page section headers. */
-    @apply font-inter text-[40px] font-semibold text-black;
+    @apply font-inter text-[40px] font-semibold;
   }
   .text-h3 {
     /*Content titles such as course titles, card titles, and important UI headings.*/
-    @apply font-inter text-[24px] font-semibold text-black;
+    @apply font-inter text-[24px] font-semibold;
   }
   .text-h4 {
     /* Small section headers, sidebar titles, filter group titles, and compact UI sections. */
-    @apply font-inter text-[20px] font-semibold text-black;
+    @apply font-inter text-[20px] font-semibold;
   }
 
   .text-body {
@@ -136,36 +136,36 @@
   }
   .text-body-light-xl {
     /*Primary paragraph text, descriptions, modal content, and general readable content.*/
-    @apply font-inter text-[24px] font-light text-black;
+    @apply font-inter text-[24px] font-light;
   }
   .text-body-xl {
     /*Primary paragraph text, descriptions, modal content, and general readable content.*/
-    @apply font-inter text-[24px] font-semibold text-black;
+    @apply font-inter text-[24px] font-semibold;
   }
   .text-body-l {
     /* Primary UI text including main buttons, navigation links, dropdown values, and key actions. */
-    @apply font-inter text-[20px] font-medium text-black;
+    @apply font-inter text-[20px] font-medium;
   }
   .text-body-m {
     /* Primary paragraph text, descriptions, modal content, and general readable content. */
-    @apply font-inter text-[18px] font-medium text-black;
+    @apply font-inter text-[18px] font-medium;
   }
   .text-body-s {
     /* Secondary text such as instructor names, supporting descriptions, and metadata context. */
-    @apply font-inter text-[16px] font-medium text-black;
+    @apply font-inter text-[16px] font-medium;
   }
   .text-body-xs {
     /* Secondary text such as instructor names, supporting descriptions, and metadata context. */
-    @apply font-inter text-[14px] font-medium text-black;
+    @apply font-inter text-[14px] font-medium;
   }
   /* micro texts */
   .text-helper-medium {
     /* Form field labels such as 'Email', 'Password', and input titles. */
-    @apply font-inter text-[12px] font-medium text-black;
+    @apply font-inter text-[12px] font-medium;
   }
   .text-helper-regular {
     /* Form helper text and validation messages such as errors, hints, and instructions. */
-    @apply font-inter text-[12px] font-normal text-black;
+    @apply font-inter text-[12px] font-normal;
   }
 
   /* underlines */
@@ -175,17 +175,17 @@
   }
   .text-underline-s {
     /* descriptions and introductory text */
-    @apply font-inter text-[14px] font-semibold border-b;
+    @apply font-inter text-[14px] font-semibold text-grayscale-900  border-b hover:text-purple-400 duration-400;
   }
 
   /* buttons text */
   .text-button-m {
     /* Primary UI text including main buttons, navigation links, dropdown values, and key actions. */
-    @apply font-inter text-[20px] font-semibold text-black;
+    @apply font-inter text-[20px] font-semibold;
   }
   .text-button-s {
     /* Secondary text such as instructor names, supporting descriptions, and metadata context. */
-    @apply font-inter text-[16px] font-semibold text-black;
+    @apply font-inter text-[16px] font-semibold;
   }
 }
 

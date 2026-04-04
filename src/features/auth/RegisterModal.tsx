@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import modalCloseIcon from "../../assets/icons/icon-set/modal_close.svg";
-import registerBackStep from "../../assets/icons/icon-set/register_back.svg";
+import { useCallback, useEffect, useState } from "react";
+import { AuthModalShell } from "./auth-modal/AuthModalShell";
+import { useAuthModalLifecycle } from "../../hooks/useAuthModalLifecycle";
 import {
   getStepProgressClass,
   initialRegisterFormValues,
@@ -30,7 +30,11 @@ function resetRegisterModalState(
   setErrors({});
 }
 
-export function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
+export function RegisterModal({
+  isOpen,
+  onClose,
+  onSwitchToLogin,
+}: RegisterModalProps) {
   const [step, setStep] = useState<RegisterStep>(1);
   const [values, setValues] = useState<RegisterFormValues>(
     initialRegisterFormValues,
@@ -38,36 +42,21 @@ export function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
   const [errors, setErrors] = useState<RegisterErrors>({});
   const [avatarPreviewUrl, setAvatarPreviewUrl] = useState<string | null>(null);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  function handleClose() {
+  const handleClose = useCallback(() => {
     resetRegisterModalState(setStep, setValues, setErrors);
     onClose();
-  }
+  }, [onClose]);
 
-  useEffect(() => {
-    if (!isOpen) {
-      return;
-    }
+  const handleSwitchToLogin = useCallback(() => {
+    resetRegisterModalState(setStep, setValues, setErrors);
+    onSwitchToLogin();
+  }, [onSwitchToLogin]);
 
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        handleClose();
-      }
-    };
-
-    window.addEventListener("keydown", handleEscape);
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", handleEscape);
-    };
-  }, [handleClose, isOpen]);
+  useAuthModalLifecycle(isOpen, handleClose);
 
   useEffect(() => {
     if (!values.avatarFile) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setAvatarPreviewUrl(null);
       return;
     }
@@ -125,53 +114,12 @@ export function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
     handleClose();
   };
 
-  if (!isOpen) {
-    return null;
-  }
-
   return (
-    <div className="fixed inset-0 z-60 flex items-center justify-center">
-      <button
-        aria-label="Close registration modal"
-        className="absolute inset-0 bg-grayscale-950/45"
-        onClick={handleClose}
-        type="button"
-      />
-
-      <section
-        aria-modal="true"
-        className="relative z-10 w-full max-w-115 rounded-[20px] bg-grayscale-50 p-12.25 shadow-[0_30px_80px_rgba(20,20,20,0.22)]"
-        role="dialog"
-      >
-        <div>
-          {step && (
-            <button
-              aria-label="Previous registration  step"
-              className="cursor-pointer  absolute top-6 left-6 "
-              onClick={goToPreviousStep}
-              type="button"
-            >
-              <img className="max-w-6" src={registerBackStep} alt="" />
-            </button>
-          )}
-
-          <button
-            aria-label="Close registration modal"
-            className="cursor-pointer absolute top-6 right-6 "
-            onClick={handleClose}
-            type="button"
-          >
-            <img className="max-w-6" src={modalCloseIcon} alt="" />
-          </button>
-        </div>
-
-        <div className="mt-1 text-center gap-1.5">
-          <h2 className="text-h2">Create Account</h2>
-          <p className="text-body-xs text-grayscale-500">
-            {registerStepTitles[step]}
-          </p>
-        </div>
-
+    <AuthModalShell
+      backAriaLabel="Previous registration step"
+      closeAriaLabel="Close registration modal"
+      description={registerStepTitles[step]}
+      headerSlot={
         <div className="mt-5 flex gap-1.5">
           {[1, 2, 3].map((segment) => (
             <span
@@ -180,65 +128,70 @@ export function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
             />
           ))}
         </div>
+      }
+      isOpen={isOpen}
+      onBack={step > 1 ? goToPreviousStep : undefined}
+      onClose={handleClose}
+      title="Create Account"
+    >
+      <div className="mt-6">
+        {step === 1 ? (
+          <RegisterEmailStep
+            email={values.email}
+            error={errors.email}
+            onChange={(value) => setFieldValue("email", value)}
+          />
+        ) : null}
 
-        <div className="mt-6">
-          {step === 1 ? (
-            <RegisterEmailStep
-              email={values.email}
-              error={errors.email}
-              onChange={(value) => setFieldValue("email", value)}
-            />
-          ) : null}
+        {step === 2 ? (
+          <RegisterPasswordStep
+            confirmPassword={values.confirmPassword}
+            confirmPasswordError={errors.confirmPassword}
+            onConfirmPasswordChange={(value) =>
+              setFieldValue("confirmPassword", value)
+            }
+            onPasswordChange={(value) => setFieldValue("password", value)}
+            password={values.password}
+            passwordError={errors.password}
+          />
+        ) : null}
 
-          {step === 2 ? (
-            <RegisterPasswordStep
-              confirmPassword={values.confirmPassword}
-              confirmPasswordError={errors.confirmPassword}
-              onConfirmPasswordChange={(value) =>
-                setFieldValue("confirmPassword", value)
-              }
-              onPasswordChange={(value) => setFieldValue("password", value)}
-              password={values.password}
-              passwordError={errors.password}
-            />
-          ) : null}
+        {step === 3 ? (
+          <RegisterProfileStep
+            avatarError={errors.avatar}
+            avatarFileName={values.avatarFile?.name}
+            avatarPreviewUrl={avatarPreviewUrl}
+            onAvatarChange={(event) =>
+              setFieldValue("avatarFile", event.target.files?.[0] ?? null)
+            }
+            onUsernameChange={(value) => setFieldValue("username", value)}
+            username={values.username}
+            usernameError={errors.username}
+          />
+        ) : null}
+      </div>
 
-          {step === 3 ? (
-            <RegisterProfileStep
-              avatarError={errors.avatar}
-              avatarFileName={values.avatarFile?.name}
-              avatarPreviewUrl={avatarPreviewUrl}
-              onAvatarChange={(event) =>
-                setFieldValue("avatarFile", event.target.files?.[0] ?? null)
-              }
-              onUsernameChange={(value) => setFieldValue("username", value)}
-              username={values.username}
-              usernameError={errors.username}
-            />
-          ) : null}
-        </div>
+      <button
+        className="button-primary mt-6 flex h-12 w-full items-center justify-center text-button-s"
+        onClick={step === 3 ? handleSubmit : goToNextStep}
+        type="button"
+      >
+        {step === 3 ? "Sign Up" : "Next"}
+      </button>
 
-        <button
-          className="button-primary mt-6 flex h-12 w-full items-center justify-center text-button-s"
-          onClick={step === 3 ? handleSubmit : goToNextStep}
-          type="button"
-        >
-          {step === 3 ? "Sign Up" : "Next"}
-        </button>
-
-        <div className="mt-4 text-center">
-          <span className="text-helper-regular text-grayscale-300">or</span>
-          <p className="mt-3 text-helper-regular text-grayscale-500">
-            Already have an account?{" "}
-            <button
-              className="font-semibold text-grayscale-900 underline"
-              type="button"
-            >
-              Log In
-            </button>
-          </p>
-        </div>
-      </section>
-    </div>
+      <div className="mt-4 text-center">
+        <span className="text-helper-regular text-grayscale-300">or</span>
+        <p className="mt-3 text-helper-regular text-grayscale-500">
+          Already have an account?{" "}
+          <button
+            className="text-underline-s cursor-pointer"
+            onClick={handleSwitchToLogin}
+            type="button"
+          >
+            Log In
+          </button>
+        </p>
+      </div>
+    </AuthModalShell>
   );
 }

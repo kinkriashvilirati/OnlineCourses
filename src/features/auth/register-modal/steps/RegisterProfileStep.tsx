@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent } from "react";
-import { RegisterInputField } from "../RegisterInputField";
+import { AuthInputField } from "../../shared/AuthInputField";
 import modalCloseIcon from "../../../../assets/icons/icon-set/upload_image.svg";
 type RegisterProfileStepProps = {
   avatarError?: string;
@@ -23,7 +23,7 @@ export function RegisterProfileStep({
   const [avatarSize, setAvatarSize] = useState<number | null>(null);
   return (
     <div className="space-y-4">
-      <RegisterInputField
+      <AuthInputField
         error={usernameError}
         id="register-username"
         label="Username*"
