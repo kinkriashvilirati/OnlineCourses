@@ -171,11 +171,11 @@
   /* underlines */
   .text-underline-m {
     /* For Ghost Buttons */
-    @apply font-inter text-[20px] font-semibold text-black underline;
+    @apply font-inter text-[20px] font-semibold  border-b;
   }
   .text-underline-s {
     /* descriptions and introductory text */
-    @apply font-inter text-[14px] font-semibold text-black underline;
+    @apply font-inter text-[14px] font-semibold border-b;
   }
 
   /* buttons text */

@@ -1,6 +1,6 @@
-import type { ChangeEvent } from "react";
+import { useState, type ChangeEvent } from "react";
 import { RegisterInputField } from "../RegisterInputField";
-
+import modalCloseIcon from "../../../../assets/icons/icon-set/upload_image.svg";
 type RegisterProfileStepProps = {
   avatarError?: string;
   avatarFileName?: string;
@@ -20,6 +20,7 @@ export function RegisterProfileStep({
   username,
   usernameError,
 }: RegisterProfileStepProps) {
+  const [avatarSize, setAvatarSize] = useState<number | null>(null);
   return (
     <div className="space-y-4">
       <RegisterInputField
@@ -39,7 +40,7 @@ export function RegisterProfileStep({
 
         <label
           className={[
-            "flex min-h-33.75 cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed bg-grayscale-50 px-4 py-6 text-center transition-colors duration-200",
+            "flex min-h-35 cursor-pointer flex-col items-center justify-center rounded-xl border border-grayscale-200  bg-grayscale-50 px-4 py-6 text-center transition-colors duration-500 hover:bg-purple-50 hover:border-purple-100 active:bg-purple-100 active:border-purple-200",
             avatarError
               ? "border-helper-error"
               : "border-grayscale-200 hover:border-purple-300",
@@ -48,28 +49,45 @@ export function RegisterProfileStep({
         >
           {avatarPreviewUrl ? (
             <>
-              <img
-                alt="Avatar preview"
-                className="h-14 w-14 rounded-full object-cover"
-                src={avatarPreviewUrl}
-              />
-              <p className="mt-3 text-helper-medium text-grayscale-700">
-                {avatarFileName}
-              </p>
-              <p className="mt-1 text-helper-regular text-purple-500">
-                Choose another file
-              </p>
+              <div className="flex gap-1">
+                <div>
+                  <img
+                    alt="Avatar preview"
+                    className="h-14 w-14 rounded-full object-cover"
+                    src={avatarPreviewUrl}
+                  />
+                </div>
+                <div className="flex flex-col items-start">
+                  <p className="mt-3 text-helper-medium text-grayscale-700">
+                    {avatarFileName}
+                  </p>
+                  {avatarSize && (
+                    <p className="text-helper-regular font-light text-grayscale-300">
+                      Size -{" "}
+                      {avatarSize
+                        ? `${(avatarSize / 1024 / 1024).toFixed(2)} MB`
+                        : ""}
+                    </p>
+                  )}
+
+                  <p className="text-purple-500 text-underline-s text-[10px]">
+                    change
+                  </p>
+                </div>
+              </div>
             </>
           ) : (
             <>
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-grayscale-100 text-lg text-grayscale-500">
-                ^
+              <div className="">
+                <img src={modalCloseIcon} alt="upload image icon" />
               </div>
-              <p className="mt-3 text-helper-medium text-grayscale-700">
+              <p className="text-body-xs text-grayscale-500 mt-3">
                 Drag and drop or{" "}
-                <span className="text-purple-500 underline">Upload file</span>
+                <span className="text-underline-s text-purple-500">
+                  Upload file
+                </span>
               </p>
-              <p className="mt-1 text-helper-regular text-grayscale-400">
+              <p className="text-helper-regular text-gray-400 mt-1.5">
                 JPG, PNG or WEBP
               </p>
             </>
@@ -80,7 +98,10 @@ export function RegisterProfileStep({
           accept="image/jpeg,image/png,image/webp"
           className="hidden"
           id="register-avatar"
-          onChange={onAvatarChange}
+          onChange={(e) => {
+            onAvatarChange(e);
+            setAvatarSize(e.target.files?.[0]?.size ?? null);
+          }}
           type="file"
         />
 

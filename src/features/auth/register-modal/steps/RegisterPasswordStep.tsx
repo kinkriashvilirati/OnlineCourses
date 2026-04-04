@@ -20,6 +20,7 @@ export function RegisterPasswordStep({
   return (
     <div className="space-y-4">
       <RegisterInputField
+        allowPasswordToggle
         error={passwordError}
         id="register-password"
         label="Password*"
@@ -30,6 +31,7 @@ export function RegisterPasswordStep({
       />
 
       <RegisterInputField
+        allowPasswordToggle
         error={confirmPasswordError}
         id="register-confirm-password"
         label="Confirm Password*"

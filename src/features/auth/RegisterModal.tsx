@@ -140,30 +140,28 @@ export function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
 
       <section
         aria-modal="true"
-        className="relative z-10 w-full max-w-135 rounded-[20px] bg-grayscale-50 px-8 pb-7 pt-4 shadow-[0_30px_80px_rgba(20,20,20,0.22)]"
+        className="relative z-10 w-full max-w-115 rounded-[20px] bg-grayscale-50 p-12.25 shadow-[0_30px_80px_rgba(20,20,20,0.22)]"
         role="dialog"
       >
-        <div className="flex items-center justify-between">
-          {step > 1 ? (
+        <div>
+          {step && (
             <button
               aria-label="Previous registration  step"
-              className="flex h-7 w-7 items-center justify-center rounded-full text-grayscale-600 transition-colors duration-200 hover:bg-grayscale-100 cursor-pointer hover:text-grayscale-900"
+              className="cursor-pointer  absolute top-6 left-6 "
               onClick={goToPreviousStep}
               type="button"
             >
-              <img src={registerBackStep} alt="" />
+              <img className="max-w-6" src={registerBackStep} alt="" />
             </button>
-          ) : (
-            <span className="h-7 w-7" />
           )}
 
           <button
             aria-label="Close registration modal"
-            className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-full text-grayscale-600 transition-colors duration-200 hover:bg-grayscale-100 hover:text-grayscale-900"
+            className="cursor-pointer absolute top-6 right-6 "
             onClick={handleClose}
             type="button"
           >
-            <img src={modalCloseIcon} alt="" />
+            <img className="max-w-6" src={modalCloseIcon} alt="" />
           </button>
         </div>
 
