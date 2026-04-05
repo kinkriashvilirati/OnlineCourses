@@ -7,6 +7,7 @@ export type RegisterModalProps = {
 export type RegisterStep = 1 | 2 | 3;
 
 export type RegisterFieldErrorKey =
+  | "form"
   | "email"
   | "password"
   | "confirmPassword"

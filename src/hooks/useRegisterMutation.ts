@@ -20,12 +20,10 @@ export function useRegisterMutation() {
     RegisterApiRequest
   >({
     mutationFn: registerUser,
-    onSuccess: (data) => {
-      console.log("succesfully registered ", data);
-    },
   });
 }
 
+// necessary for smart validation-error handling
 export function isRegisterValidationError(
   error: unknown,
 ): error is AxiosError<ValidationErrorResponse> {

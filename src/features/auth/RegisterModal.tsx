@@ -6,6 +6,7 @@ import {
   initialRegisterFormValues,
   registerStepTitles,
 } from "./register-modal/registerModal.constants";
+import { mapRegisterValidationErrors } from "./register-modal/registerModal.serverErrors";
 import type {
   RegisterErrors,
   RegisterFormValues,
@@ -19,6 +20,11 @@ import {
 import { RegisterEmailStep } from "./register-modal/steps/RegisterEmailStep";
 import { RegisterPasswordStep } from "./register-modal/steps/RegisterPasswordStep";
 import { RegisterProfileStep } from "./register-modal/steps/RegisterProfileStep";
+import {
+  isRegisterValidationError,
+  useRegisterMutation,
+} from "../../hooks/useRegisterMutation";
+import RegisterErrorsComponent from "./register-modal/components/RegisterErrorsComponent";
 
 function resetRegisterModalState(
   setStep: (step: RegisterStep) => void,
@@ -35,6 +41,7 @@ export function RegisterModal({
   onClose,
   onSwitchToLogin,
 }: RegisterModalProps) {
+  const registerMutation = useRegisterMutation();
   const [step, setStep] = useState<RegisterStep>(1);
   const [values, setValues] = useState<RegisterFormValues>(
     initialRegisterFormValues,
@@ -44,13 +51,15 @@ export function RegisterModal({
 
   const handleClose = useCallback(() => {
     resetRegisterModalState(setStep, setValues, setErrors);
+    registerMutation.reset();
     onClose();
-  }, [onClose]);
+  }, [onClose, registerMutation]);
 
   const handleSwitchToLogin = useCallback(() => {
     resetRegisterModalState(setStep, setValues, setErrors);
+    registerMutation.reset();
     onSwitchToLogin();
-  }, [onSwitchToLogin]);
+  }, [onSwitchToLogin, registerMutation]);
 
   useAuthModalLifecycle(isOpen, handleClose);
 
@@ -80,6 +89,7 @@ export function RegisterModal({
 
     setErrors((currentErrors) => ({
       ...currentErrors,
+      form: undefined,
       [key === "avatarFile" ? "avatar" : key]: undefined,
     }));
   };
@@ -103,7 +113,7 @@ export function RegisterModal({
     );
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const nextErrors = validateRegisterForm(values);
     setErrors(nextErrors);
 
@@ -111,7 +121,43 @@ export function RegisterModal({
       return;
     }
 
-    handleClose();
+    try {
+      await registerMutation.mutateAsync({
+        avatar: values.avatarFile,
+        email: values.email.trim(),
+        password: values.password,
+        password_confirmation: values.confirmPassword,
+        username: values.username.trim(),
+      });
+
+      handleClose();
+    } catch (error) {
+      if (isRegisterValidationError(error)) {
+        const response = error.response;
+        if (!response) {
+          setErrors({
+            form: "Registration failed. Please try again.",
+          });
+          return;
+        }
+
+        const mappedErrors = mapRegisterValidationErrors(response.data.errors);
+
+        setErrors({
+          ...mappedErrors,
+          form:
+            Object.keys(mappedErrors).length === 0
+              ? response.data.message
+              : undefined,
+        });
+
+        return;
+      }
+
+      setErrors({
+        form: "Registration failed. Please try again.",
+      });
+    }
   };
 
   return (
@@ -174,10 +220,17 @@ export function RegisterModal({
       <button
         className="button-primary mt-6 flex h-12 w-full items-center justify-center text-button-s"
         onClick={step === 3 ? handleSubmit : goToNextStep}
+        disabled={step === 3 ? registerMutation.isPending : false}
         type="button"
       >
-        {step === 3 ? "Sign Up" : "Next"}
+        {step === 3
+          ? registerMutation.isPending
+            ? "Signing Up..."
+            : "Sign Up"
+          : "Next"}
       </button>
+
+      <RegisterErrorsComponent errors={errors} />
 
       <div className="mt-4 text-center">
         <span className="text-helper-regular text-grayscale-300">or</span>
