@@ -21,8 +21,8 @@ export type RegisterApiUser = {
 
 export type RegisterApiResponse = {
   data: {
-    token: string;
     user: RegisterApiUser;
+    token: string;
   };
 };
 
