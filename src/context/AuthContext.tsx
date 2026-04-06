@@ -20,6 +20,7 @@ import { useCurrentUserQuery } from "../hooks/useCurrentUserQuery";
 type AuthContextValue = {
   clearAuthenticatedSession: () => void;
   isAuthenticated: boolean;
+  isAuthRestoring: boolean;
   profileComplete: boolean;
   setAuthenticatedSession: (session: {
     token: string;
@@ -33,12 +34,13 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 export function AuthProvider({ children }: PropsWithChildren) {
   const queryClient = useQueryClient();
   const [user, setUser] = useState<RegisterApiUser | null>(null);
+  const hasStoredToken = Boolean(getAccessToken());
 
-  const currentUserQuery = useCurrentUserQuery(
-    Boolean(getAccessToken()) && user === null,
-  );
+  const currentUserQuery = useCurrentUserQuery(hasStoredToken && user === null);
 
   const resolvedUser = user ?? currentUserQuery.data?.data ?? null;
+  const isAuthRestoring =
+    hasStoredToken && user === null && currentUserQuery.isPending;
 
   useEffect(() => {
     if (!currentUserQuery.isError) {
@@ -64,6 +66,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
         setUser(null);
       },
       isAuthenticated: resolvedUser !== null,
+      isAuthRestoring,
       profileComplete: resolvedUser?.profileComplete ?? false,
       setAuthenticatedSession: ({ token, user }) => {
         setAccessToken(token);
@@ -74,7 +77,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
       },
       user: resolvedUser,
     }),
-    [queryClient, resolvedUser],
+    [isAuthRestoring, queryClient, resolvedUser],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
