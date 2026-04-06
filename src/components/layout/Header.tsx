@@ -17,7 +17,7 @@ export function Header() {
           <img alt="RedClass logo" className="h-7.5 w-7.5 " src={navLogo} />
         </Link>
 
-        {!isAuthenticated ? <AuthNavigation /> : <GuestNavigation />}
+        {isAuthenticated ? <AuthNavigation /> : <GuestNavigation />}
       </nav>
     </header>
   );
