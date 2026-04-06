@@ -1,7 +1,10 @@
 import { useCallback, useState } from "react";
 import { AuthModalShell } from "./auth-modal/AuthModalShell";
 import { useAuthModalLifecycle } from "../../hooks/useAuthModalLifecycle";
+import { useAuth } from "../../context/AuthContext";
 import { LoginFields } from "./login-modal/LoginFields";
+import LoginErrorsComponent from "./login-modal/components/LoginErrorsComponent";
+import { getLoginErrorMessage } from "./login-modal/loginModal.serverErrors";
 import {
   initialLoginFormValues,
   validateLoginForm,
@@ -11,6 +14,11 @@ import type {
   LoginFormValues,
   LoginModalProps,
 } from "./login-modal/loginModal.types";
+import {
+  isLoginCredentialsError,
+  type LoginMutationError,
+  useLoginMutation,
+} from "../../hooks/useLoginMutation";
 
 function resetLoginModalState(
   setValues: (values: LoginFormValues) => void,
@@ -25,18 +33,22 @@ export function LoginModal({
   onClose,
   onSwitchToRegister,
 }: LoginModalProps) {
+  const { setAuthenticatedSession } = useAuth();
+  const loginMutation = useLoginMutation();
   const [values, setValues] = useState<LoginFormValues>(initialLoginFormValues);
   const [errors, setErrors] = useState<LoginErrors>({});
 
   const handleClose = useCallback(() => {
     resetLoginModalState(setValues, setErrors);
+    loginMutation.reset();
     onClose();
-  }, [onClose]);
+  }, [loginMutation, onClose]);
 
   const handleSwitchToRegister = useCallback(() => {
     resetLoginModalState(setValues, setErrors);
+    loginMutation.reset();
     onSwitchToRegister();
-  }, [onSwitchToRegister]);
+  }, [loginMutation, onSwitchToRegister]);
 
   useAuthModalLifecycle(isOpen, handleClose);
 
@@ -51,11 +63,12 @@ export function LoginModal({
 
     setErrors((currentErrors) => ({
       ...currentErrors,
+      form: undefined,
       [key]: undefined,
     }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const nextErrors = validateLoginForm(values);
     setErrors(nextErrors);
 
@@ -63,7 +76,30 @@ export function LoginModal({
       return;
     }
 
-    handleClose();
+    try {
+      const response = await loginMutation.mutateAsync({
+        email: values.email.trim(),
+        password: values.password,
+      });
+
+      setAuthenticatedSession({
+        token: response.data.token,
+        user: response.data.user,
+      });
+
+      handleClose();
+    } catch (error) {
+      if (isLoginCredentialsError(error)) {
+        setErrors({
+          form: error.response?.data.message ?? "Invalid credentials.",
+        });
+        return;
+      }
+
+      setErrors({
+        form: getLoginErrorMessage(error as LoginMutationError),
+      });
+    }
   };
 
   return (
@@ -88,10 +124,13 @@ export function LoginModal({
       <button
         className="button-primary mt-6 flex h-12 w-full items-center justify-center text-button-s"
         onClick={handleSubmit}
+        disabled={loginMutation.isPending}
         type="button"
       >
-        Log In
+        {loginMutation.isPending ? "Logging In..." : "Log In"}
       </button>
+
+      <LoginErrorsComponent errors={errors} />
 
       <div className="mt-6">
         <div className="flex items-center gap-3">

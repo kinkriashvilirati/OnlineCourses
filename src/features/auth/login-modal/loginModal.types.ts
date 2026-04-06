@@ -4,7 +4,7 @@ export type LoginModalProps = {
   onSwitchToRegister: () => void;
 };
 
-export type LoginFieldErrorKey = "email" | "password";
+export type LoginFieldErrorKey = "email" | "form" | "password";
 
 export type LoginFormValues = {
   email: string;
