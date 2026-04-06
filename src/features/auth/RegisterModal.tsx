@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { AuthModalShell } from "./auth-modal/AuthModalShell";
 import { useAuthModalLifecycle } from "../../hooks/useAuthModalLifecycle";
+import { useAuth } from "../../context/AuthContext";
 import {
   getStepProgressClass,
   initialRegisterFormValues,
@@ -41,6 +42,7 @@ export function RegisterModal({
   onClose,
   onSwitchToLogin,
 }: RegisterModalProps) {
+  const { setAuthenticatedSession } = useAuth();
   const registerMutation = useRegisterMutation();
   const [step, setStep] = useState<RegisterStep>(1);
   const [values, setValues] = useState<RegisterFormValues>(
@@ -122,12 +124,17 @@ export function RegisterModal({
     }
 
     try {
-      await registerMutation.mutateAsync({
+      const response = await registerMutation.mutateAsync({
         avatar: values.avatarFile,
         email: values.email.trim(),
         password: values.password,
         password_confirmation: values.confirmPassword,
         username: values.username.trim(),
+      });
+
+      setAuthenticatedSession({
+        token: response.data.token,
+        user: response.data.user,
       });
 
       handleClose();
