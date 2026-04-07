@@ -1,7 +1,7 @@
 import { useAuth } from "../../../context/AuthContext";
 import BrowseCourses from "./BrowsCourses";
 import EnrolledCoursesButton from "./EnrolledCoursesButton";
-import ProfileStatusButton from "./ProfileStatusButton";
+import ProfileStatusButton from "./ProfileButton";
 
 export default function AuthNavigation() {
   const { profileComplete } = useAuth();
