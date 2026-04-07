@@ -5,6 +5,7 @@ type RegisterPasswordStepProps = {
   confirmPasswordError?: string;
   onConfirmPasswordChange: (value: string) => void;
   onPasswordChange: (value: string) => void;
+  onBlur: () => void;
   password: string;
   passwordError?: string;
 };
@@ -16,6 +17,7 @@ export function RegisterPasswordStep({
   onPasswordChange,
   password,
   passwordError,
+  onBlur,
 }: RegisterPasswordStepProps) {
   return (
     <div className="space-y-4">
@@ -25,12 +27,14 @@ export function RegisterPasswordStep({
         id="register-password"
         label="Password*"
         onChange={onPasswordChange}
+        onBlur={onBlur}
         placeholder="Password"
         type="password"
         value={password}
       />
 
       <AuthInputField
+        onBlur={onBlur}
         allowPasswordToggle
         error={confirmPasswordError}
         id="register-confirm-password"

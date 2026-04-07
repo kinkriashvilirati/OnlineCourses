@@ -67,7 +67,10 @@ export function LoginModal({
       [key]: undefined,
     }));
   };
-
+  const handleBlur = () => {
+    const nextErrors = validateLoginForm(values);
+    setErrors(nextErrors);
+  };
   const handleSubmit = async () => {
     const nextErrors = validateLoginForm(values);
     setErrors(nextErrors);
@@ -118,6 +121,7 @@ export function LoginModal({
           onPasswordChange={(value) => setFieldValue("password", value)}
           password={values.password}
           passwordError={errors.password}
+          onBlur={handleBlur}
         />
       </div>
 

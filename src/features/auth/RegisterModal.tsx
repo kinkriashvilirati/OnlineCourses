@@ -109,6 +109,11 @@ export function RegisterModal({
     );
   };
 
+  const handleBlur = () => {
+    const nextErrors = validateRegisterStep(values, step);
+    setErrors((currentErrors) => ({ ...currentErrors, ...nextErrors }));
+  };
+
   const goToPreviousStep = () => {
     setStep((currentStep) =>
       currentStep > 1 ? ((currentStep - 1) as RegisterStep) : currentStep,
@@ -192,6 +197,7 @@ export function RegisterModal({
           <RegisterEmailStep
             email={values.email}
             error={errors.email}
+            onBlur={handleBlur}
             onChange={(value) => setFieldValue("email", value)}
           />
         ) : null}
@@ -206,6 +212,7 @@ export function RegisterModal({
             onPasswordChange={(value) => setFieldValue("password", value)}
             password={values.password}
             passwordError={errors.password}
+            onBlur={handleBlur}
           />
         ) : null}
 
@@ -220,6 +227,7 @@ export function RegisterModal({
             onUsernameChange={(value) => setFieldValue("username", value)}
             username={values.username}
             usernameError={errors.username}
+            onBlur={handleBlur}
           />
         ) : null}
       </div>
@@ -237,7 +245,7 @@ export function RegisterModal({
           : "Next"}
       </button>
 
-      <RegisterErrorsComponent errors={errors} />
+      <RegisterErrorsComponent errors={errors} step={step} />
 
       <div className="mt-4 text-center">
         <span className="text-helper-regular text-grayscale-300">or</span>

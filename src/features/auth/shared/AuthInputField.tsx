@@ -9,6 +9,7 @@ type AuthInputFieldProps = {
   id: string;
   label: string;
   onChange: (value: string) => void;
+  onBlur: () => void;
   placeholder: string;
   type: "email" | "password" | "text";
   value: string;
@@ -21,6 +22,7 @@ export function AuthInputField({
   id,
   label,
   onChange,
+  onBlur,
   placeholder,
   type,
   value,
@@ -52,6 +54,7 @@ export function AuthInputField({
           placeholder={placeholder}
           type={inputType}
           value={value}
+          onBlur={onBlur}
         />
 
         {allowPasswordToggle && isPasswordField ? (

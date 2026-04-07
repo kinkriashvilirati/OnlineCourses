@@ -9,6 +9,7 @@ type RegisterProfileStepProps = {
   onUsernameChange: (value: string) => void;
   username: string;
   usernameError?: string;
+  onBlur: () => void;
 };
 
 export function RegisterProfileStep({
@@ -19,6 +20,7 @@ export function RegisterProfileStep({
   onUsernameChange,
   username,
   usernameError,
+  onBlur,
 }: RegisterProfileStepProps) {
   const [avatarSize, setAvatarSize] = useState<number | null>(null);
   return (
@@ -31,6 +33,7 @@ export function RegisterProfileStep({
         placeholder="Username"
         type="text"
         value={username}
+        onBlur={onBlur}
       />
 
       <div>

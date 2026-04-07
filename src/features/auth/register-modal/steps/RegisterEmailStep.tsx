@@ -4,12 +4,14 @@ type RegisterEmailStepProps = {
   email: string;
   error?: string;
   onChange: (value: string) => void;
+  onBlur: () => void;
 };
 
 export function RegisterEmailStep({
   email,
   error,
   onChange,
+  onBlur,
 }: RegisterEmailStepProps) {
   return (
     <AuthInputField
@@ -20,6 +22,7 @@ export function RegisterEmailStep({
       placeholder="you@example.com"
       type="email"
       value={email}
+      onBlur={onBlur}
     />
   );
 }

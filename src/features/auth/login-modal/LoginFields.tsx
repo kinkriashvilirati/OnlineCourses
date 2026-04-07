@@ -7,6 +7,7 @@ type LoginFieldsProps = {
   onPasswordChange: (value: string) => void;
   password: string;
   passwordError?: string;
+  onBlur: () => void;
 };
 
 export function LoginFields({
@@ -16,6 +17,7 @@ export function LoginFields({
   onPasswordChange,
   password,
   passwordError,
+  onBlur,
 }: LoginFieldsProps) {
   return (
     <div className="space-y-4">
@@ -28,6 +30,7 @@ export function LoginFields({
         placeholder="you@example.com"
         type="email"
         value={email}
+        onBlur={onBlur}
       />
 
       <AuthInputField
@@ -40,6 +43,7 @@ export function LoginFields({
         placeholder="Password"
         type="password"
         value={password}
+        onBlur={onBlur}
       />
     </div>
   );

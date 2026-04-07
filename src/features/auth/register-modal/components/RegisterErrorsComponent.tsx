@@ -2,9 +2,13 @@ import type { RegisterErrors } from "../registerModal.types";
 
 export default function RegisterErrorsComponent({
   errors,
+  step,
 }: {
   errors: RegisterErrors;
+  step: number;
 }) {
+  console.log(errors);
+  if (step != 3) return;
   return (
     <>
       {errors.username || errors.avatar ? (
