@@ -93,6 +93,11 @@ export function RegisterModal({
       ...currentErrors,
       form: undefined,
       [key === "avatarFile" ? "avatar" : key]: undefined,
+      ...(key === "password"
+        ? {
+            confirmPassword: undefined,
+          }
+        : {}),
     }));
   };
 
@@ -112,6 +117,27 @@ export function RegisterModal({
   const handleBlur = () => {
     const nextErrors = validateRegisterStep(values, step);
     setErrors((currentErrors) => ({ ...currentErrors, ...nextErrors }));
+  };
+
+  const handlePasswordBlur = () => {
+    const nextErrors = validateRegisterStep(values, 2);
+
+    setErrors((currentErrors) => ({
+      ...currentErrors,
+      password: nextErrors.password,
+      confirmPassword: values.confirmPassword.trim()
+        ? nextErrors.confirmPassword
+        : undefined,
+    }));
+  };
+
+  const handleConfirmPasswordBlur = () => {
+    const nextErrors = validateRegisterStep(values, 2);
+
+    setErrors((currentErrors) => ({
+      ...currentErrors,
+      confirmPassword: nextErrors.confirmPassword,
+    }));
   };
 
   const goToPreviousStep = () => {
@@ -209,10 +235,11 @@ export function RegisterModal({
             onConfirmPasswordChange={(value) =>
               setFieldValue("confirmPassword", value)
             }
+            onConfirmPasswordBlur={handleConfirmPasswordBlur}
             onPasswordChange={(value) => setFieldValue("password", value)}
             password={values.password}
             passwordError={errors.password}
-            onBlur={handleBlur}
+            onPasswordBlur={handlePasswordBlur}
           />
         ) : null}
 

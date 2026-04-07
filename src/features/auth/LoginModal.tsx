@@ -67,10 +67,25 @@ export function LoginModal({
       [key]: undefined,
     }));
   };
-  const handleBlur = () => {
+
+  const handleEmailBlur = () => {
     const nextErrors = validateLoginForm(values);
-    setErrors(nextErrors);
+
+    setErrors((currentErrors) => ({
+      ...currentErrors,
+      email: nextErrors.email,
+    }));
   };
+
+  const handlePasswordBlur = () => {
+    const nextErrors = validateLoginForm(values);
+
+    setErrors((currentErrors) => ({
+      ...currentErrors,
+      password: nextErrors.password,
+    }));
+  };
+
   const handleSubmit = async () => {
     const nextErrors = validateLoginForm(values);
     setErrors(nextErrors);
@@ -118,10 +133,11 @@ export function LoginModal({
           email={values.email}
           emailError={errors.email}
           onEmailChange={(value) => setFieldValue("email", value)}
+          onEmailBlur={handleEmailBlur}
           onPasswordChange={(value) => setFieldValue("password", value)}
+          onPasswordBlur={handlePasswordBlur}
           password={values.password}
           passwordError={errors.password}
-          onBlur={handleBlur}
         />
       </div>
 
