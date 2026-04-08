@@ -1,1 +1,1 @@
-export type AuthModalType = "login" | "register" | null;
+export type AuthModalType = "login" | "profile" | "register" | null;

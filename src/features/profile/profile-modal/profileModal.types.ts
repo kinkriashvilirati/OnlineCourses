@@ -1,8 +1,3 @@
-export type ProfileModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
-};
-
 export type ProfileEditableField = "age" | "fullName" | "mobileNumber";
 
 export type ProfileFormValues = {

@@ -1,5 +1,6 @@
 import { useAuthModal } from "../../context/AuthModalContext";
 import { LoginModal } from "./LoginModal";
+import { ProfileModal } from "../profile/ProfileModal";
 import { RegisterModal } from "./RegisterModal";
 
 export function AuthModalHost() {
@@ -24,6 +25,8 @@ export function AuthModalHost() {
         onClose={closeAuthModal}
         onSwitchToLogin={switchToLoginModal}
       />
+
+      <ProfileModal />
     </>
   );
 }

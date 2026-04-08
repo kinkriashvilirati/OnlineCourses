@@ -10,9 +10,12 @@ import type { AuthModalType } from "../features/auth/auth-modal/authModal.types"
 type AuthModalContextValue = {
   activeModal: AuthModalType;
   closeAuthModal: () => void;
+  closeProfileModal: () => void;
   isLoginModalOpen: boolean;
+  isProfileModalOpen: boolean;
   isRegisterModalOpen: boolean;
   openLoginModal: () => void;
+  openProfileModal: () => void;
   openRegisterModal: () => void;
   switchToLoginModal: () => void;
   switchToRegisterModal: () => void;
@@ -27,9 +30,12 @@ export function AuthModalProvider({ children }: PropsWithChildren) {
     () => ({
       activeModal,
       closeAuthModal: () => setActiveModal(null),
+      closeProfileModal: () => setActiveModal(null),
       isLoginModalOpen: activeModal === "login",
+      isProfileModalOpen: activeModal === "profile",
       isRegisterModalOpen: activeModal === "register",
       openLoginModal: () => setActiveModal("login"),
+      openProfileModal: () => setActiveModal("profile"),
       openRegisterModal: () => setActiveModal("register"),
       switchToLoginModal: () => setActiveModal("login"),
       switchToRegisterModal: () => setActiveModal("register"),

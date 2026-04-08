@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState, type ChangeEvent } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { useAuthModal } from "../../context/AuthModalContext";
 import { useAuthModalLifecycle } from "../../hooks/useAuthModalLifecycle";
 import { AuthModalShell } from "../auth/auth-modal/AuthModalShell";
 import { ProfileModalFields } from "./profile-modal/ProfileModalFields";
@@ -9,7 +10,6 @@ import type {
   ProfileEditableField,
   ProfileErrors,
   ProfileFormValues,
-  ProfileModalProps,
 } from "./profile-modal/profileModal.types";
 import {
   getInitialProfileFormValues,
@@ -128,16 +128,17 @@ function ProfileModalContent({
   );
 }
 
-export function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
+export function ProfileModal() {
   const { profileComplete, user } = useAuth();
+  const { closeProfileModal, isProfileModalOpen } = useAuthModal();
 
-  if (!isOpen) {
+  if (!isProfileModalOpen) {
     return null;
   }
 
   return (
     <ProfileModalContent
-      onClose={onClose}
+      onClose={closeProfileModal}
       profileComplete={profileComplete}
       user={user}
     />
