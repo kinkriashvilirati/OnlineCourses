@@ -4,6 +4,7 @@ type AvatarInputProps = {
   avatarFileName: string | undefined;
   avatarPreviewUrl: string | null;
   avatarSize: number | null;
+  inputId: string;
 };
 
 export default function AvatarInput({
@@ -11,6 +12,7 @@ export default function AvatarInput({
   avatarFileName,
   avatarPreviewUrl,
   avatarSize,
+  inputId,
 }: AvatarInputProps) {
   return (
     <>
@@ -21,7 +23,7 @@ export default function AvatarInput({
             ? "border-helper-error"
             : "border-grayscale-200 hover:border-purple-300",
         ].join(" ")}
-        htmlFor="register-avatar"
+        htmlFor={inputId}
       >
         {avatarPreviewUrl ? (
           <>

@@ -1,7 +1,10 @@
-export default function ProfileIconSvg() {
+type ProfilSvgProps = { size?: number };
+
+export default function ProfileIconSvg({ size = 10 }: ProfilSvgProps) {
   return (
     <>
       <svg
+        className={`size-${size}`}
         width="38"
         height="38"
         viewBox="0 0 38 38"

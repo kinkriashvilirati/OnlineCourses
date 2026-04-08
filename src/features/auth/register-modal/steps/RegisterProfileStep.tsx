@@ -45,6 +45,7 @@ export function RegisterProfileStep({
           avatarFileName={avatarFileName}
           avatarPreviewUrl={avatarPreviewUrl}
           avatarSize={avatarSize}
+          inputId="register-avatar"
         />
         <input
           accept="image/jpeg,image/png,image/webp"

@@ -5,11 +5,12 @@ import registerBackStep from "../../../assets/icons/icon-set/register_back.svg";
 type AuthModalShellProps = PropsWithChildren<{
   backAriaLabel?: string;
   closeAriaLabel: string;
-  description: string;
+  description?: string;
   headerSlot?: ReactNode;
   isOpen: boolean;
   onBack?: () => void;
   onClose: () => void;
+  panelClassName?: string;
   title: string;
 }>;
 
@@ -22,6 +23,7 @@ export function AuthModalShell({
   isOpen,
   onBack,
   onClose,
+  panelClassName,
   title,
 }: AuthModalShellProps) {
   if (!isOpen) {
@@ -32,14 +34,17 @@ export function AuthModalShell({
     <div className="fixed inset-0 z-60 flex items-center justify-center">
       <button
         aria-label={closeAriaLabel}
-        className="absolute inset-0 bg-grayscale-950/45"
+        className="absolute inset-0 bg-grayscale-950/45 backdrop-blur-[3px]"
         onClick={onClose}
         type="button"
       />
 
       <section
         aria-modal="true"
-        className="relative z-10 w-full max-w-115 rounded-[20px] bg-grayscale-50 p-12.25 shadow-[0_30px_80px_rgba(20,20,20,0.22)]"
+        className={[
+          "relative z-10 w-full rounded-[20px] bg-grayscale-50 shadow-[0_30px_80px_rgba(20,20,20,0.22)]",
+          panelClassName ?? "max-w-115 p-12.25",
+        ].join(" ")}
         role="dialog"
       >
         {onBack ? (
@@ -64,7 +69,9 @@ export function AuthModalShell({
 
         <div className="mt-1 text-center">
           <h2 className="text-h2">{title}</h2>
-          <p className="text-body-xs text-grayscale-500">{description}</p>
+          {description ? (
+            <p className="text-body-xs text-grayscale-500">{description}</p>
+          ) : null}
         </div>
 
         {headerSlot}
