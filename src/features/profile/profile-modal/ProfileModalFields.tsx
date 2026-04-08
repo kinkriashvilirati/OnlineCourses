@@ -4,14 +4,26 @@ import checkIcon from "../../../assets/icons/icon-set/Check.svg";
 import pencilIcon from "../../../assets/icons/icon-set/PencilSimple.svg";
 import type { RegisterApiUser } from "../../../api/auth/register";
 import AvatarInput from "../../../components/shared/AvatarInput";
+import type {
+  ProfileBlurredFields,
+  ProfileEditableField,
+  ProfileErrors,
+  ProfileFormValues,
+} from "./profileModal.types";
 import { ProfileInputField } from "./ProfileInputField";
 
 type ProfileModalFieldsProps = {
   avatarFileName?: string;
   avatarPreviewUrl: string | null;
   avatarSize: number | null;
+  blurredFields: ProfileBlurredFields;
+  errors: ProfileErrors;
+  isSaveDisabled: boolean;
   onAvatarChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onFieldBlur: (field: ProfileEditableField) => void;
+  onFieldChange: (field: ProfileEditableField, value: string) => void;
   user: RegisterApiUser | null;
+  values: ProfileFormValues;
 };
 
 function getMobilePlaceholder(mobileNumber: string | null) {
@@ -26,22 +38,31 @@ export function ProfileModalFields({
   avatarFileName,
   avatarPreviewUrl,
   avatarSize,
+  blurredFields,
+  errors,
+  isSaveDisabled,
   onAvatarChange,
+  onFieldBlur,
+  onFieldChange,
   user,
+  values,
 }: ProfileModalFieldsProps) {
   return (
     <div className="space-y-6">
       <div className="space-y-5">
         <ProfileInputField
-          defaultValue={user?.fullName ?? user?.username ?? ""}
+          error={errors.fullName}
+          isValid={Boolean(blurredFields.fullName && !errors.fullName)}
           label="Full Name"
+          onBlur={() => onFieldBlur("fullName")}
+          onChange={(value) => onFieldChange("fullName", value)}
           rightAdornment={
             <img alt="" className="h-5 w-5 opacity-45" src={pencilIcon} />
           }
+          value={values.fullName}
         />
 
         <ProfileInputField
-          defaultValue={user?.email ?? ""}
           disabled
           label="Email"
           readOnly
@@ -49,35 +70,54 @@ export function ProfileModalFields({
             <img alt="" className="h-5 w-5 opacity-40" src={checkIcon} />
           }
           type="email"
+          value={values.email}
         />
 
         <div className="flex items-end gap-2">
-          <div className="w-[267px]">
+          <div className="w-66.75">
             <ProfileInputField
+              error={errors.mobileNumber}
               inputMode="numeric"
+              isValid={Boolean(
+                blurredFields.mobileNumber && !errors.mobileNumber,
+              )}
               label="Mobile Number"
-              placeholder={getMobilePlaceholder(user?.mobileNumber ?? null)}
+              onBlur={() => onFieldBlur("mobileNumber")}
+              onChange={(value) => onFieldChange("mobileNumber", value)}
+              placeholder={
+                values.mobileNumber
+                  ? undefined
+                  : getMobilePlaceholder(user?.mobileNumber ?? null)
+              }
               prefix="+995"
               rightAdornment={
                 <img alt="" className="h-4 w-4 opacity-40" src={checkIcon} />
               }
+              value={values.mobileNumber}
             />
           </div>
 
           <div className="flex-1">
             <ProfileInputField
+              error={errors.age}
               inputMode="numeric"
+              isValid={Boolean(blurredFields.age && !errors.age)}
               label="Age"
-              placeholder={user?.age ? String(user.age) : ""}
+              onBlur={() => onFieldBlur("age")}
+              onChange={(value) => onFieldChange("age", value)}
+              placeholder={
+                values.age ? undefined : user?.age ? String(user.age) : ""
+              }
               rightAdornment={
                 <img alt="" className="h-4 w-4 opacity-40" src={arrowIcon} />
               }
+              value={values.age}
             />
           </div>
         </div>
       </div>
 
-      <div>
+      <div className="mt-10">
         <p className="mb-2 text-body-m text-grayscale-700">Upload Avatar</p>
 
         <AvatarInput
@@ -98,7 +138,11 @@ export function ProfileModalFields({
       </div>
 
       <div className="pt-1">
-        <button className="button-primary h-12 w-full text-button-s" type="button">
+        <button
+          className="button-primary h-12 w-full text-button-s"
+          disabled={isSaveDisabled}
+          type="button"
+        >
           Save Profile
         </button>
       </div>
