@@ -36,7 +36,7 @@ export function ProfileModalHeader({
           </div>
 
           <ProfileStatusIndicator
-            className="right-0 bottom-0 h-[15px] w-[15px]"
+            className="right-0 bottom-0 h-3.75 w-3.75"
             isProfileComplete={isProfileComplete}
           />
         </div>

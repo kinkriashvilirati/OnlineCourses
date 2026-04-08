@@ -35,7 +35,7 @@ export default function AvatarInput({
                   src={avatarPreviewUrl}
                 />
               </div>
-              <div className="flex flex-col items-start">
+              <div className="flex flex-col items-start text-left">
                 <p className="mt-3 text-helper-medium text-grayscale-700">
                   {avatarFileName}
                 </p>
