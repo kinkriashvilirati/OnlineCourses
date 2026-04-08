@@ -27,21 +27,20 @@ export function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
   useAuthModalLifecycle(isOpen, handleClose);
 
   useEffect(() => {
-    if (!avatarFile) {
-      setAvatarPreviewUrl(null);
-      return;
-    }
-
-    const objectUrl = URL.createObjectURL(avatarFile);
-    setAvatarPreviewUrl(objectUrl);
-
     return () => {
-      URL.revokeObjectURL(objectUrl);
+      if (avatarPreviewUrl) {
+        URL.revokeObjectURL(avatarPreviewUrl);
+      }
     };
-  }, [avatarFile]);
+  }, [avatarPreviewUrl]);
 
   const handleAvatarChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setAvatarFile(event.target.files?.[0] ?? null);
+    const nextAvatarFile = event.target.files?.[0] ?? null;
+
+    setAvatarFile(nextAvatarFile);
+    setAvatarPreviewUrl(
+      nextAvatarFile ? URL.createObjectURL(nextAvatarFile) : null,
+    );
   };
 
   return (
