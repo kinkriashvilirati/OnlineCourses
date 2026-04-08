@@ -10,6 +10,7 @@ type AuthModalShellProps = PropsWithChildren<{
   isOpen: boolean;
   onBack?: () => void;
   onClose: () => void;
+  onOverlayClick?: () => void;
   panelClassName?: string;
   title: string;
 }>;
@@ -23,6 +24,7 @@ export function AuthModalShell({
   isOpen,
   onBack,
   onClose,
+  onOverlayClick,
   panelClassName,
   title,
 }: AuthModalShellProps) {
@@ -35,7 +37,7 @@ export function AuthModalShell({
       <button
         aria-label={closeAriaLabel}
         className="absolute inset-0 bg-grayscale-950/45 backdrop-blur-[3px]"
-        onClick={onClose}
+        onClick={onOverlayClick ?? onClose}
         type="button"
       />
 

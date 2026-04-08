@@ -23,6 +23,7 @@ import {
   validateProfileAvatar,
   validateProfileForm,
 } from "./profile-modal/profileModal.validation";
+import ConfrimModal from "./profile-modal/ConfrimModal";
 
 type ProfileModalContentProps = {
   onClose: () => void;
@@ -43,10 +44,22 @@ function ProfileModalContent({
   const [values, setValues] = useState<ProfileFormValues>(initialValues);
   const [errors, setErrors] = useState<ProfileErrors>({});
   const [blurredFields, setBlurredFields] = useState<ProfileBlurredFields>({});
+  const [showCloseConfirm, setShowCloseConfirm] = useState(false);
 
   const handleClose = useCallback(() => {
+    if (!profileComplete) {
+      setShowCloseConfirm(true);
+      return;
+    }
+
     onClose();
-  }, [onClose]);
+  }, [onClose, profileComplete]);
+
+  const handleOverlayClick = useCallback(() => {
+    if (profileComplete) {
+      onClose();
+    }
+  }, [onClose, profileComplete]);
 
   useAuthModalLifecycle(true, handleClose);
 
@@ -158,6 +171,7 @@ function ProfileModalContent({
       closeAriaLabel="Close profile modal"
       isOpen
       onClose={handleClose}
+      onOverlayClick={handleOverlayClick}
       panelClassName="max-w-115 p-12.25"
       title="Profile"
     >
@@ -180,6 +194,13 @@ function ProfileModalContent({
           values={values}
         />
       </div>
+
+      {showCloseConfirm ? (
+        <ConfrimModal
+          onClose={onClose}
+          setShowCloseConfirm={setShowCloseConfirm}
+        />
+      ) : null}
     </AuthModalShell>
   );
 }

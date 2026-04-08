@@ -9,8 +9,8 @@ export function useAuthModalLifecycle(isOpen: boolean, onClose: () => void) {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
         onClose();
       }
     };
