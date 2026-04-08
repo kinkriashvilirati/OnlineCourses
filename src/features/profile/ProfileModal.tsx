@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState, type ChangeEvent } from "react";
+import { toast } from "sonner";
 import { useAuth } from "../../context/AuthContext";
 import { useAuthModal } from "../../context/AuthModalContext";
 import {
@@ -135,7 +136,7 @@ function ProfileModalContent({
       });
 
       updateUser(response.data);
-      console.log("Profile updated successfully");
+      toast.success("Profile updated successfully");
       console.log(response.data);
       onClose();
     } catch (error) {
