@@ -19,6 +19,7 @@ import type {
 import {
   getInitialProfileFormValues,
   validateProfileField,
+  validateProfileAvatar,
   validateProfileForm,
 } from "./profile-modal/profileModal.validation";
 
@@ -63,6 +64,11 @@ function ProfileModalContent({
     setAvatarPreviewUrl(
       nextAvatarFile ? URL.createObjectURL(nextAvatarFile) : null,
     );
+
+    setErrors((currentErrors) => ({
+      ...currentErrors,
+      avatar: undefined,
+    }));
   };
 
   const handleFieldChange = (
@@ -108,6 +114,12 @@ function ProfileModalContent({
 
   const handleSaveProfile = async () => {
     const nextErrors = validateProfileForm(values);
+    const avatarError = validateProfileAvatar(avatarFile);
+
+    if (avatarError) {
+      nextErrors.avatar = avatarError;
+    }
+
     setErrors(nextErrors);
 
     if (Object.keys(nextErrors).length > 0) {
@@ -117,12 +129,14 @@ function ProfileModalContent({
     try {
       const response = await updateProfileMutation.mutateAsync({
         age: Number(values.age),
+        avatar: avatarFile,
         fullName: values.fullName.trim(),
         mobileNumber: values.mobileNumber.replace(/\s+/g, ""),
       });
 
       updateUser(response.data);
       console.log("Profile updated successfully");
+      console.log(response.data);
       onClose();
     } catch (error) {
       if (isUpdateProfileValidationError(error)) {

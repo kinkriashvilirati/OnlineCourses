@@ -3,6 +3,7 @@ import { apiClient } from "../client";
 
 export type UpdateProfileApiRequest = {
   age: number;
+  avatar?: File | null;
   fullName: string;
   mobileNumber: string;
 };
@@ -17,6 +18,10 @@ function buildUpdateProfileFormData(payload: UpdateProfileApiRequest) {
   formData.append("full_name", payload.fullName.trim());
   formData.append("mobile_number", payload.mobileNumber.replace(/\s+/g, ""));
   formData.append("age", String(payload.age));
+
+  if (payload.avatar) {
+    formData.append("avatar", payload.avatar);
+  }
 
   return formData;
 }

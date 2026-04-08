@@ -19,5 +19,9 @@ export function mapProfileValidationErrors(
     nextErrors.age = errors.age[0];
   }
 
+  if (errors.avatar?.[0]) {
+    nextErrors.avatar = errors.avatar[0];
+  }
+
   return nextErrors;
 }

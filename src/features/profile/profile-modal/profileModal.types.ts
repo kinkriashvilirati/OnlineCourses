@@ -1,4 +1,5 @@
 export type ProfileEditableField = "age" | "fullName" | "mobileNumber";
+export type ProfileErrorField = ProfileEditableField | "avatar";
 
 export type ProfileFormValues = {
   age: string;
@@ -7,7 +8,7 @@ export type ProfileFormValues = {
   mobileNumber: string;
 };
 
-export type ProfileErrors = Partial<Record<ProfileEditableField, string>>;
+export type ProfileErrors = Partial<Record<ProfileErrorField, string>>;
 
 export type ProfileBlurredFields = Partial<
   Record<ProfileEditableField, boolean>

@@ -125,7 +125,7 @@ export function ProfileModalFields({
         <p className="mb-2 text-body-m text-grayscale-700">Upload Avatar</p>
 
         <AvatarInput
-          avatarError={undefined}
+          avatarError={errors.avatar}
           avatarFileName={avatarFileName}
           avatarPreviewUrl={avatarPreviewUrl}
           avatarSize={avatarSize}
@@ -139,6 +139,12 @@ export function ProfileModalFields({
           onChange={onAvatarChange}
           type="file"
         />
+
+        {errors.avatar ? (
+          <p className="mt-2 text-helper-regular text-helper-error">
+            {errors.avatar}
+          </p>
+        ) : null}
       </div>
 
       <div className="pt-1">

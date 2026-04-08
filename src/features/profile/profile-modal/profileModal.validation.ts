@@ -5,6 +5,9 @@ import type {
   ProfileFormValues,
 } from "./profileModal.types";
 
+const allowedAvatarTypes = ["image/jpeg", "image/png", "image/webp"];
+const maxAvatarSize = 2 * 1024 * 1024;
+
 function normalizeMobileNumber(value: string) {
   return value.replace(/\s+/g, "");
 }
@@ -106,4 +109,20 @@ export function validateProfileForm(values: ProfileFormValues) {
   }
 
   return nextErrors;
+}
+
+export function validateProfileAvatar(file: File | null) {
+  if (!file) {
+    return undefined;
+  }
+
+  if (!allowedAvatarTypes.includes(file.type)) {
+    return "Avatar must be a jpg, jpeg, png, or webp image";
+  }
+
+  if (file.size > maxAvatarSize) {
+    return "Avatar must be smaller than 2MB";
+  }
+
+  return undefined;
 }
