@@ -17,23 +17,17 @@ import {
   validateProfileForm,
 } from "./profile-modal/profileModal.validation";
 
-function resetProfileModalState(
-  setAvatarFile: (file: File | null) => void,
-  setAvatarPreviewUrl: (url: string | null) => void,
-  setValues: (values: ProfileFormValues) => void,
-  setErrors: (errors: ProfileErrors) => void,
-  setBlurredFields: (fields: ProfileBlurredFields) => void,
-  values: ProfileFormValues,
-) {
-  setAvatarFile(null);
-  setAvatarPreviewUrl(null);
-  setValues(values);
-  setErrors({});
-  setBlurredFields({});
-}
+type ProfileModalContentProps = {
+  onClose: () => void;
+  profileComplete: boolean;
+  user: ReturnType<typeof useAuth>["user"];
+};
 
-export function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
-  const { profileComplete, user } = useAuth();
+function ProfileModalContent({
+  onClose,
+  profileComplete,
+  user,
+}: ProfileModalContentProps) {
   const initialValues = getInitialProfileFormValues(user);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [avatarPreviewUrl, setAvatarPreviewUrl] = useState<string | null>(null);
@@ -42,29 +36,10 @@ export function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
   const [blurredFields, setBlurredFields] = useState<ProfileBlurredFields>({});
 
   const handleClose = useCallback(() => {
-    resetProfileModalState(
-      setAvatarFile,
-      setAvatarPreviewUrl,
-      setValues,
-      setErrors,
-      setBlurredFields,
-      getInitialProfileFormValues(user),
-    );
     onClose();
-  }, [onClose, user]);
+  }, [onClose]);
 
-  useAuthModalLifecycle(isOpen, handleClose);
-
-  useEffect(() => {
-    if (!isOpen) {
-      return;
-    }
-
-    const nextValues = getInitialProfileFormValues(user);
-    setValues(nextValues);
-    setErrors({});
-    setBlurredFields({});
-  }, [isOpen, user]);
+  useAuthModalLifecycle(true, handleClose);
 
   useEffect(() => {
     return () => {
@@ -127,7 +102,7 @@ export function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
   return (
     <AuthModalShell
       closeAriaLabel="Close profile modal"
-      isOpen={isOpen}
+      isOpen
       onClose={handleClose}
       panelClassName="max-w-115 p-12.25"
       title="Profile"
@@ -150,5 +125,21 @@ export function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
         />
       </div>
     </AuthModalShell>
+  );
+}
+
+export function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
+  const { profileComplete, user } = useAuth();
+
+  if (!isOpen) {
+    return null;
+  }
+
+  return (
+    <ProfileModalContent
+      onClose={onClose}
+      profileComplete={profileComplete}
+      user={user}
+    />
   );
 }
