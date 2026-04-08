@@ -25,22 +25,22 @@ export function ProfileInputField({
 }: ProfileInputFieldProps) {
   return (
     <div>
-      <label className="mb-3 block text-body-xl text-grayscale-700">
+      <label className="mb-2 block text-body-m text-grayscale-700">
         {label}
       </label>
 
       <div className="relative">
         {prefix ? (
-          <span className="pointer-events-none  absolute left-4 top-1/2 -translate-y-1/2 text-body-m text-grayscale-300">
+          <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-body-s text-grayscale-300">
             {prefix}
           </span>
         ) : null}
 
         <input
           className={[
-            "h-18 w-full rounded-[20px] border-[1.5px] border-grayscale-200 bg-grayscale-50 px-4 text-body-m text-grayscale-700 outline-none transition-colors duration-300 placeholder:text-grayscale-300 hover:border-grayscale-300 focus:border-grayscale-400",
-            prefix ? "pl-22" : "",
-            rightAdornment ? "pr-14" : "",
+            "h-12 w-full rounded-lg border-[1.5px] border-grayscale-200 bg-grayscale-50 px-4 text-body-s text-grayscale-700 outline-none transition-colors duration-300 placeholder:text-grayscale-300 hover:border-grayscale-300 focus:border-grayscale-400",
+            prefix ? "pl-18" : "",
+            rightAdornment ? "pr-11" : "",
             disabled
               ? "cursor-not-allowed text-grayscale-300 hover:border-grayscale-200 focus:border-grayscale-200"
               : "",
@@ -54,7 +54,7 @@ export function ProfileInputField({
         />
 
         {rightAdornment ? (
-          <span className="pointer-events-none absolute right-5 top-1/2 -translate-y-1/2">
+          <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2">
             {rightAdornment}
           </span>
         ) : null}

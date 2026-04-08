@@ -20,43 +20,46 @@ export function ProfileModalHeader({
   user,
 }: ProfileModalHeaderProps) {
   return (
-    <div className="flex items-center gap-6">
-      <div className="relative">
-        <div className="flex h-31 w-31 items-center justify-center rounded-full bg-purple-50">
-          {user?.avatar ? (
-            <img
-              alt={`${getDisplayName(user)} avatar`}
-              className="h-full w-full rounded-full object-cover"
-              src={user.avatar}
-            />
-          ) : (
-            <ProfileIconSvg size={20} />
-          )}
+    <div className="flex items-start justify-between gap-4">
+      <div className="flex items-center gap-3">
+        <div className="relative">
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-purple-50">
+            {user?.avatar ? (
+              <img
+                alt={`${getDisplayName(user)} avatar`}
+                className="h-full w-full rounded-full object-cover"
+                src={user.avatar}
+              />
+            ) : (
+              <ProfileIconSvg size={32} />
+            )}
+          </div>
+
+          <ProfileStatusIndicator
+            className="right-0 bottom-0 h-[15px] w-[15px]"
+            isProfileComplete={isProfileComplete}
+          />
         </div>
 
-        <ProfileStatusIndicator
-          className="right-1 bottom-1 border-[3px] w-6 h-6"
-          isProfileComplete={isProfileComplete}
-        />
+        <div className="space-y-0.5">
+          <p className="text-h4">{getDisplayName(user)}</p>
+          <p
+            className={[
+              "text-helper-regular",
+              isProfileComplete ? "text-helper-success" : "text-helper-warning",
+            ].join(" ")}
+          >
+            {getProfileStatusLabel(isProfileComplete)}
+          </p>
+        </div>
       </div>
 
-      <div className="space-y-1">
-        <p className="text-h1">{getDisplayName(user)}</p>
-        <p
-          className={[
-            "text-body-l",
-            isProfileComplete ? "text-helper-success" : "text-helper-warning",
-          ].join(" ")}
-        >
-          {getProfileStatusLabel(isProfileComplete)}
-        </p>
-        <button
-          className="text-helper-regular text-grayscale-400 underline decoration-grayscale-300 underline-offset-3"
-          type="button"
-        >
-          Log Out
-        </button>
-      </div>
+      <button
+        className="text-helper-regular text-grayscale-400 underline decoration-grayscale-300 underline-offset-3"
+        type="button"
+      >
+        Log Out
+      </button>
     </div>
   );
 }

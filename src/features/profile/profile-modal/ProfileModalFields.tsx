@@ -11,7 +11,6 @@ type ProfileModalFieldsProps = {
   avatarPreviewUrl: string | null;
   avatarSize: number | null;
   onAvatarChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  onClose: () => void;
   user: RegisterApiUser | null;
 };
 
@@ -31,13 +30,13 @@ export function ProfileModalFields({
   user,
 }: ProfileModalFieldsProps) {
   return (
-    <div className="space-y-8 border-5 ">
-      <div className="space-y-6">
+    <div className="space-y-6">
+      <div className="space-y-5">
         <ProfileInputField
           defaultValue={user?.fullName ?? user?.username ?? ""}
           label="Full Name"
           rightAdornment={
-            <img alt="" className="h-6 w-6 opacity-45" src={pencilIcon} />
+            <img alt="" className="h-5 w-5 opacity-45" src={pencilIcon} />
           }
         />
 
@@ -47,35 +46,39 @@ export function ProfileModalFields({
           label="Email"
           readOnly
           rightAdornment={
-            <img alt="" className="h-6 w-6 opacity-40" src={checkIcon} />
+            <img alt="" className="h-5 w-5 opacity-40" src={checkIcon} />
           }
           type="email"
         />
 
-        <div className="grid grid-cols-[minmax(0,1fr)_190px] gap-4">
-          <ProfileInputField
-            inputMode="numeric"
-            label="Mobile Number"
-            placeholder={getMobilePlaceholder(user?.mobileNumber ?? null)}
-            prefix="+995"
-            rightAdornment={
-              <img alt="" className="h-5 w-5 opacity-40" src={arrowIcon} />
-            }
-          />
+        <div className="flex items-end gap-2">
+          <div className="w-[267px]">
+            <ProfileInputField
+              inputMode="numeric"
+              label="Mobile Number"
+              placeholder={getMobilePlaceholder(user?.mobileNumber ?? null)}
+              prefix="+995"
+              rightAdornment={
+                <img alt="" className="h-4 w-4 opacity-40" src={checkIcon} />
+              }
+            />
+          </div>
 
-          <ProfileInputField
-            inputMode="numeric"
-            label="Age"
-            placeholder={user?.age ? String(user.age) : ""}
-            rightAdornment={
-              <img alt="" className="h-5 w-5 opacity-40" src={arrowIcon} />
-            }
-          />
+          <div className="flex-1">
+            <ProfileInputField
+              inputMode="numeric"
+              label="Age"
+              placeholder={user?.age ? String(user.age) : ""}
+              rightAdornment={
+                <img alt="" className="h-4 w-4 opacity-40" src={arrowIcon} />
+              }
+            />
+          </div>
         </div>
       </div>
 
       <div>
-        <p className="mb-3 text-body-xl text-grayscale-700">Upload Avatar</p>
+        <p className="mb-2 text-body-m text-grayscale-700">Upload Avatar</p>
 
         <AvatarInput
           avatarError={undefined}
@@ -94,11 +97,8 @@ export function ProfileModalFields({
         />
       </div>
 
-      <div className="flex items-center justify-end gap-3">
-        <button
-          className="button-primary min-w-52 w-full text-button-s"
-          type="button"
-        >
+      <div className="pt-1">
+        <button className="button-primary h-12 w-full text-button-s" type="button">
           Save Profile
         </button>
       </div>

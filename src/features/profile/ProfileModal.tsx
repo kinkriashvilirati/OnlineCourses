@@ -49,10 +49,10 @@ export function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
       closeAriaLabel="Close profile modal"
       isOpen={isOpen}
       onClose={handleClose}
-      panelClassName="max-w-[920px] p-8"
+      panelClassName="max-w-115 p-12.25"
       title="Profile"
     >
-      <div className="mt-10 space-y-8">
+      <div className="mt-6 space-y-6">
         <ProfileModalHeader isProfileComplete={profileComplete} user={user} />
 
         <ProfileModalFields
@@ -60,7 +60,6 @@ export function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
           avatarPreviewUrl={avatarPreviewUrl}
           avatarSize={avatarFile?.size ?? null}
           onAvatarChange={handleAvatarChange}
-          onClose={handleClose}
           user={user}
         />
       </div>
