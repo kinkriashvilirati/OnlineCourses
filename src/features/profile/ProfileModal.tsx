@@ -1,10 +1,15 @@
 import { useCallback, useEffect, useState, type ChangeEvent } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useAuthModal } from "../../context/AuthModalContext";
+import {
+  isUpdateProfileValidationError,
+  useUpdateProfileMutation,
+} from "../../hooks/useUpdateProfileMutation";
 import { useAuthModalLifecycle } from "../../hooks/useAuthModalLifecycle";
 import { AuthModalShell } from "../auth/auth-modal/AuthModalShell";
 import { ProfileModalFields } from "./profile-modal/ProfileModalFields";
 import { ProfileModalHeader } from "./profile-modal/ProfileModalHeader";
+import { mapProfileValidationErrors } from "./profile-modal/profileModal.serverErrors";
 import type {
   ProfileBlurredFields,
   ProfileEditableField,
@@ -28,7 +33,9 @@ function ProfileModalContent({
   profileComplete,
   user,
 }: ProfileModalContentProps) {
+  const { updateUser } = useAuth();
   const initialValues = getInitialProfileFormValues(user);
+  const updateProfileMutation = useUpdateProfileMutation();
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [avatarPreviewUrl, setAvatarPreviewUrl] = useState<string | null>(null);
   const [values, setValues] = useState<ProfileFormValues>(initialValues);
@@ -99,6 +106,38 @@ function ProfileModalContent({
 
   const isSaveDisabled = Object.keys(validateProfileForm(values)).length > 0;
 
+  const handleSaveProfile = async () => {
+    const nextErrors = validateProfileForm(values);
+    setErrors(nextErrors);
+
+    if (Object.keys(nextErrors).length > 0) {
+      return;
+    }
+
+    try {
+      const response = await updateProfileMutation.mutateAsync({
+        age: Number(values.age),
+        fullName: values.fullName.trim(),
+        mobileNumber: values.mobileNumber.replace(/\s+/g, ""),
+      });
+
+      updateUser(response.data);
+      console.log("Profile updated successfully");
+      onClose();
+    } catch (error) {
+      if (isUpdateProfileValidationError(error)) {
+        const validationErrors = error.response?.data?.errors;
+
+        if (validationErrors) {
+          setErrors(mapProfileValidationErrors(validationErrors));
+        }
+        return;
+      }
+
+      console.error(error);
+    }
+  };
+
   return (
     <AuthModalShell
       closeAriaLabel="Close profile modal"
@@ -116,10 +155,12 @@ function ProfileModalContent({
           avatarSize={avatarFile?.size ?? null}
           blurredFields={blurredFields}
           errors={errors}
+          isSaving={updateProfileMutation.isPending}
           isSaveDisabled={isSaveDisabled}
           onAvatarChange={handleAvatarChange}
           onFieldBlur={handleFieldBlur}
           onFieldChange={handleFieldChange}
+          onSave={handleSaveProfile}
           user={user}
           values={values}
         />

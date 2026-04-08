@@ -71,14 +71,12 @@ export function AuthProvider({ children }: PropsWithChildren) {
       profileComplete: resolvedUser?.profileComplete ?? false,
       setAuthenticatedSession: ({ token, user }) => {
         setAccessToken(token);
-        // Keep the /me cache aligned with the latest in-memory user state.
         queryClient.setQueryData<CurrentUserApiResponse>(["auth", "me"], {
           data: user,
         });
         setUser(user);
       },
       updateUser: (user: RegisterApiUser) => {
-        // Profile updates should refresh both context state and the cached /me user.
         queryClient.setQueryData<CurrentUserApiResponse>(["auth", "me"], {
           data: user,
         });

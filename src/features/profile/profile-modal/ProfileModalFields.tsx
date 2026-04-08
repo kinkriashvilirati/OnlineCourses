@@ -18,10 +18,12 @@ type ProfileModalFieldsProps = {
   avatarSize: number | null;
   blurredFields: ProfileBlurredFields;
   errors: ProfileErrors;
+  isSaving: boolean;
   isSaveDisabled: boolean;
   onAvatarChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onFieldBlur: (field: ProfileEditableField) => void;
   onFieldChange: (field: ProfileEditableField, value: string) => void;
+  onSave: () => void;
   user: RegisterApiUser | null;
   values: ProfileFormValues;
 };
@@ -40,10 +42,12 @@ export function ProfileModalFields({
   avatarSize,
   blurredFields,
   errors,
+  isSaving,
   isSaveDisabled,
   onAvatarChange,
   onFieldBlur,
   onFieldChange,
+  onSave,
   user,
   values,
 }: ProfileModalFieldsProps) {
@@ -140,10 +144,11 @@ export function ProfileModalFields({
       <div className="pt-1">
         <button
           className="button-primary h-12 w-full text-button-s"
-          disabled={isSaveDisabled}
+          disabled={isSaveDisabled || isSaving}
+          onClick={onSave}
           type="button"
         >
-          Save Profile
+          {isSaving ? "Saving Profile..." : "Save Profile"}
         </button>
       </div>
     </div>
