@@ -3,7 +3,7 @@ import { notAuthCards } from "./fakeData";
 import FeaturedLearningCourse from "./FeaturedLearningCourse";
 
 export default function ContinueLearningSection() {
-  const isDisabled = false;
+  const isDisabled = true;
   return (
     <section className="flex flex-col gap-9">
       <header>

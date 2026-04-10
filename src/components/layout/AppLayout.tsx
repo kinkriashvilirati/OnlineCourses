@@ -4,6 +4,7 @@ import { AuthModalProvider } from "../../context/AuthModalContext";
 import { useAuth } from "../../context/AuthContext";
 import { AuthModalHost } from "../../features/auth/AuthModalHost";
 import { AppLoadingScreen } from "../loading/Loading";
+import Footer from "./Footer";
 import { Header } from "./Header";
 
 function AppLayoutContent() {
@@ -14,13 +15,14 @@ function AppLayoutContent() {
   }
 
   return (
-    <div className="min-h-screen bg-grayscale-100 ">
+    <div className="flex min-h-screen flex-col bg-grayscale-100">
       <Header />
 
-      <main className="px-44.25 pt-27 mb-1000">
+      <main className="flex-1 px-44.25 pt-27">
         <Outlet />
       </main>
 
+      <Footer />
       <AuthModalHost />
     </div>
   );
