@@ -4,6 +4,8 @@ import ProfileStatusIndicator from "../../../components/shared/ProfileStatusIndi
 
 type ProfileModalHeaderProps = {
   isProfileComplete: boolean;
+  isLoggingOut: boolean;
+  onLogout: () => void;
   user: RegisterApiUser | null;
 };
 
@@ -17,6 +19,8 @@ function getProfileStatusLabel(isProfileComplete: boolean) {
 
 export function ProfileModalHeader({
   isProfileComplete,
+  isLoggingOut,
+  onLogout,
   user,
 }: ProfileModalHeaderProps) {
   return (
@@ -55,10 +59,12 @@ export function ProfileModalHeader({
       </div>
 
       <button
-        className="text-helper-regular text-grayscale-400 underline decoration-grayscale-300 underline-offset-3"
+        className="text-helper-regular text-grayscale-400 underline decoration-grayscale-300 underline-offset-3 cursor-pointer"
+        disabled={isLoggingOut}
+        onClick={onLogout}
         type="button"
       >
-        Log Out
+        {isLoggingOut ? "Logging Out..." : "Log Out"}
       </button>
     </div>
   );

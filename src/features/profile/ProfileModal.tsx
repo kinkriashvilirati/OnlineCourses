@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState, type ChangeEvent } from "react";
 import { toast } from "sonner";
 import { useAuth } from "../../context/AuthContext";
 import { useAuthModal } from "../../context/AuthModalContext";
+import { useLogoutMutation } from "../../hooks/useLogoutMutation";
 import {
   isUpdateProfileValidationError,
   useUpdateProfileMutation,
@@ -54,7 +55,7 @@ function ProfileModalContent({
 
     onClose();
   }, [onClose, profileComplete]);
-
+  const logoutMutation = useLogoutMutation(handleClose);
   const handleOverlayClick = useCallback(() => {
     if (profileComplete) {
       onClose();
@@ -166,6 +167,10 @@ function ProfileModalContent({
     }
   };
 
+  const handleLogout = () => {
+    logoutMutation.mutate();
+  };
+
   return (
     <AuthModalShell
       closeAriaLabel="Close profile modal"
@@ -176,7 +181,12 @@ function ProfileModalContent({
       title="Profile"
     >
       <div className="mt-6 space-y-6">
-        <ProfileModalHeader isProfileComplete={profileComplete} user={user} />
+        <ProfileModalHeader
+          isLoggingOut={logoutMutation.isPending}
+          isProfileComplete={profileComplete}
+          onLogout={handleLogout}
+          user={user}
+        />
 
         <ProfileModalFields
           avatarFileName={avatarFile?.name}
