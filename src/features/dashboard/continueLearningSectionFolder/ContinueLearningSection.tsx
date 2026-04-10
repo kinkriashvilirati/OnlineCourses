@@ -1,9 +1,9 @@
-import ContinueLearningLockedOverlay from "./ContinueLearningLockedOverlay";
+import ContinueLearningLockedModal from "./ContinueLearningLockedModal";
 import { notAuthCards } from "./fakeData";
 import FeaturedLearningCourse from "./FeaturedLearningCourse";
 
 export default function ContinueLearningSection() {
-  const isDisabled = true;
+  const isDisabled = false;
   return (
     <section className="flex flex-col gap-9">
       <header>
@@ -21,7 +21,7 @@ export default function ContinueLearningSection() {
               <FeaturedLearningCourse enrollment={card} key={card.id} />
             ))}
           </div>
-          {isDisabled ? <ContinueLearningLockedOverlay /> : null}
+          {isDisabled ? <ContinueLearningLockedModal /> : null}
         </div>
       </div>
     </section>

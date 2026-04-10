@@ -18,7 +18,7 @@ export default function FeaturedCourseCard({
   course,
 }: FeaturedCourseCardProps) {
   return (
-    <article className="flex w-full flex-col rounded-xl border border-grayscale-100 bg-grayscale-50 p-5 gap-6  justify-between">
+    <article className="flex w-full flex-col rounded-xl border border-grayscale-100 bg-grayscale-50 p-5 gap-6  justify-between hover:shadow-[0_0_25px_0_rgba(138,130,212,0.1)] active:shadow-[0_0_25px_0_rgba(138,130,212,0.15)] transition-all duration-300">
       <div className="flex flex-col gap-4">
         <img
           alt={`${course.title} course preview`}

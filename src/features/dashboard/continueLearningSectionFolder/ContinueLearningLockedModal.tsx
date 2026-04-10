@@ -1,7 +1,7 @@
 import lockIcon from "../../../assets/icons/icon-set/lock.svg";
 import { useAuthModal } from "../../../context/AuthModalContext";
 
-export default function ContinueLearningLockedOverlay() {
+export default function ContinueLearningLockedModal() {
   const { openLoginModal } = useAuthModal();
 
   return (

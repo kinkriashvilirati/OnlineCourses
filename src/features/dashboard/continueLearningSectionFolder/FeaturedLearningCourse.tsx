@@ -19,7 +19,7 @@ export default function FeaturedLearningCourse({
   );
 
   return (
-    <article className="bg-grayscale-50 min-h-5 flex w-full flex-col rounded-xl border border-grayscale-100 p-5 gap-2 justify-between">
+    <article className="bg-grayscale-50 min-h-5 flex w-full flex-col rounded-xl border border-grayscale-100 p-5 gap-2 justify-between hover:border-purple-200 active:border-purple-300 transition-all duration-300">
       <div className="flex">
         <img
           alt={`${enrollment.course.title} course preview`}
@@ -44,7 +44,6 @@ export default function FeaturedLearningCourse({
           </h3>
         </div>
       </div>
-
       <div className="flex items-end justify-between gap-10">
         <div className="flex flex-1 flex-col gap-3">
           <p className="text-body-m text-grayscale-900">
