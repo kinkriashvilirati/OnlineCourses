@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import sliderArrowLeft from "../../assets/icons/icon-set/slider_left.svg";
-import sliderArrowRight from "../../assets/icons/icon-set/slider_right.svg";
-import sliderArrowLeftDisabled from "../../assets/icons/icon-set/slider_left_disabled.svg";
-import sliderArrowRightDisabled from "../../assets/icons/icon-set/slider_right_disabled.svg";
+import sliderArrowLeft from "../../../assets/icons/icon-set/slider_left.svg";
+import sliderArrowRight from "../../../assets/icons/icon-set/slider_right.svg";
+import sliderArrowLeftDisabled from "../../../assets/icons/icon-set/slider_left_disabled.svg";
+import sliderArrowRightDisabled from "../../../assets/icons/icon-set/slider_right_disabled.svg";
 import {
   dashboardHeroSlides,
   type DashboardHeroSlide,

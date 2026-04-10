@@ -1,6 +1,6 @@
-import sliderOne from "../../assets/images/slider/slider_1.png";
-import sliderTwo from "../../assets/images/slider/slider_2.png";
-import sliderThree from "../../assets/images/slider/slider_3.png";
+import sliderOne from "../../../assets/images/slider/slider_1.png";
+import sliderTwo from "../../../assets/images/slider/slider_2.png";
+import sliderThree from "../../../assets/images/slider/slider_3.png";
 
 export type DashboardHeroSlide = {
   buttonLabel: string;
