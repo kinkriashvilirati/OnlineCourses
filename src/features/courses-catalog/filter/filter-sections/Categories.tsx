@@ -1,5 +1,12 @@
 import CategoriesIcons from "../../../../assets/icons/filter-categories-icon/CategoriesIcon";
+
 export default function Categories() {
-  console.log(CategoriesIcons);
-  return <h1>Categories</h1>;
+  return (
+    <div>
+      <button className="button-filter-item text-body-s flex gap-2 choose">
+        Development
+        {CategoriesIcons.development()}
+      </button>
+    </div>
+  );
 }
