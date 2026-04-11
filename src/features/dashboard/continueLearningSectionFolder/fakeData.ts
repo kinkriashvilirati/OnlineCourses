@@ -1,7 +1,7 @@
 import continueLearningBase from "../../../assets/images/continue_learning_base.png";
 import type { Enrollment } from "../../../types/enrollment";
 
-export const notAuthCards: Enrollment[] = [
+export const notAuthCourses: Enrollment[] = [
   {
     completedAt: null,
     course: {
