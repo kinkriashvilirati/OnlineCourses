@@ -9,7 +9,7 @@ export function useLogoutMutation(handleClose: HandleClose) {
   const { clearAuthenticatedSession } = useAuth();
   return useMutation<void, LogoutMutationError, void>({
     mutationFn: logoutUser,
-    onSuccess: () => {
+    onSettled: () => {
       clearAuthenticatedSession();
       handleClose();
     },

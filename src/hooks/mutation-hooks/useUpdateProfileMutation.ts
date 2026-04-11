@@ -21,6 +21,8 @@ export function useUpdateProfileMutation() {
     UpdateProfileMutationError,
     UpdateProfileApiRequest
   >({
+    // Profile updates return the updated user, so the UI can refresh the auth cache
+    // from the response instead of invalidating `["auth", "me"]` and refetching `/me`.
     mutationFn: updateProfile,
   });
 }

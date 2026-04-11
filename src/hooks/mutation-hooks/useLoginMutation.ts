@@ -15,9 +15,8 @@ export type LoginMutationError = AxiosError<LoginErrorResponse> | Error;
 export function useLoginMutation() {
   return useMutation<LoginApiResponse, LoginMutationError, LoginApiRequest>({
     mutationFn: loginUser,
-    onSuccess: (data) => {
-      console.log(data);
-    },
+    // We do not invalidate `["auth", "me"]` here because the caller already
+    // writes the returned user straight into the auth cache via setAuthenticatedSession.
   });
 }
 
