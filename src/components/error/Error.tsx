@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 type ErrorProps = {
   description?: string;
   title?: string;
@@ -15,19 +17,42 @@ function ErrorIcon() {
 }
 
 export function ErrorPage({
-  description = "We couldn't load this page right now. Please try again in a moment.",
-  title = "Something went wrong",
+  description = "The page you are looking for does not exist, was moved, or the link is incorrect.",
+  title = "Page not found",
 }: ErrorProps) {
   return (
-    <div className="flex min-h-[60vh] items-center justify-center px-6 py-16">
-      <div className="w-full max-w-120 rounded-3xl border border-grayscale-200 bg-grayscale-50 px-10 py-12 shadow-[0_20px_50px_rgba(20,20,20,0.08)]">
-        <div className="flex flex-col items-center text-center">
-          <ErrorIcon />
+    <div className="flex min-h-[65vh] items-center justify-center px-6 py-16">
+      <div className="relative w-full max-w-180 overflow-hidden rounded-4xl border border-grayscale-200 bg-grayscale-50 px-10 py-14 shadow-[0_24px_60px_rgba(20,20,20,0.08)]">
+        <div className="absolute right-10 top-8 h-36 w-36 rounded-full bg-purple-500/10 blur-3xl" />
+        <div className="absolute bottom-6 left-12 h-24 w-24 rounded-full bg-helper-warning/10 blur-2xl" />
 
-          <h1 className="mt-6 text-h2 text-grayscale-950">{title}</h1>
-          <p className="mt-4 max-w-88 text-body-s leading-normal text-grayscale-600">
+        <div className="relative flex flex-col items-center text-center">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-helper-error/8">
+            <ErrorIcon />
+          </div>
+
+          <p className="mt-6 text-helper-medium uppercase tracking-[0.28em] text-purple-500">
+            404 Error
+          </p>
+          <p className="mt-4 text-[96px] font-bold leading-none text-purple-500">
+            404
+          </p>
+          <h1 className="mt-4 text-h1 text-grayscale-950">{title}</h1>
+          <p className="mt-4 max-w-110 text-body-s leading-normal text-grayscale-600">
             {description}
           </p>
+
+          <div className="mt-8 flex items-center gap-4">
+            <Link className="button-primary px-6 py-3.5 text-button-m" to="/">
+              Go Home
+            </Link>
+            <Link
+              className="button-outline px-6 py-3.5 text-button-m"
+              to="/courses"
+            >
+              Browse Courses
+            </Link>
+          </div>
         </div>
       </div>
     </div>

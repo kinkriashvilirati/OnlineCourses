@@ -1,3 +1,4 @@
+import { ErrorComponent } from "../../../components/error/Error";
 import { LoadingDots } from "../../../components/loading/Loading";
 import { useFeaturedCoursesQuery } from "../../../hooks/query-hooks/useFeaturedCoursesQuery";
 import FeaturedCourseCard from "./FeaturedCourseCard";
@@ -16,7 +17,7 @@ export default function StartLearningSection() {
 
       {featuredCoursesQuery.isPending ? <LoadingDots /> : null}
 
-      {featuredCoursesQuery.isError ? <p>Failed to load courses</p> : null}
+      {featuredCoursesQuery.isError ? <ErrorComponent /> : null}
 
       {featuredCoursesQuery.data ? (
         <div className="flex gap-6">
