@@ -6,6 +6,7 @@ import FeaturedLearningCourse from "./FeaturedLearningCourse";
 import { useAuth } from "../../../context/AuthContext";
 import { useCoursesInProgressQuery } from "../../../hooks/query-hooks/useCoursesInProgressQuery";
 import BrowseCourses from "../../../components/shared/BrowsCourses";
+import { ErrorComponent } from "../../../components/error/Error";
 
 export default function ContinueLearningSection() {
   const { isAuthenticated } = useAuth();
@@ -13,7 +14,7 @@ export default function ContinueLearningSection() {
   const coursesInProgress = coursesInProgressQuery.data?.data ?? [];
   const shouldShowSeeAll = isAuthenticated && coursesInProgress.length >= 4;
   if (coursesInProgressQuery.isSuccess) {
-    console.log(coursesInProgressQuery);
+    console.log(coursesInProgressQuery.data);
   }
   return (
     <section className="flex flex-col gap-9">
@@ -51,7 +52,7 @@ export default function ContinueLearningSection() {
           ) : null}
 
           {isAuthenticated && coursesInProgressQuery.isError ? (
-            <p>Failed to load courses</p>
+            <ErrorComponent />
           ) : null}
 
           {isAuthenticated &&
