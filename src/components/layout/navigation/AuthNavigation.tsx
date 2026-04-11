@@ -1,5 +1,5 @@
 import { useAuth } from "../../../context/AuthContext";
-import BrowseCourses from "./BrowsCourses";
+import BrowseCourses from "../../shared/BrowsCourses";
 import EnrolledCoursesButton from "./EnrolledCoursesButton";
 import ProfileStatusButton from "./ProfileButton";
 

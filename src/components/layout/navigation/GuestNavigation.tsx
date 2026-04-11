@@ -1,5 +1,5 @@
 import { useAuthModal } from "../../../context/AuthModalContext";
-import BrowseCourses from "./BrowsCourses";
+import BrowseCourses from "../../shared/BrowsCourses";
 
 export default function GuestNavigation() {
   const { openLoginModal, openRegisterModal } = useAuthModal();
