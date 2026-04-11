@@ -6,7 +6,7 @@ import StartLearningSection from "../features/dashboard/startLearningSectionFold
 export function DashboardPage() {
   const { isAuthenticated } = useAuth();
   return (
-    <main className="flex flex-col gap-16">
+    <div className="flex flex-col gap-16 pt-27">
       <DashboardHeroSlider />
       {!isAuthenticated ? (
         <>
@@ -19,6 +19,6 @@ export function DashboardPage() {
           <StartLearningSection />
         </>
       )}
-    </main>
+    </div>
   );
 }
