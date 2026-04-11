@@ -15,7 +15,7 @@ import {
 } from "../api/authSession";
 import type { CurrentUserApiResponse } from "../api/auth/me";
 import type { RegisterApiUser } from "../api/auth/register";
-import { useCurrentUserQuery } from "../hooks/useCurrentUserQuery";
+import { useCurrentUserQuery } from "../hooks/query-hooks/useCurrentUserQuery";
 
 type AuthContextValue = {
   clearAuthenticatedSession: () => void;

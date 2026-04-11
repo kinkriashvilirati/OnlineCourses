@@ -18,7 +18,7 @@ import {
   isLoginCredentialsError,
   type LoginMutationError,
   useLoginMutation,
-} from "../../hooks/useLoginMutation";
+} from "../../hooks/mutation-hooks/useLoginMutation";
 
 function resetLoginModalState(
   setValues: (values: LoginFormValues) => void,

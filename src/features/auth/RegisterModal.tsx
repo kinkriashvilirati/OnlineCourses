@@ -24,7 +24,7 @@ import { RegisterProfileStep } from "./register-modal/steps/RegisterProfileStep"
 import {
   isRegisterValidationError,
   useRegisterMutation,
-} from "../../hooks/useRegisterMutation";
+} from "../../hooks/mutation-hooks/useRegisterMutation";
 import RegisterErrorsComponent from "./register-modal/components/RegisterErrorsComponent";
 
 function resetRegisterModalState(

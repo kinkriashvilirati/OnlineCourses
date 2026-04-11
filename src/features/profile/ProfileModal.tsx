@@ -2,11 +2,11 @@ import { useCallback, useEffect, useState, type ChangeEvent } from "react";
 import { toast } from "sonner";
 import { useAuth } from "../../context/AuthContext";
 import { useAuthModal } from "../../context/AuthModalContext";
-import { useLogoutMutation } from "../../hooks/useLogoutMutation";
+import { useLogoutMutation } from "../../hooks/mutation-hooks/useLogoutMutation";
 import {
   isUpdateProfileValidationError,
   useUpdateProfileMutation,
-} from "../../hooks/useUpdateProfileMutation";
+} from "../../hooks/mutation-hooks/useUpdateProfileMutation";
 import { useAuthModalLifecycle } from "../../hooks/useAuthModalLifecycle";
 import { AuthModalShell } from "../auth/auth-modal/AuthModalShell";
 import { ProfileModalFields } from "./profile-modal/ProfileModalFields";

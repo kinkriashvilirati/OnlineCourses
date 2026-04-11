@@ -1,4 +1,4 @@
-import type { LoginMutationError } from "../../../hooks/useLoginMutation";
+import type { LoginMutationError } from "../../../hooks/mutation-hooks/useLoginMutation";
 
 export function getLoginErrorMessage(error: LoginMutationError) {
   if ("response" in error && error.response?.data?.message) {

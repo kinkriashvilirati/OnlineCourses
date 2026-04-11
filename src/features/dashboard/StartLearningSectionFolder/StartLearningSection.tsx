@@ -1,5 +1,5 @@
 import { LoadingDots } from "../../../components/loading/Loading";
-import { useFeaturedCoursesQuery } from "../../../hooks/useFeaturedCoursesQuery";
+import { useFeaturedCoursesQuery } from "../../../hooks/query-hooks/useFeaturedCoursesQuery";
 import FeaturedCourseCard from "./FeaturedCourseCard";
 
 export default function StartLearningSection() {

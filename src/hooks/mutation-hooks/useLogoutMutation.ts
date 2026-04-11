@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
-import { logoutUser } from "../api/auth/logout";
-import { useAuth } from "../context/AuthContext";
+import { logoutUser } from "../../api/auth/logout";
+import { useAuth } from "../../context/AuthContext";
 export type LogoutMutationError = AxiosError | Error;
 
 type HandleClose = () => void;

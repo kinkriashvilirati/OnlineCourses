@@ -4,7 +4,7 @@ import {
   updateProfile,
   type UpdateProfileApiRequest,
   type UpdateProfileApiResponse,
-} from "../api/profile/updateProfile";
+} from "../../api/profile/updateProfile";
 
 type ProfileValidationErrorResponse = {
   errors: Record<string, string[]>;

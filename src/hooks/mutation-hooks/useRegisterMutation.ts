@@ -4,7 +4,7 @@ import {
   registerUser,
   type RegisterApiRequest,
   type RegisterApiResponse,
-} from "../api/auth/register";
+} from "../../api/auth/register";
 
 type ValidationErrorResponse = {
   errors: Record<string, string[]>;

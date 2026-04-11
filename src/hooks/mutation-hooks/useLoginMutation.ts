@@ -4,7 +4,7 @@ import {
   loginUser,
   type LoginApiRequest,
   type LoginApiResponse,
-} from "../api/auth/login";
+} from "../../api/auth/login";
 
 type LoginErrorResponse = {
   message: string;

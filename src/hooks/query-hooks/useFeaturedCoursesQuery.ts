@@ -3,7 +3,7 @@ import type { AxiosError } from "axios";
 import {
   getFeaturedCourses,
   type FeaturedCoursesApiResponse,
-} from "../api/courses/featuredCourses";
+} from "../../api/courses/featuredCourses";
 
 export function useFeaturedCoursesQuery() {
   return useQuery<FeaturedCoursesApiResponse, AxiosError>({
