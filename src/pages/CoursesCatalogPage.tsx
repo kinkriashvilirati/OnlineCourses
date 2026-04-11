@@ -1,14 +1,23 @@
+import Filters from "../features/courses-catalog/filter/Filters";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 export function CoursesCatalogPage() {
   return (
-    <section className="rounded-4xl bg-grayscale-50 px-8 py-10">
-      <p className="text-helper-medium uppercase tracking-[0.18em] text-purple-500">
-        Browse Courses
-      </p>
-      <h1 className="mt-4 text-h1">Courses catalog page</h1>
-      <p className="mt-4 max-w-160 text-body-s text-grayscale-600">
-        This is the catalog route for now. Next we can build the real catalog
-        layout, filters, and cards step by step.
-      </p>
-    </section>
+    <main>
+      <nav aria-label="Breadcrumb">
+        <span>Home</span>
+        <span>
+          <FontAwesomeIcon icon={faChevronRight} />
+        </span>
+        <span>Browse</span>
+      </nav>
+      <aside>
+        <Filters />
+      </aside>
+      <section>
+        {/* articles of the each course */}
+        <nav aria-label="Pagination">{/* pagination */}</nav>
+      </section>
+    </main>
   );
 }
