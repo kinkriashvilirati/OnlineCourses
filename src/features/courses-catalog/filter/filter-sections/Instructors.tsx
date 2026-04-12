@@ -1,26 +1,21 @@
-import { useState } from "react";
 import { SECTION_INSTRUCTORS } from "./filterData";
 
-export default function Instructor() {
-  const [selectedInstructorIds, setSelectedInstructorIds] = useState<number[]>(
-    [],
-  );
+type InstructorProps = {
+  onToggle: (id: number) => void;
+  selectedIds: number[];
+};
 
-  function handleInstructorToggle(instructorId: number) {
-    setSelectedInstructorIds((currentIds) =>
-      currentIds.includes(instructorId)
-        ? currentIds.filter((id) => id !== instructorId)
-        : [...currentIds, instructorId],
-    );
-  }
-
+export default function Instructor({
+  onToggle,
+  selectedIds,
+}: InstructorProps) {
   return (
     <div className="flex flex-col gap-6 ">
       <p className="text-body-m text-grayscale-500">{"Instructors"}</p>
 
       <div className="block">
         {SECTION_INSTRUCTORS.data.map((category) => {
-          const isSelected = selectedInstructorIds.includes(category.id);
+          const isSelected = selectedIds.includes(category.id);
 
           return (
             <button
@@ -28,8 +23,8 @@ export default function Instructor() {
               className={`button-filter-item text-body-s flex items-center gap-2.5 mb-2 ${
                 isSelected ? "choose" : ""
               }`}
-              key={`${category.id}-${category.name}`}
-              onClick={() => handleInstructorToggle(category.id)}
+              key={`${category.id}-Instructors`}
+              onClick={() => onToggle(category.id)}
               type="button"
             >
               {category.avatar && (

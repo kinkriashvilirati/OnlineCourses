@@ -1,7 +1,40 @@
+import { useState } from "react";
 import Filters from "../features/courses-catalog/filter/Filters";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+
 export function CoursesCatalogPage() {
+  const [selectedFilters, setSelectedFilters] = useState({
+    categories: [] as number[],
+    instructors: [] as number[],
+    topics: [] as number[],
+  });
+
+  function toggleFilter(
+    type: "categories" | "topics" | "instructors",
+    id: number,
+  ) {
+    setSelectedFilters((prevFilters) => {
+      const currentFilters = prevFilters[type];
+      const updatedFilters = currentFilters.includes(id)
+        ? currentFilters.filter((filterId) => filterId !== id)
+        : [...currentFilters, id];
+
+      return {
+        ...prevFilters,
+        [type]: updatedFilters,
+      };
+    });
+  }
+
+  function clearAllFilters() {
+    setSelectedFilters({
+      categories: [],
+      instructors: [],
+      topics: [],
+    });
+  }
+
   return (
     <div className="pt-43">
       <nav
@@ -16,7 +49,11 @@ export function CoursesCatalogPage() {
         <span className="text-purple-400">Browse</span>
       </nav>
       <aside>
-        <Filters />
+        <Filters
+          onClearAll={clearAllFilters}
+          onToggleFilter={toggleFilter}
+          selectedFilters={selectedFilters}
+        />
       </aside>
       <section>
         {/* articles of the each course */}

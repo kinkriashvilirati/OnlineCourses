@@ -1,29 +1,26 @@
-import { useState } from "react";
 import CategoriesIcons from "../../../../assets/icons/filter-categories-icon/CategoriesIcon";
 import { SECTION_CATEGORIES } from "./filterData";
 
-export default function Categories() {
-  const [selectedCategoryIds, setSelectedCategoryIds] = useState<number[]>([]);
+type CategoriesProps = {
+  onToggle: (id: number) => void;
+  selectedIds: number[];
+};
 
-  function handleCategoryToggle(categoryId: number) {
-    setSelectedCategoryIds((currentIds) =>
-      currentIds.includes(categoryId)
-        ? currentIds.filter((id) => id !== categoryId)
-        : [...currentIds, categoryId],
-    );
-    console.log(selectedCategoryIds);
-  }
-  const title = "Categories";
+export default function Categories({
+  onToggle,
+  selectedIds,
+}: CategoriesProps) {
   const data = SECTION_CATEGORIES.data;
+
   return (
     <div className="flex flex-col gap-6 ">
-      <p className="text-body-m text-grayscale-500">{title}</p>
+      <p className="text-body-m text-grayscale-500">Categories</p>
 
       <div className="flex flex-wrap gap-2">
         {data.map((category) => {
           const Icon =
             category.icon && CategoriesIcons[category.icon.toLocaleLowerCase()];
-          const isSelected = selectedCategoryIds.includes(category.id);
+          const isSelected = selectedIds.includes(category.id);
 
           return (
             <button
@@ -31,8 +28,8 @@ export default function Categories() {
               className={`button-filter-item text-body-s flex items-center gap-2.5 ${
                 isSelected ? "choose" : ""
               }`}
-              key={`${category.id}-${category.name}`}
-              onClick={() => handleCategoryToggle(category.id)}
+              key={`${category.id}-Categories`}
+              onClick={() => onToggle(category.id)}
               type="button"
             >
               {Icon ? (
