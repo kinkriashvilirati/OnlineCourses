@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Courses from "../features/courses-catalog/courses/Courses";
 import Filters from "../features/courses-catalog/filter/Filters";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
@@ -48,27 +49,25 @@ export function CoursesCatalogPage() {
 
         <span className="text-purple-400">Browse</span>
       </nav>
-      <aside>
-        <Filters
-          onClearAll={clearAllFilters}
-          onToggleFilter={toggleFilter}
-          selectedFilters={selectedFilters}
-        />
-      </aside>
-      <section>
-        {/* sorting */}
-        <div></div>
+      <div className="flex gap-20 ">
+        <aside>
+          <Filters
+            onClearAll={clearAllFilters}
+            onToggleFilter={toggleFilter}
+            selectedFilters={selectedFilters}
+          />
+        </aside>
+        <section className="w-full">
+          {/* sorting */}
+          <div></div>
 
-        {/* courses */}
-        <ul>
-          {/* <li>
-            <article></article>
-          </li> */}
-        </ul>
+          {/* courses */}
+          <Courses />
 
-        {/* pagination */}
-        <nav aria-label="pagination"></nav>
-      </section>
+          {/* pagination */}
+          <nav aria-label="pagination"></nav>
+        </section>
+      </div>
     </div>
   );
 }

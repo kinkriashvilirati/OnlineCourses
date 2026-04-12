@@ -5,6 +5,7 @@ export type Category = {
 };
 
 export type Topic = {
+  categoryId: number;
   id: number;
   name: string;
 };
@@ -20,10 +21,10 @@ export type Course = {
   title: string;
   description: string;
   image: string;
-  basePrice: string;
+  basePrice: number;
   durationWeeks: number;
   isFeatured: boolean;
-  avgRating: number;
+  avgRating: number | null;
   reviewCount: number;
   category: Category;
   topic: Topic;

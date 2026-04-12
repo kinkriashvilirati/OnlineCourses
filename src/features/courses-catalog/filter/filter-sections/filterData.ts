@@ -23,14 +23,17 @@ export const SECTION_CATEGORIES: { data: Category[] } = {
 export const SECTION_TOPICS: { data: Topic[] } = {
   data: [
     {
+      categoryId: 1,
       id: 1,
       name: "React",
     },
     {
+      categoryId: 1,
       id: 2,
       name: "Java",
     },
     {
+      categoryId: 1,
       id: 3,
       name: "Python",
     },
