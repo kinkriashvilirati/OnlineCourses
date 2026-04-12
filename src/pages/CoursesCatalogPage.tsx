@@ -56,8 +56,18 @@ export function CoursesCatalogPage() {
         />
       </aside>
       <section>
-        {/* articles of the each course */}
-        <nav aria-label="Pagination">{/* pagination */}</nav>
+        {/* sorting */}
+        <div></div>
+
+        {/* courses */}
+        <ul>
+          {/* <li>
+            <article></article>
+          </li> */}
+        </ul>
+
+        {/* pagination */}
+        <nav aria-label="pagination"></nav>
       </section>
     </div>
   );

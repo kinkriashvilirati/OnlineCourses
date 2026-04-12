@@ -1,6 +1,6 @@
-import type { Section } from "./filterType";
 import baseImg from "../../../../assets/images/course_base_img.jpg";
-export const SECTION_CATEGORIES: Section = {
+import type { Category, Instructor, Topic } from "../../courses-catalog-type";
+export const SECTION_CATEGORIES: { data: Category[] } = {
   data: [
     {
       id: 1,
@@ -20,7 +20,7 @@ export const SECTION_CATEGORIES: Section = {
   ],
 };
 
-export const SECTION_TOPICS: Section = {
+export const SECTION_TOPICS: { data: Topic[] } = {
   data: [
     {
       id: 1,
@@ -36,7 +36,7 @@ export const SECTION_TOPICS: Section = {
     },
   ],
 };
-export const SECTION_INSTRUCTORS: Section = {
+export const SECTION_INSTRUCTORS: { data: Instructor[] } = {
   data: [
     {
       id: 1,
