@@ -13,7 +13,7 @@ export type Topic = {
 export type Instructor = {
   id: number;
   name: string;
-  avatar: string;
+  avatar: string | null;
 };
 
 export type Course = {
