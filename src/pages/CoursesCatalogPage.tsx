@@ -23,7 +23,6 @@ export function CoursesCatalogPage() {
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedSort, setSelectedSort] = useState<SortOption>("Newest First");
-  const courses = mockData.data.slice(0, 9);
   const displayedCount: number =
     mockData.data.length > 9 ? 9 : mockData.data.length;
   const totalCount: number = mockData.data.length;
@@ -84,7 +83,7 @@ export function CoursesCatalogPage() {
             sortOptions={sortOptions}
             totalCount={mockData.data.length}
           />
-          <Courses courses={courses} />
+          <Courses />
 
           <CoursesPagination
             currentPage={currentPage}
