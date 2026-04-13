@@ -1,4 +1,6 @@
-import { SECTION_TOPICS } from "./filterData";
+import { ErrorComponent } from "../../../../components/error/Error";
+import { LoadingDots } from "../../../../components/loading/Loading";
+import { useTopicsQuery } from "../../../../hooks/query-hooks/useTopicsQuery";
 
 type TopicsProps = {
   onToggle: (id: number) => void;
@@ -6,29 +8,37 @@ type TopicsProps = {
 };
 
 export default function Topics({ onToggle, selectedIds }: TopicsProps) {
+  const topicsQuery = useTopicsQuery();
+
   return (
     <div className="flex flex-col gap-6 ">
       <p className="text-body-m text-grayscale-500">Topics</p>
 
-      <div className="flex flex-wrap gap-2">
-        {SECTION_TOPICS.data.map((category) => {
-          const isSelected = selectedIds.includes(category.id);
+      {topicsQuery.isPending ? <LoadingDots /> : null}
 
-          return (
-            <button
-              aria-pressed={isSelected}
-              className={`button-filter-item text-body-s flex items-center gap-2.5 ${
-                isSelected ? "choose" : ""
-              }`}
-              key={`${category.id}-topics`}
-              onClick={() => onToggle(category.id)}
-              type="button"
-            >
-              <span>{category.name}</span>
-            </button>
-          );
-        })}
-      </div>
+      {topicsQuery.isError ? <ErrorComponent /> : null}
+
+      {topicsQuery.data ? (
+        <div className="flex flex-wrap gap-2">
+          {topicsQuery.data.data.map((topic) => {
+            const isSelected = selectedIds.includes(topic.id);
+
+            return (
+              <button
+                aria-pressed={isSelected}
+                className={`button-filter-item text-body-s flex items-center gap-2.5 ${
+                  isSelected ? "choose" : ""
+                }`}
+                key={`${topic.id}-topics`}
+                onClick={() => onToggle(topic.id)}
+                type="button"
+              >
+                <span>{topic.name}</span>
+              </button>
+            );
+          })}
+        </div>
+      ) : null}
     </div>
   );
 }
