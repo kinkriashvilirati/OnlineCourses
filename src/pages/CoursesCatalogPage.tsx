@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import CoursesHeaderSort from "../features/courses-catalog/courses/courses-comopnents/CoursesHeaderSort";
 import { mockData } from "../features/courses-catalog/courses/courses-comopnents/mockData";
+import CoursesPagination from "../features/courses-catalog/courses/courses-comopnents/CoursesPagination";
 
 const sortOptions = [
   "Newest First",
@@ -20,9 +21,13 @@ export function CoursesCatalogPage() {
     instructors: [] as number[],
     topics: [] as number[],
   });
+  const [currentPage, setCurrentPage] = useState(1);
   const [selectedSort, setSelectedSort] = useState<SortOption>("Newest First");
   const courses = mockData.data.slice(0, 9);
-
+  const displayedCount: number =
+    mockData.data.length > 9 ? 9 : mockData.data.length;
+  const totalCount: number = mockData.data.length;
+  const totalPages = Math.ceil(totalCount / 9);
   function toggleFilter(
     type: "categories" | "topics" | "instructors",
     id: number,
@@ -71,7 +76,7 @@ export function CoursesCatalogPage() {
         </aside>
         <section className="flex flex-col w-full gap-6">
           <CoursesHeaderSort
-            displayedCount={courses.length}
+            displayedCount={displayedCount}
             onSelectSort={(sortValue) =>
               setSelectedSort(sortValue as (typeof sortOptions)[number])
             }
@@ -81,8 +86,11 @@ export function CoursesCatalogPage() {
           />
           <Courses courses={courses} />
 
-          {/* pagination */}
-          <nav aria-label="pagination"></nav>
+          <CoursesPagination
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+            totalPages={totalPages}
+          />
         </section>
       </div>
     </div>

@@ -222,7 +222,10 @@
     @apply bg-purple-700  text-grayscale-50   border-purple-700;
   }
   .button-outline:disabled {
-    @apply bg-grayscale-300  text-grayscale-400 cursor-not-allowed border-grayscale-300;
+    @apply bg-grayscale-300  text-grayscale-400 cursor-auto border-grayscale-300;
+  }
+  .button-outline.pagination:disabled {
+    @apply text-grayscale-200 border-grayscale-200 bg-grayscale-50;
   }
   /* ghost */
   .button-ghost {
