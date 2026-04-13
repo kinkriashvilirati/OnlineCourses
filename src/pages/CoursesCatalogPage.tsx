@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { ErrorComponent } from "../components/error/Error";
+import { LoadingDots } from "../components/loading/Loading";
 import Courses from "../features/courses-catalog/courses/Courses";
 import Filters from "../features/courses-catalog/filter/Filters";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import CoursesHeaderSort from "../features/courses-catalog/courses/courses-comopnents/CoursesHeaderSort";
-import { mockData } from "../features/courses-catalog/courses/courses-comopnents/mockData";
 import CoursesPagination from "../features/courses-catalog/courses/courses-comopnents/CoursesPagination";
+import { useCoursesQuery } from "../hooks/query-hooks/useCoursesQuery";
 
 const sortOptions = [
   "Newest First",
@@ -23,10 +25,12 @@ export function CoursesCatalogPage() {
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedSort, setSelectedSort] = useState<SortOption>("Newest First");
-  const displayedCount: number =
-    mockData.data.length > 9 ? 9 : mockData.data.length;
-  const totalCount: number = mockData.data.length;
-  const totalPages = Math.ceil(totalCount / 9);
+  const coursesSectionRef = useRef<HTMLElement | null>(null);
+  const coursesQuery = useCoursesQuery(currentPage);
+  const displayedCount = coursesQuery.data?.data.length ?? 0;
+  const totalCount = coursesQuery.data?.meta.total ?? 0;
+  const totalPages = coursesQuery.data?.meta.lastPage ?? 1;
+  console.log(coursesQuery.data);
   function toggleFilter(
     type: "categories" | "topics" | "instructors",
     id: number,
@@ -52,6 +56,14 @@ export function CoursesCatalogPage() {
     });
   }
 
+  function handlePageChange(page: number) {
+    setCurrentPage(page);
+    coursesSectionRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }
+
   return (
     <div className="pt-43">
       <nav
@@ -73,7 +85,7 @@ export function CoursesCatalogPage() {
             selectedFilters={selectedFilters}
           />
         </aside>
-        <section className="flex flex-col w-full gap-6">
+        <section className="flex flex-col w-full gap-6" ref={coursesSectionRef}>
           <CoursesHeaderSort
             displayedCount={displayedCount}
             onSelectSort={(sortValue) =>
@@ -81,15 +93,22 @@ export function CoursesCatalogPage() {
             }
             selectedSort={selectedSort}
             sortOptions={sortOptions}
-            totalCount={mockData.data.length}
+            totalCount={totalCount}
           />
-          <Courses />
 
-          <CoursesPagination
-            currentPage={currentPage}
-            onPageChange={setCurrentPage}
-            totalPages={totalPages}
-          />
+          {coursesQuery.isPending ? <LoadingDots /> : null}
+          {coursesQuery.isError ? <ErrorComponent /> : null}
+          {coursesQuery.data ? (
+            <Courses courses={coursesQuery.data.data} />
+          ) : null}
+
+          {coursesQuery.data ? (
+            <CoursesPagination
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+              totalPages={totalPages}
+            />
+          ) : null}
         </section>
       </div>
     </div>
