@@ -246,11 +246,9 @@
     @apply py-2 rounded-xl px-3 bg-grayscale-50 cursor-pointer duration-300 border-2 border-grayscale-50  transition-all text-gray-500;
   }
 
-  .button-filter-item.choose:hover,
   .button-filter-item:hover {
     @apply bg-grayscale-100 text-grayscale-600 border-grayscale-200;
   }
-  .button-filter-item.choose:focus,
   .button-filter-item:focus {
     @apply bg-purple-100 border-purple-100 text-purple-600;
   }

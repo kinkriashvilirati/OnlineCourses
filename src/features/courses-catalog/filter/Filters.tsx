@@ -28,7 +28,7 @@ export default function Filters({
     selectedFilters.instructors.length;
 
   return (
-    <aside className="flex w-full min-w-77.25 flex-col  mt-15.5 gap-6">
+    <aside className="flex w-full min-w-77.25 flex-col   gap-6">
       <header className="flex items-center justify-between ">
         <h1 className="text-h1 text-grayscale-950">Filters</h1>
         <button
