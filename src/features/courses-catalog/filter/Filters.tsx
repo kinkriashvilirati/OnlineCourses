@@ -40,7 +40,7 @@ export default function Filters({
         </button>
       </header>
 
-      <div className="flex flex-col gap-14">
+      <div className="flex flex-col gap-14 max-w-77.25">
         <section>
           <Categories
             onToggle={(id) => onToggleFilter("categories", id)}
