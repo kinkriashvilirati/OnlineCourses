@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { ErrorComponent } from "../components/error/Error";
 import { LoadingDots } from "../components/loading/Loading";
 import Courses from "../features/courses-catalog/courses/Courses";
@@ -8,6 +8,7 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import CoursesHeaderSort from "../features/courses-catalog/courses/courses-comopnents/CoursesHeaderSort";
 import CoursesPagination from "../features/courses-catalog/courses/courses-comopnents/CoursesPagination";
 import { useCoursesQuery } from "../hooks/query-hooks/useCoursesQuery";
+import { useTopicsQuery } from "../hooks/query-hooks/useTopicsQuery";
 
 const sortOptions = [
   "Newest First",
@@ -27,10 +28,25 @@ export function CoursesCatalogPage() {
   const [selectedSort, setSelectedSort] = useState<SortOption>("Newest First");
   const coursesSectionRef = useRef<HTMLElement | null>(null);
   const coursesQuery = useCoursesQuery(currentPage);
+  const topicsQuery = useTopicsQuery(selectedFilters.categories);
   const displayedCount = coursesQuery.data?.data.length ?? 0;
   const totalCount = coursesQuery.data?.meta.total ?? 0;
   const totalPages = coursesQuery.data?.meta.lastPage ?? 1;
-  console.log(coursesQuery.data);
+  const effectiveSelectedFilters = useMemo(() => {
+    if (!topicsQuery.data) {
+      return selectedFilters;
+    }
+
+    const validTopicIds = new Set(topicsQuery.data.data.map((topic) => topic.id));
+
+    return {
+      ...selectedFilters,
+      topics: selectedFilters.topics.filter((topicId) =>
+        validTopicIds.has(topicId),
+      ),
+    };
+  }, [selectedFilters, topicsQuery.data]);
+
   function toggleFilter(
     type: "categories" | "topics" | "instructors",
     id: number,
@@ -82,7 +98,7 @@ export function CoursesCatalogPage() {
           <Filters
             onClearAll={clearAllFilters}
             onToggleFilter={toggleFilter}
-            selectedFilters={selectedFilters}
+            selectedFilters={effectiveSelectedFilters}
           />
         </aside>
         <section className="flex flex-col w-full gap-6" ref={coursesSectionRef}>

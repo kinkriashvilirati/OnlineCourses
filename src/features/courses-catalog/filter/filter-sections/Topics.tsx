@@ -4,11 +4,16 @@ import { useTopicsQuery } from "../../../../hooks/query-hooks/useTopicsQuery";
 
 type TopicsProps = {
   onToggle: (id: number) => void;
+  selectedCategoryIds: number[];
   selectedIds: number[];
 };
 
-export default function Topics({ onToggle, selectedIds }: TopicsProps) {
-  const topicsQuery = useTopicsQuery();
+export default function Topics({
+  onToggle,
+  selectedCategoryIds,
+  selectedIds,
+}: TopicsProps) {
+  const topicsQuery = useTopicsQuery(selectedCategoryIds);
 
   return (
     <div className="flex flex-col gap-6 ">

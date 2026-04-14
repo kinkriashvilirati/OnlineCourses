@@ -50,6 +50,7 @@ export default function Filters({
         <section>
           <Topics
             onToggle={(id) => onToggleFilter("topics", id)}
+            selectedCategoryIds={selectedFilters.categories}
             selectedIds={selectedFilters.topics}
           />
         </section>
