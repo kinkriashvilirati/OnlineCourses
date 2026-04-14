@@ -1,5 +1,5 @@
 import CourseCard from "../../../components/CourseCard";
-import type { Course } from "../../courses-catalog/courses-catalog-type";
+import type { Course } from "../../../types/courses-type";
 
 type FeaturedCourseCardProps = {
   course: Course;

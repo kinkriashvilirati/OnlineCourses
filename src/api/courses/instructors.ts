@@ -1,4 +1,4 @@
-import type { Instructor } from "../../features/courses-catalog/courses-catalog-type";
+import type { Instructor } from "../../types/courses-type";
 import { apiClient } from "../client";
 
 export type InstructorsApiResponse = {
@@ -6,8 +6,7 @@ export type InstructorsApiResponse = {
 };
 
 export async function getInstructors() {
-  const response =
-    await apiClient.get<InstructorsApiResponse>("/instructors");
+  const response = await apiClient.get<InstructorsApiResponse>("/instructors");
 
   return response.data;
 }

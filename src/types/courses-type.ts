@@ -16,6 +16,11 @@ export type Instructor = {
   avatar: string | null;
 };
 
+export type Review = {
+  userId: number;
+  rating: number;
+};
+
 export type Course = {
   id: number;
   title: string;
@@ -29,6 +34,23 @@ export type Course = {
   category: Category;
   topic: Topic;
   instructor: Instructor;
+};
+
+export type DetailedCourse = {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  basePrice: string;
+  durationWeeks: 8;
+  hours: 72;
+  isFeatured: true;
+  reviews: Review[];
+  isRated: boolean;
+  category: Category;
+  topic: Omit<Topic, "categoryId">;
+  instructor: Instructor;
+  enrollment: null;
 };
 
 export type CoursesResponse = {

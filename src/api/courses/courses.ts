@@ -1,4 +1,4 @@
-import type { Course } from "../../features/courses-catalog/courses-catalog-type";
+import type { Course } from "../../types/courses-type";
 import type { PaginationMeta } from "../../types/pagination";
 import { apiClient } from "../client";
 

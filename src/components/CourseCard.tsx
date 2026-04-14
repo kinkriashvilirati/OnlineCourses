@@ -1,7 +1,7 @@
 import { Children, type ReactNode } from "react";
 import { Link } from "react-router";
 import fullStarIcon from "../assets/icons/icon-set/full_star.svg";
-import type { Course } from "../features/courses-catalog/courses-catalog-type";
+import type { Course } from "../types/courses-type";
 
 type CourseCardProps = {
   children?: ReactNode;

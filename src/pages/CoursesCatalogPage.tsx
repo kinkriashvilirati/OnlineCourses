@@ -3,13 +3,13 @@ import { ErrorComponent } from "../components/error/Error";
 import { LoadingDots } from "../components/loading/Loading";
 import Courses from "../features/courses-catalog/courses/Courses";
 import Filters from "../features/courses-catalog/filter/Filters";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+
 import CoursesHeaderSort from "../features/courses-catalog/courses/courses-comopnents/CoursesHeaderSort";
 import CoursesPagination from "../features/courses-catalog/courses/courses-comopnents/CoursesPagination";
 import { useCoursesQuery } from "../hooks/query-hooks/useCoursesQuery";
 import { useTopicsQuery } from "../hooks/query-hooks/useTopicsQuery";
 import { SORT_OPTIONS, type SortOption } from "../utils/sortOptions";
+import PageLocationNav from "../components/shared/PageLocationNav";
 
 const sortOptions = Object.keys(SORT_OPTIONS) as SortOption[];
 
@@ -35,7 +35,9 @@ export function CoursesCatalogPage() {
       return selectedFilters;
     }
 
-    const validTopicIds = new Set(topicsQuery.data.data.map((topic) => topic.id));
+    const validTopicIds = new Set(
+      topicsQuery.data.data.map((topic) => topic.id),
+    );
 
     return {
       ...selectedFilters,
@@ -97,17 +99,7 @@ export function CoursesCatalogPage() {
 
   return (
     <div className="pt-43">
-      <nav
-        aria-label="Breadcrumb"
-        className="flex gap-0.5 justify-center max-w-37.25  text-body-m items-center"
-      >
-        <span className="text-grayscale-500 flex items-center mr-0.5">
-          Home
-          <FontAwesomeIcon className="max-h-3.25" icon={faChevronRight} />
-        </span>
-
-        <span className="text-purple-400">Browse</span>
-      </nav>
+      <PageLocationNav />
       <div className="flex gap-20 mt-15.5">
         <aside>
           <Filters

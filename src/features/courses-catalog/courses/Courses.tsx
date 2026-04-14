@@ -1,4 +1,4 @@
-import type { Course as CourseType } from "../courses-catalog-type";
+import type { Course as CourseType } from "../../../types/courses-type";
 import Course from "./courses-comopnents/Course";
 
 type CoursesProps = {

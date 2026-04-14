@@ -3,6 +3,7 @@ import { AppLayout } from "../../components/layout/AppLayout";
 import { ErrorPage } from "../../components/error/Error";
 import { CoursesCatalogPage } from "../../pages/CoursesCatalogPage";
 import { DashboardPage } from "../../pages/DashboardPage";
+import DetailedCourse from "../../pages/DetailedCourse";
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ export const router = createBrowserRouter([
       {
         path: "courses",
         element: <CoursesCatalogPage />,
+      },
+      {
+        path: "courses/:courseId", // <-- add this
+        element: <DetailedCourse />,
       },
       {
         path: "*",

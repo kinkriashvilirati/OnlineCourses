@@ -1,4 +1,4 @@
-import type { Category } from "../../features/courses-catalog/courses-catalog-type";
+import type { Category } from "../../types/courses-type";
 import { apiClient } from "../client";
 
 export type CategoriesApiResponse = {

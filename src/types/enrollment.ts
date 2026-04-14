@@ -1,31 +1,8 @@
+import type { Course } from "./courses-type";
+
 export type Enrollment = {
   completedAt: string | null;
-  course: {
-    avgRating: number | null;
-    basePrice: number;
-    category: {
-      icon: string;
-      id: number;
-      name: string;
-    };
-    description: string;
-    durationWeeks: number;
-    id: number;
-    image: string;
-    instructor: {
-      avatar: string;
-      id: number;
-      name: string;
-    };
-    isFeatured: boolean;
-    reviewCount: number;
-    title: string;
-    topic: {
-      categoryId: number;
-      id: number;
-      name: string;
-    };
-  };
+  course: Course;
   id: number;
   progress: number;
   quantity: number;

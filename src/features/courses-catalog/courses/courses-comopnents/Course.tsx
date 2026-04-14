@@ -1,6 +1,6 @@
 import CategoriesIcons from "../../../../assets/icons/filter-categories-icon/CategoriesIcon";
 import CourseCard from "../../../../components/CourseCard";
-import type { Course as CourseData } from "../../courses-catalog-type";
+import type { Course as CourseData } from "../../../../types/courses-type";
 
 type CourseProps = {
   course: CourseData;

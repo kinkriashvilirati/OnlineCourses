@@ -1,4 +1,4 @@
-import type { Topic } from "../../features/courses-catalog/courses-catalog-type";
+import type { Topic } from "../../types/courses-type";
 import { apiClient } from "../client";
 
 export type GetTopicsParams = {
