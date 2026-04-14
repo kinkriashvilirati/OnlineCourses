@@ -7,6 +7,7 @@ export type GetCoursesParams = {
   categories?: number[];
   topics?: number[];
   instructors?: number[];
+  sort?: string;
 };
 
 export type CoursesApiResponse = {
@@ -15,6 +16,7 @@ export type CoursesApiResponse = {
 };
 
 export async function getCourses(params: GetCoursesParams = {}) {
+  console.log(params);
   const queryParams = {
     ...(params.page !== undefined ? { page: params.page } : {}),
     ...(params.categories && params.categories.length > 0
@@ -26,6 +28,7 @@ export async function getCourses(params: GetCoursesParams = {}) {
     ...(params.instructors && params.instructors.length > 0
       ? { "instructors[]": params.instructors }
       : {}),
+    ...(params.sort ? { sort: params.sort } : {}),
   };
 
   const response = await apiClient.get<CoursesApiResponse>("/courses", {

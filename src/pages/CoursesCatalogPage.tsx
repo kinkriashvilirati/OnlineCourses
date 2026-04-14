@@ -9,15 +9,10 @@ import CoursesHeaderSort from "../features/courses-catalog/courses/courses-comop
 import CoursesPagination from "../features/courses-catalog/courses/courses-comopnents/CoursesPagination";
 import { useCoursesQuery } from "../hooks/query-hooks/useCoursesQuery";
 import { useTopicsQuery } from "../hooks/query-hooks/useTopicsQuery";
+import { SORT_OPTIONS, type SortOption } from "../utils/sortOptions";
 
-const sortOptions = [
-  "Newest First",
-  "Price: Low to High",
-  "Price: High to Low",
-  "Most Popular",
-  "Title: A-Z",
-] as const;
-type SortOption = (typeof sortOptions)[number];
+const sortOptions = Object.keys(SORT_OPTIONS) as SortOption[];
+
 export function CoursesCatalogPage() {
   const [selectedFilters, setSelectedFilters] = useState({
     categories: [] as number[],
@@ -54,6 +49,7 @@ export function CoursesCatalogPage() {
     categories: effectiveSelectedFilters.categories,
     instructors: effectiveSelectedFilters.instructors,
     topics: effectiveSelectedFilters.topics,
+    sort: selectedSort,
   });
   const displayedCount = coursesQuery.data?.data.length ?? 0;
   const totalCount = coursesQuery.data?.meta.total ?? 0;
@@ -94,6 +90,11 @@ export function CoursesCatalogPage() {
     });
   }
 
+  function handleSortChange(sortValue: SortOption) {
+    setCurrentPage(1);
+    setSelectedSort(sortValue);
+  }
+
   return (
     <div className="pt-43">
       <nav
@@ -118,9 +119,7 @@ export function CoursesCatalogPage() {
         <section className="flex flex-col w-full gap-6" ref={coursesSectionRef}>
           <CoursesHeaderSort
             displayedCount={displayedCount}
-            onSelectSort={(sortValue) =>
-              setSelectedSort(sortValue as (typeof sortOptions)[number])
-            }
+            onSelectSort={handleSortChange}
             selectedSort={selectedSort}
             sortOptions={sortOptions}
             totalCount={totalCount}
