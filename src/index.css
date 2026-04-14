@@ -179,6 +179,10 @@
   }
 
   /* buttons text */
+  .text-button-l {
+    /* Primary UI text including main buttons, navigation links, dropdown values, and key actions. */
+    @apply font-inter text-[24px] font-semibold;
+  }
   .text-button-m {
     /* Primary UI text including main buttons, navigation links, dropdown values, and key actions. */
     @apply font-inter text-[20px] font-semibold;
