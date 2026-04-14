@@ -1,3 +1,5 @@
+import type { Enrollment } from "./enrollment";
+
 export type Category = {
   id: number;
   name: string;
@@ -41,16 +43,16 @@ export type DetailedCourse = {
   title: string;
   description: string;
   image: string;
-  basePrice: string;
-  durationWeeks: 8;
-  hours: 72;
-  isFeatured: true;
+  basePrice: number;
+  durationWeeks: number;
+  hours: number;
+  isFeatured: boolean;
   reviews: Review[];
   isRated: boolean;
   category: Category;
-  topic: Omit<Topic, "categoryId">;
+  topic: Topic;
   instructor: Instructor;
-  enrollment: null;
+  enrollment: Enrollment | null;
 };
 
 export type CoursesResponse = {

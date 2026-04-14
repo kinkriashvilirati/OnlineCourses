@@ -1,23 +1,62 @@
-// import { useParams } from "react-router";
+import { useParams } from "react-router";
+import { ErrorComponent } from "../components/error/Error";
+import { LoadingDots } from "../components/loading/Loading";
 import CourseDetails from "../features/detailed-course/CourseDetails";
 import EnrolmentCard from "../features/detailed-course/EnrolmentCard";
 import EnrollmentAccessNotice from "../features/detailed-course/EnrollmentAccessNotice";
-
-import { DETAILED_DATA_MOCK } from "../features/detailed-course/mockData";
 import Header from "../features/detailed-course/Navigation";
+import { useDetailedCourseQuery } from "../hooks/query-hooks/useDetailedCourseQuery";
+
 export default function DetailedCourse() {
-  // const { courseId } = useParams();
-  const { data_mock } = DETAILED_DATA_MOCK;
+  const { courseId } = useParams();
+  const parsedCourseId = Number(courseId);
+  const resolvedCourseId = Number.isInteger(parsedCourseId)
+    ? parsedCourseId
+    : null;
+  const detailedCourseQuery = useDetailedCourseQuery(resolvedCourseId);
+
+  if (resolvedCourseId === null) {
+    return (
+      <main className="mt-40">
+        <ErrorComponent
+          description="The requested course link is invalid."
+          title="Failed to load course"
+        />
+      </main>
+    );
+  }
+
+  if (detailedCourseQuery.isPending) {
+    return (
+      <main className="mt-40">
+        <LoadingDots />
+      </main>
+    );
+  }
+
+  if (detailedCourseQuery.isError || !detailedCourseQuery.data) {
+    return (
+      <main className="mt-40">
+        <ErrorComponent
+          description="Please try again in a moment."
+          title="Failed to load course"
+        />
+      </main>
+    );
+  }
+
+  const course = detailedCourseQuery.data.data;
+
   return (
     <main className="mt-40 flex flex-col gap-6">
-      <Header title={data_mock.title} />
+      <Header title={course.title} />
       <div className="flex justify-between items-start">
         <section className="w-225.75">
-          <CourseDetails data={data_mock} />
+          <CourseDetails data={course} />
         </section>
         <div className="flex w-132.5 flex-col gap-3">
           <section>
-            <EnrolmentCard data={data_mock} />
+            <EnrolmentCard data={course} />
           </section>
           <EnrollmentAccessNotice />
         </div>

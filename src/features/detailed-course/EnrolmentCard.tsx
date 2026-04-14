@@ -22,8 +22,8 @@ const SLOT_SECTIONS = [
   },
 ] as const;
 
-function formatPrice(price: string) {
-  return Math.floor(Number(price));
+function formatPrice(price: number) {
+  return Math.floor(price);
 }
 
 export default function EnrolmentCard({ data }: EnrolmentCardProps) {
