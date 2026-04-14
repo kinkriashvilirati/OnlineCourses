@@ -27,12 +27,15 @@ export function CoursesCatalogPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedSort, setSelectedSort] = useState<SortOption>("Newest First");
   const coursesSectionRef = useRef<HTMLElement | null>(null);
-  const coursesQuery = useCoursesQuery(currentPage);
   const topicsQuery = useTopicsQuery(selectedFilters.categories);
-  const displayedCount = coursesQuery.data?.data.length ?? 0;
-  const totalCount = coursesQuery.data?.meta.total ?? 0;
-  const totalPages = coursesQuery.data?.meta.lastPage ?? 1;
   const effectiveSelectedFilters = useMemo(() => {
+    if (topicsQuery.isPending) {
+      return {
+        ...selectedFilters,
+        topics: [],
+      };
+    }
+
     if (!topicsQuery.data) {
       return selectedFilters;
     }
@@ -45,12 +48,22 @@ export function CoursesCatalogPage() {
         validTopicIds.has(topicId),
       ),
     };
-  }, [selectedFilters, topicsQuery.data]);
+  }, [selectedFilters, topicsQuery.data, topicsQuery.isPending]);
+  const coursesQuery = useCoursesQuery({
+    page: currentPage,
+    categories: effectiveSelectedFilters.categories,
+    instructors: effectiveSelectedFilters.instructors,
+    topics: effectiveSelectedFilters.topics,
+  });
+  const displayedCount = coursesQuery.data?.data.length ?? 0;
+  const totalCount = coursesQuery.data?.meta.total ?? 0;
+  const totalPages = coursesQuery.data?.meta.lastPage ?? 1;
 
   function toggleFilter(
     type: "categories" | "topics" | "instructors",
     id: number,
   ) {
+    setCurrentPage(1);
     setSelectedFilters((prevFilters) => {
       const currentFilters = prevFilters[type];
       const updatedFilters = currentFilters.includes(id)
@@ -65,6 +78,7 @@ export function CoursesCatalogPage() {
   }
 
   function clearAllFilters() {
+    setCurrentPage(1);
     setSelectedFilters({
       categories: [],
       instructors: [],

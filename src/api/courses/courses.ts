@@ -4,6 +4,9 @@ import { apiClient } from "../client";
 
 export type GetCoursesParams = {
   page?: number;
+  categories?: number[];
+  topics?: number[];
+  instructors?: number[];
 };
 
 export type CoursesApiResponse = {
@@ -12,9 +15,21 @@ export type CoursesApiResponse = {
 };
 
 export async function getCourses(params: GetCoursesParams = {}) {
-  const response = await apiClient.get<CoursesApiResponse>("/courses", {
-    params,
-  });
+  const queryParams = {
+    ...(params.page !== undefined ? { page: params.page } : {}),
+    ...(params.categories && params.categories.length > 0
+      ? { "categories[]": params.categories }
+      : {}),
+    ...(params.topics && params.topics.length > 0
+      ? { "topics[]": params.topics }
+      : {}),
+    ...(params.instructors && params.instructors.length > 0
+      ? { "instructors[]": params.instructors }
+      : {}),
+  };
 
+  const response = await apiClient.get<CoursesApiResponse>("/courses", {
+    params: queryParams,
+  });
   return response.data;
 }
