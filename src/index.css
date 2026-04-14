@@ -161,7 +161,7 @@
   /* micro texts */
   .text-helper-medium {
     /* Form field labels such as 'Email', 'Password', and input titles. */
-    @apply font-inter text-[12px] font-medium;
+    @apply font-inter text-[16px] font-medium;
   }
   .text-helper-regular {
     /* Form helper text and validation messages such as errors, hints, and instructions. */
