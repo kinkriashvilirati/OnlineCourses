@@ -11,7 +11,7 @@ export default function DetailedCourse() {
       <Header title={data_mock.title} />
       <div className="flex justify-between items-center">
         <section className="w-225.75">
-          <CourseDetails />
+          <CourseDetails data={data_mock} />
         </section>
         <section className="w-132.5">
           <EnrolmentCard />
