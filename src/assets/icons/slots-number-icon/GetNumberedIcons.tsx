@@ -4,6 +4,7 @@ import two from "./two.svg";
 import two_fill from "./two_fill.svg";
 import three from "./three.svg";
 import three_fill from "./three_fill.svg";
+
 type IconsObjInteface = Record<string, string>;
 const NumberedIcons: IconsObjInteface = {
   one,
