@@ -88,9 +88,7 @@ Add your walkthrough video link here.
 
 Example:
 
-```md
 [Watch the demo video](https://youtu.be/nc9XMe1BkGs)
-```
 
 ## Screenshots
 
