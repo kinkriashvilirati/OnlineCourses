@@ -1,3 +1,4 @@
+import package_open_svg from "../../../assets/icons/icon-set/package_open.svg";
 import { ErrorComponent } from "../../../components/error/Error";
 import { LoadingDots } from "../../../components/loading/Loading";
 import { useAuthModalLifecycle } from "../../../hooks/useAuthModalLifecycle";
@@ -7,6 +8,7 @@ import FeaturedLearningCourse from "../../../features/dashboard/continueLearning
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import EnrollmentSmallDescribtion from "../../shared/EnrollmentSmallDescribtion";
+import { Link } from "react-router";
 
 type EnrolledCoursesPanelProps = {
   isOpen: boolean;
@@ -67,8 +69,26 @@ export default function EnrolledCoursesPanel({
         </div>
 
         {enrollmentsQUery.isSuccess && safeEnrollments.length === 0 ? (
-          <div className="rounded-xl border border-grayscale-100 bg-grayscale-50 px-8 py-16 text-center">
-            <p className="text-h4 text-grayscale-800">No courses yet</p>
+          <div className="h-full flex flex-col items-center justify-center px-8 py-16 text-center gap-1">
+            <img src={package_open_svg} alt="Opened Package" />
+            <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-2">
+                <h3 className="text-h3 text-purple-800">
+                  No Enrolled Courses Yet
+                </h3>
+                <p className="text-body-xs text-purple-800">
+                  Your learning journey starts here! Browse courses to get
+                  started.
+                </p>
+              </div>
+              <Link
+                onClick={onClose}
+                to="/courses"
+                className=" px-6.25 py-4.25 inline text-grayscale-50 rounded-lg button-primary self-center"
+              >
+                Browse Course
+              </Link>
+            </div>
           </div>
         ) : null}
 
