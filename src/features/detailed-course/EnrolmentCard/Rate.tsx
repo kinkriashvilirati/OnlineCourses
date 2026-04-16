@@ -18,10 +18,16 @@ function getRatingStarIcon(starValue: number, hoveredRating: number | null) {
 }
 
 type RateProps = {
+  isSubmitting?: boolean;
+  onRate: (rating: number) => void;
   setIsRatingVisible: (value: boolean) => void;
 };
 
-export default function Rate({ setIsRatingVisible }: RateProps) {
+export default function Rate({
+  isSubmitting = false,
+  onRate,
+  setIsRatingVisible,
+}: RateProps) {
   const [hoveredRating, setHoveredRating] = useState<number | null>(null);
 
   return (
@@ -29,6 +35,7 @@ export default function Rate({ setIsRatingVisible }: RateProps) {
       <button
         className="cursor-pointer absolute w-3 h-3 top-5 right-5"
         onClick={() => setIsRatingVisible(false)}
+        disabled={isSubmitting}
         type="button"
       >
         <img alt="Close rating" className="h-5 w-5" src={modal_close_icon} />
@@ -41,12 +48,10 @@ export default function Rate({ setIsRatingVisible }: RateProps) {
       <div className="flex items-center gap-4.5 ">
         {RATING_STARS.map((starValue) => (
           <button
-            className="cursor-pointer"
+            className="cursor-pointer disabled:cursor-auto"
+            disabled={isSubmitting}
             key={starValue}
-            onClick={() => {
-              alert(`Clicked star: ${starValue}`);
-              // setIsRatingVisible(false);
-            }}
+            onClick={() => onRate(starValue)}
             onMouseEnter={() => setHoveredRating(starValue)}
             onMouseLeave={() => setHoveredRating(null)}
             type="button"

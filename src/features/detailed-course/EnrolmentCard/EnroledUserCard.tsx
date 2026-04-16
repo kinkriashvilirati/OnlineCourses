@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { isAxiosError } from "axios";
+import { toast } from "sonner";
 import type { Enrollment } from "../../../types/enrollment";
 import desktop_icon from "../../../assets/icons/schedules-secctions-icon/desktop.svg";
 import map_icon from "../../../assets/icons/icon-set/map_pin.svg";
@@ -10,14 +11,20 @@ import ProgressBar from "../../../components/shared/ProgressBar";
 import retake_icon from "../../../assets/icons/icon-set/Retake.svg";
 import Rate from "./Rate";
 import { useCompleteEnrollmentMutation } from "../../../hooks/mutation-hooks/useCompleteEnrollmentMutation";
+import { useCreateReviewMutation } from "../../../hooks/mutation-hooks/useCreateReviewMutation";
 
 export default function EnroledUserCard({
+  courseId,
   enrollment,
+  isRated,
 }: {
+  courseId: number;
   enrollment: Enrollment;
+  isRated: boolean;
 }) {
   const [isRatingVisible, setIsRatingVisible] = useState(true);
   const completeEnrollmentMutation = useCompleteEnrollmentMutation();
+  const createReviewMutation = useCreateReviewMutation();
   const progressPercentage = enrollment.progress;
   const clampedProgressPercentage = Math.min(
     Math.max(progressPercentage, 0),
@@ -32,7 +39,11 @@ export default function EnroledUserCard({
     completeEnrollmentMutation.isPending ||
     completeEnrollmentMutation.isSuccess;
   const buttonIcon = isCompleted ? retake_icon : check_2_icon;
-  const shouldShowRatingPanel = isCompleted && isRatingVisible;
+  const shouldShowRatingPanel =
+    isCompleted &&
+    !isRated &&
+    isRatingVisible &&
+    !createReviewMutation.isSuccess;
   const completeErrorMessage = completeEnrollmentMutation.isError
     ? isAxiosError(completeEnrollmentMutation.error)
       ? completeEnrollmentMutation.error.response?.data?.message ??
@@ -105,7 +116,32 @@ export default function EnroledUserCard({
           <p className="text-body-xs text-helper-error">{completeErrorMessage}</p>
         ) : null}
         {shouldShowRatingPanel ? (
-          <Rate setIsRatingVisible={setIsRatingVisible} />
+          <Rate
+            isSubmitting={createReviewMutation.isPending}
+            onRate={(rating) => {
+              createReviewMutation.mutate(
+                {
+                  courseId,
+                  rating,
+                },
+                {
+                  onError: (error) => {
+                    const message = isAxiosError(error)
+                      ? error.response?.data?.message ??
+                        "Failed to submit your rating."
+                      : "Failed to submit your rating.";
+
+                    toast.error(message);
+                  },
+                  onSuccess: () => {
+                    setIsRatingVisible(false);
+                    toast.success("Thanks for rating this course!");
+                  },
+                },
+              );
+            }}
+            setIsRatingVisible={setIsRatingVisible}
+          />
         ) : null}
       </div>
     </div>

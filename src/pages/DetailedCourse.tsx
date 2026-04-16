@@ -59,7 +59,11 @@ export default function DetailedCourse() {
           {course.enrollment ? (
             <>
               <section>
-                <EnroledUserCard enrollment={course.enrollment} />
+                <EnroledUserCard
+                  courseId={course.id}
+                  enrollment={course.enrollment}
+                  isRated={course.isRated}
+                />
               </section>
             </>
           ) : (
