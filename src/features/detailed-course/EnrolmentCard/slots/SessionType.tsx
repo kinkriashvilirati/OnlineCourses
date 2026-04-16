@@ -92,7 +92,7 @@ export default function SessionType({
         const sessionTypeDescription = getSessionTypeDescription(schedule);
         const isFullyBooked = schedule.availableSeats === 0;
         const isLowSeats =
-          schedule.availableSeats > 0 && schedule.availableSeats < 3;
+          schedule.availableSeats > 0 && schedule.availableSeats < 5;
         return (
           <div key={schedule.id} className=" w-full  ">
             <div className="flex w-full gap-2 flex-col items-center">
@@ -133,26 +133,25 @@ export default function SessionType({
                   </p>
                 </div>
 
-                <p
-                  className={`text-body-xs ${
-                    isFullyBooked ? "text-grayscale-500" : "text-purple-400"
-                  }`}
-                >
-                  {isFullyBooked
-                    ? "Fully Booked"
-                    : schedule.priceModifier === 0
-                      ? "Included"
-                      : `+$${Math.floor(schedule.priceModifier)}`}
+                <p className={`text-body-xs`}>
+                  {schedule.priceModifier === 0
+                    ? "Included"
+                    : `+$${Math.floor(schedule.priceModifier)}`}
                 </p>
               </button>
               <div className="text-body-xs text-grayscale-700 flex gap-1 justify-center items-center">
                 {isLowSeats ? (
                   <>
                     <img className="w-4 h-4" alt="Warning Icon" src={warning} />
-                    <span>{schedule.availableSeats} left</span>
+                    <span className="text-helper-warning">
+                      {schedule.availableSeats} left
+                    </span>
                   </>
-                ) : isFullyBooked ? (
-                  <span className="text-grayscale-500">Fully Booked</span>
+                ) : schedule.availableSeats == 0 ? (
+                  <>
+                    <img className="w-4 h-4" alt="Warning Icon" src={warning} />
+                    <span>Fully Booked</span>
+                  </>
                 ) : (
                   `${schedule.availableSeats} Remainded`
                 )}

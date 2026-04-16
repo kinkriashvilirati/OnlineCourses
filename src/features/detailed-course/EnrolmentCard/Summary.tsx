@@ -1,9 +1,11 @@
 type SummaryProps = {
+  canEnroll: boolean;
   sessionTypePrice: number;
   totalPrice: number;
   basePrice: number;
 };
 export default function Summary({
+  canEnroll,
   sessionTypePrice,
   totalPrice,
   basePrice,
@@ -37,8 +39,8 @@ export default function Summary({
         </div>
 
         <button
-          className="w-full cursor-auto rounded-xl border-2 border-purple-100 bg-purple-50 px-5 py-4 text-button-l text-purple-300"
-          disabled
+          className="cursor-pointer w-full  rounded-xl border-2   px-5 py-4 text-button-l border-purple-300 bg-purple-100 text-purple-600 disabled:bg-purple-50 disabled:border-purple-50 disabled:text-purple-200 disabled:cursor-auto"
+          disabled={!canEnroll}
           type="button"
         >
           Enroll Now

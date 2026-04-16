@@ -1,6 +1,7 @@
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NumberedIcons from "../../../assets/icons/slots-number-icon/GetNumberedIcons";
+import { useAuth } from "../../../context/AuthContext";
 import type { DetailedCourse } from "../../../types/courses-type";
 import Summary from "./Summary";
 import Slot from "./slots/Slot";
@@ -33,6 +34,7 @@ function formatPrice(price: number) {
 }
 
 export default function EnrolmentCard({ data }: EnrolmentCardProps) {
+  const { isAuthenticated, isAuthRestoring, profileComplete } = useAuth();
   const basePrice = formatPrice(data.basePrice);
   type SlotOpen = Record<number, boolean>;
 
@@ -48,6 +50,13 @@ export default function EnrolmentCard({ data }: EnrolmentCardProps) {
   >(null);
   const [selectedSessionTypePrice, setSelectedSessionTypePrice] = useState(0);
   const totalPrice = Number(basePrice) + Number(selectedSessionTypePrice);
+  const canEnroll =
+    !isAuthRestoring &&
+    isAuthenticated &&
+    profileComplete &&
+    selectedWeeklyScheduleId !== null &&
+    selectedTimeSlotId !== null &&
+    selectedSessionTypeId !== null;
 
   function getIsSectionDisabled(sectionId: number) {
     if (sectionId === 2) {
@@ -165,6 +174,7 @@ export default function EnrolmentCard({ data }: EnrolmentCardProps) {
       })}
       <Summary
         basePrice={basePrice}
+        canEnroll={canEnroll}
         sessionTypePrice={selectedSessionTypePrice}
         totalPrice={totalPrice}
       />
