@@ -75,13 +75,13 @@ export default function EnrolmentCard({ data }: EnrolmentCardProps) {
   const conflictData =
     createEnrollmentMutation.isError &&
     isAxiosError(createEnrollmentMutation.error)
-      ? createEnrollmentMutation.error.response?.data?.conflicts?.[0] ?? null
+      ? (createEnrollmentMutation.error.response?.data?.conflicts?.[0] ?? null)
       : null;
   const enrollErrorMessage =
     createEnrollmentMutation.isError && !conflictData
       ? isAxiosError(createEnrollmentMutation.error)
-        ? createEnrollmentMutation.error.response?.data?.message ??
-          "Failed to enroll in this course."
+        ? (createEnrollmentMutation.error.response?.data?.message ??
+          "Failed to enroll in this course.")
         : "Failed to enroll in this course."
       : null;
   const enrollErrorContent = enrollErrorMessage ? (
@@ -264,7 +264,7 @@ export default function EnrolmentCard({ data }: EnrolmentCardProps) {
         actions={
           <>
             <button
-              className="w-full cursor-pointer rounded-xl border-2 border-purple-300 bg-grayscale-50 px-5 py-4 text-button-l text-purple-600 transition-all duration-300 hover:bg-purple-50 disabled:cursor-auto disabled:border-purple-100 disabled:text-purple-200"
+              className="w-full cursor-pointer rounded-xl border-2 border-purple-300 bg-grayscale-50 px-3 py-2 text-button-s text-purple-600 transition-all duration-300 hover:bg-purple-50 disabled:cursor-auto disabled:border-purple-100 disabled:text-purple-200"
               disabled={createEnrollmentMutation.isPending}
               onClick={() => {
                 if (!canEnroll || selectedCourseScheduleId === null) {
@@ -289,7 +289,7 @@ export default function EnrolmentCard({ data }: EnrolmentCardProps) {
                 : "Continue Anyway"}
             </button>
             <button
-              className="w-full cursor-pointer rounded-xl border-2 border-purple-500 bg-purple-500 px-5 py-4 text-button-l text-grayscale-50 transition-all duration-300 hover:bg-purple-600 disabled:cursor-auto disabled:border-purple-100 disabled:bg-purple-100 disabled:text-purple-300"
+              className="w-full cursor-pointer rounded-xl border-2 border-purple-500 bg-purple-500 px-3 py-2 text-button-s text-grayscale-50 transition-all duration-300 hover:bg-purple-600 disabled:cursor-auto disabled:border-purple-100 disabled:bg-purple-100 disabled:text-purple-300"
               disabled={createEnrollmentMutation.isPending}
               onClick={() => createEnrollmentMutation.reset()}
               type="button"

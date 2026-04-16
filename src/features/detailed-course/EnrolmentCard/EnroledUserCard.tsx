@@ -141,16 +141,14 @@ export default function EnroledUserCard({
           <img src={buttonIcon} alt="Check Icon" />
         </button>
         {actionErrorMessage ? (
-          <p className="text-body-xs text-helper-error">
-            {actionErrorMessage}
-          </p>
+          <p className="text-body-xs text-helper-error">{actionErrorMessage}</p>
         ) : null}
       </div>
 
       <CourseTakeModal
         actions={
           <button
-            className="w-full cursor-pointer rounded-xl border-2 border-purple-500 bg-purple-500 px-5 py-4 text-button-l text-grayscale-50 transition-all duration-300 hover:bg-purple-600"
+            className="w-full cursor-pointer rounded-xl border-2 border-purple-500 bg-purple-500 px-3 py-2 text-button-s text-grayscale-50 transition-all duration-300 hover:bg-purple-600"
             onClick={() => setIsCompletionModalVisible(false)}
             type="button"
           >

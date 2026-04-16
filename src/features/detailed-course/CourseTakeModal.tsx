@@ -38,7 +38,7 @@ export default function CourseTakeModal({
 
       <section
         aria-modal="true"
-        className="relative z-10 flex w-full max-w-122.5 flex-col items-center gap-8 rounded-[24px] bg-grayscale-50 px-12 py-10 text-center shadow-[0_30px_80px_rgba(20,20,20,0.22)]"
+        className="relative z-10 flex w-full max-w-122.5 flex-col items-center gap-8 rounded-3xl bg-grayscale-50 px-12 py-10 text-center shadow-[0_30px_80px_rgba(20,20,20,0.22)]"
         role="dialog"
       >
         <img alt="" className="h-18 w-18 shrink-0" src={GetModdelacons[icon]} />
@@ -50,7 +50,7 @@ export default function CourseTakeModal({
 
         {children ? <div className="w-full">{children}</div> : null}
 
-        <div className="flex w-full flex-col gap-4 sm:flex-row">{actions}</div>
+        <div className="flex  w-full flex-col gap-4 sm:flex-row">{actions}</div>
       </section>
     </div>
   );
