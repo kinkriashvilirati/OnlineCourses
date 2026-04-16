@@ -72,6 +72,12 @@ npm run preview
 - A few courses may already be enrolled, completed, or have limited / full seats.
 - To get the full experience, choose a course that still has available seats and try different schedule options if one path is already taken.
 
+## Notes
+
+- The project currently focuses on the desktop experience.
+- Backend-driven course data can affect enrollment availability, schedule conflicts, and progress states.
+- If a demo flow looks unavailable, try another course or another session type.
+
 ## Live Demo
 
 [Open the live website](https://online-course-rk.netlify.app/)
@@ -90,7 +96,6 @@ Example:
 
 Example:
 
-```md
 ## Screenshots
 
 ![Dashboard](./web-pngs/dashboard.png)
@@ -98,10 +103,3 @@ Example:
 ![Courses Catalog](./catalog.png)
 
 ![Detailed Course](./web-pngs/detailed.png)
-```
-
-## Notes
-
-- The project currently focuses on the desktop experience.
-- Backend-driven course data can affect enrollment availability, schedule conflicts, and progress states.
-- If a demo flow looks unavailable, try another course or another session type.
