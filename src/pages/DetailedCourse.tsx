@@ -6,6 +6,7 @@ import EnrolmentCard from "../features/detailed-course/EnrolmentCard/EnrolmentCa
 import EnrollmentAccessNotice from "../features/detailed-course/EnrollmentAccessNotice";
 import Header from "../features/detailed-course/Navigation";
 import { useDetailedCourseQuery } from "../hooks/query-hooks/useDetailedCourseQuery";
+import EnroledUserCard from "../features/detailed-course/EnrolmentCard/EnroledUserCard";
 
 export default function DetailedCourse() {
   const { courseId } = useParams();
@@ -56,7 +57,11 @@ export default function DetailedCourse() {
         </section>
         <div className="flex w-132.5 flex-col gap-3">
           {course.enrollment ? (
-            "enrolled"
+            <>
+              <section>
+                <EnroledUserCard enrollment={course.enrollment} />
+              </section>
+            </>
           ) : (
             <>
               <section>

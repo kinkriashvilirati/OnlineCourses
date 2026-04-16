@@ -31,7 +31,7 @@
   --ui-helper-errorLight: #f66466;
   --ui-helper-warning: #f4a316;
   --ui-helper-success: #1dc31d;
-  --ui-helper-successLight: #1dc31d1a;
+  --ui-helper-successLight: rgba(29, 195, 29, 0.1);
 }
 
 @theme inline {

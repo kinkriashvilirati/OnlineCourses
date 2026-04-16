@@ -1,4 +1,5 @@
 import fullStarIcon from "../../../assets/icons/icon-set/full_star.svg";
+import ProgressBar from "../../../components/shared/ProgressBar";
 import type { Enrollment } from "../../../types/enrollment";
 
 type FeaturedLearningCourseProps = {
@@ -45,18 +46,7 @@ export default function FeaturedLearningCourse({
         </div>
       </div>
       <div className="flex items-end justify-between gap-10">
-        <div className="flex flex-1 flex-col gap-3">
-          <p className="text-body-m text-grayscale-900">
-            {clampedProgressPercentage}% Complete
-          </p>
-
-          <div className="h-4 w-full overflow-hidden rounded-full bg-purple-100">
-            <div
-              className="h-full rounded-full bg-purple-500 transition-all duration-500"
-              style={{ width: `${clampedProgressPercentage}%` }}
-            />
-          </div>
-        </div>
+        <ProgressBar clampedProgressPercentage={clampedProgressPercentage} />
 
         <button
           className="button-outline min-w-33 rounded-2xl px-8 py-4 text-button-m"
