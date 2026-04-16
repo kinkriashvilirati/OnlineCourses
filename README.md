@@ -91,8 +91,12 @@ Example:
 Example:
 
 ```md
+## Screenshots
+
 ![Dashboard](./web-pngs/dashboard.png)
-![Courses Catalog](./web-pngs/catalog.png)
+
+![Courses Catalog](./catalog.png)
+
 ![Detailed Course](./web-pngs/detailed.png)
 ```
 
