@@ -2,9 +2,6 @@ import { FooterBrandSection } from "./footer-sections/FooterBrandSection";
 import { FooterContactSection } from "./footer-sections/FooterContactSection";
 import { FooterLinksColumn } from "./footer-sections/FooterLinksColumn";
 
-const exploreLinks = ["Enrolled Courses", "Browse Courses"];
-const accountLinks = ["My Profile"];
-
 export default function Footer() {
   return (
     <footer className="mt-40 border-t border-grayscale-200 bg-grayscale-10 px-44.25 pt-20 pb-5 flex flex-col gap-18.5">
@@ -12,8 +9,8 @@ export default function Footer() {
         <FooterBrandSection />
 
         <div className="flex items-start gap-30">
-          <FooterLinksColumn links={exploreLinks} title="Explore" />
-          <FooterLinksColumn links={accountLinks} title="Account" />
+          <FooterLinksColumn title="Explore" />
+          <FooterLinksColumn title="Account" />
           <FooterContactSection />
         </div>
       </div>

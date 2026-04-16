@@ -1,4 +1,3 @@
-import { Link } from "react-router";
 import { LoadingDots } from "../../../components/loading/Loading";
 import ContinueLearningLockedModal from "./ContinueLearningLockedModal";
 import { notAuthCourses } from "./fakeData";
@@ -7,12 +6,15 @@ import { useAuth } from "../../../context/AuthContext";
 import { useCoursesInProgressQuery } from "../../../hooks/query-hooks/useCoursesInProgressQuery";
 import BrowseCourses from "../../../components/shared/BrowsCourses";
 import { ErrorComponent } from "../../../components/error/Error";
+import { useAuthModal } from "../../../context/AuthModalContext";
 
 export default function ContinueLearningSection() {
   const { isAuthenticated } = useAuth();
   const coursesInProgressQuery = useCoursesInProgressQuery(isAuthenticated);
   const coursesInProgress = coursesInProgressQuery.data?.data ?? [];
   const shouldShowSeeAll = isAuthenticated && coursesInProgress.length >= 4;
+  const { setIsPanelOpen } = useAuthModal();
+
   if (coursesInProgressQuery.isSuccess) {
     console.log(coursesInProgressQuery.data);
   }
@@ -25,12 +27,14 @@ export default function ContinueLearningSection() {
             Pick up where you left
           </p>
           {shouldShowSeeAll ? (
-            <Link
-              to="/courses"
-              className="text-underline-m text-purple-500 max-h-7"
+            <button
+              onClick={() => {
+                setIsPanelOpen((prev) => !prev);
+              }}
+              className="text-underline-m text-purple-500 max-h-7 cursor-pointer hover:text-purple-500 transition-all duration-300"
             >
               See All
-            </Link>
+            </button>
           ) : null}
         </div>
       </header>

@@ -1,9 +1,8 @@
-import { useState } from "react";
 import EnrolledCoursesPanel from "./EnrolledCoursesPanel";
+import { useAuthModal } from "../../../context/AuthModalContext";
 
 export default function EnrolledCoursesButton() {
-  const [isPanelOpen, setIsPanelOpen] = useState(false);
-
+  const { isPanelOpen, setIsPanelOpen } = useAuthModal();
   return (
     <>
       <button
