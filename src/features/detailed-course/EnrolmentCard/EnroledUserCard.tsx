@@ -12,6 +12,7 @@ import retake_icon from "../../../assets/icons/icon-set/Retake.svg";
 import Rate from "./Rate";
 import { useCompleteEnrollmentMutation } from "../../../hooks/mutation-hooks/useCompleteEnrollmentMutation";
 import { useCreateReviewMutation } from "../../../hooks/mutation-hooks/useCreateReviewMutation";
+import { useDeleteEnrollmentMutation } from "../../../hooks/mutation-hooks/useDeleteEnrollmentMutation";
 
 export default function EnroledUserCard({
   courseId,
@@ -25,6 +26,7 @@ export default function EnroledUserCard({
   const [isRatingVisible, setIsRatingVisible] = useState(true);
   const completeEnrollmentMutation = useCompleteEnrollmentMutation();
   const createReviewMutation = useCreateReviewMutation();
+  const deleteEnrollmentMutation = useDeleteEnrollmentMutation();
   const progressPercentage = enrollment.progress;
   const clampedProgressPercentage = Math.min(
     Math.max(progressPercentage, 0),
@@ -34,22 +36,50 @@ export default function EnroledUserCard({
   const SPAN_CLASSES = "text-body-l grayscale-500";
   const ROWCONTAINER = "flex gap-3";
   const isCompleted = enrollment.completedAt ? true : false;
-  const isCompletingLocked =
-    isCompleted ||
-    completeEnrollmentMutation.isPending ||
-    completeEnrollmentMutation.isSuccess;
+  const isButtonLocked = isCompleted
+    ? deleteEnrollmentMutation.isPending || deleteEnrollmentMutation.isSuccess
+    : completeEnrollmentMutation.isPending || completeEnrollmentMutation.isSuccess;
   const buttonIcon = isCompleted ? retake_icon : check_2_icon;
   const shouldShowRatingPanel =
     isCompleted &&
     !isRated &&
     isRatingVisible &&
     !createReviewMutation.isSuccess;
-  const completeErrorMessage = completeEnrollmentMutation.isError
+  const actionErrorMessage = completeEnrollmentMutation.isError
     ? isAxiosError(completeEnrollmentMutation.error)
-      ? completeEnrollmentMutation.error.response?.data?.message ??
-        "Failed to complete course."
+      ? (completeEnrollmentMutation.error.response?.data?.message ??
+        "Failed to complete course.")
       : "Failed to complete course."
-    : null;
+    : deleteEnrollmentMutation.isError
+      ? isAxiosError(deleteEnrollmentMutation.error)
+        ? (deleteEnrollmentMutation.error.response?.data?.message ??
+          "Failed to retake course.")
+        : "Failed to retake course."
+      : null;
+
+  function handleEnrollmentAction() {
+    if (isCompleted) {
+      deleteEnrollmentMutation.mutate({
+        courseId,
+        enrollmentId: enrollment.id,
+      });
+      return;
+    }
+
+    completeEnrollmentMutation.mutate(enrollment.id);
+  }
+
+  const buttonLabel = isCompleted
+    ? deleteEnrollmentMutation.isPending
+      ? "Retaking..."
+      : deleteEnrollmentMutation.isSuccess
+        ? "Updating..."
+        : "Retake Course"
+    : completeEnrollmentMutation.isPending
+      ? "Completing..."
+      : completeEnrollmentMutation.isSuccess
+        ? "Updating..."
+        : "Complete Course";
   return (
     <div className="flex flex-col gap-24.25">
       <div className="flex flex-col gap-5.5">
@@ -97,23 +127,17 @@ export default function EnroledUserCard({
         <ProgressBar clampedProgressPercentage={clampedProgressPercentage} />
         <button
           className="py-4.25 text-button-m flex justify-center items-center text-grayscale-50 gap-2.5 bg-purple-400 rounded-lg hover:bg-pruple-500 transition-all duration-300 cursor-pointer disabled:bg-purple-100 disabled:text-purple-300 disabled:cursor-auto"
-          disabled={isCompletingLocked}
-          onClick={() => completeEnrollmentMutation.mutate(enrollment.id)}
+          disabled={isButtonLocked}
+          onClick={handleEnrollmentAction}
           type="button"
         >
-          <span>
-            {completeEnrollmentMutation.isPending
-              ? "Completing..."
-              : completeEnrollmentMutation.isSuccess && !isCompleted
-                ? "Updating..."
-              : isCompleted
-                ? "Course Completed"
-                : "Complete Course"}
-          </span>
+          <span>{buttonLabel}</span>
           <img src={buttonIcon} alt="Check Icon" />
         </button>
-        {completeErrorMessage ? (
-          <p className="text-body-xs text-helper-error">{completeErrorMessage}</p>
+        {actionErrorMessage ? (
+          <p className="text-body-xs text-helper-error">
+            {actionErrorMessage}
+          </p>
         ) : null}
         {shouldShowRatingPanel ? (
           <Rate
@@ -127,8 +151,8 @@ export default function EnroledUserCard({
                 {
                   onError: (error) => {
                     const message = isAxiosError(error)
-                      ? error.response?.data?.message ??
-                        "Failed to submit your rating."
+                      ? (error.response?.data?.message ??
+                        "Failed to submit your rating.")
                       : "Failed to submit your rating.";
 
                     toast.error(message);
