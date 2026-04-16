@@ -1,88 +1,137 @@
+import { useParams } from "react-router";
 import GetModdelacons from "../../../../assets/icons/modalIcons/GetModellacons";
 import GetSlotsSectionsIcons from "../../../../assets/icons/schedules-secctions-icon/GetSlotsSectionsIcons";
-type SlotItem = {
-  id: number;
-  courseScheduleId: number;
-  name: string;
-  priceModifier: string; // backend gives string (e.g. "0.00")
-  availableSeats: number;
-  location: string | null;
+import { LoadingDots } from "../../../../components/loading/Loading";
+import { useSessionTypesQuery } from "../../../../hooks/query-hooks/useSessionTypesQuery";
+import type { SessionType as SessionTypeItem } from "../../../../types/sessionType";
+import { ErrorComponent } from "../../../../components/error/Error";
+
+type SessionTypeProps = {
+  onSelectSessionType: (id: number, priceModifier: number) => void;
+  selectedSessionTypeId: number | null;
+  selectedTimeSlotId: number | null;
+  selectedWeeklyScheduleId: number | null;
 };
-const MOCK: SlotItem[] = [
-  {
-    id: 1,
-    courseScheduleId: 5,
-    name: "online",
-    priceModifier: "0.00",
-    availableSeats: 0,
-    location: null,
-  },
-  {
-    id: 2,
-    courseScheduleId: 5,
-    name: "online",
-    priceModifier: "0.00",
-    availableSeats: 0,
-    location: null,
-  },
-  {
-    id: 3,
-    courseScheduleId: 5,
-    name: "online",
-    priceModifier: "0.00",
-    availableSeats: 30,
-    location: null,
-  },
-];
-export default function SessionType() {
-  /**
-   * icons:
-  cloud_sun,
-  desktop,
-  intersect,
-  moon,
-  sun,
-  users,
-   */
+
+function formatSessionTypeName(name: SessionTypeItem["name"]) {
+  if (name === "online") {
+    return "Online";
+  }
+
+  if (name === "in_person") {
+    return "In-Person";
+  }
+
+  return "Hybrid";
+}
+
+function getSessionTypeDescription(sessionType: SessionTypeItem) {
+  if (sessionType.name === "online") {
+    return "Google Meet";
+  }
+
+  return sessionType.location ?? "";
+}
+
+function getSessionTypeIcon(name: SessionTypeItem["name"]) {
+  if (name === "online") {
+    return GetSlotsSectionsIcons.desktop;
+  }
+
+  if (name === "in_person") {
+    return GetSlotsSectionsIcons.users;
+  }
+
+  return GetSlotsSectionsIcons.intersect;
+}
+
+export default function SessionType({
+  onSelectSessionType,
+  selectedSessionTypeId,
+  selectedTimeSlotId,
+  selectedWeeklyScheduleId,
+}: SessionTypeProps) {
+  const { courseId } = useParams();
+  const parsedCourseId = Number(courseId);
+  const resolvedCourseId = Number.isInteger(parsedCourseId)
+    ? parsedCourseId
+    : null;
+  const sessionTypesQuery = useSessionTypesQuery(
+    resolvedCourseId,
+    selectedWeeklyScheduleId,
+    selectedTimeSlotId,
+  );
+  if (resolvedCourseId === null) {
+    return <ErrorComponent description="failed to load session types" />;
+  }
+
+  if (selectedWeeklyScheduleId === null || selectedTimeSlotId === null) {
+    return null;
+  }
+
+  if (sessionTypesQuery.isPending) {
+    return <LoadingDots />;
+  }
+
+  if (sessionTypesQuery.isError) {
+    return <ErrorComponent description="failed to load session types" />;
+  }
+
+  const sessionTypes = sessionTypesQuery.data.data;
   const gridCols =
-    MOCK.length === 1
+    sessionTypes.length === 1
       ? "grid-cols-1"
-      : MOCK.length === 2
+      : sessionTypes.length === 2
         ? "grid-cols-2"
         : "grid-cols-3";
-  const Icon = GetSlotsSectionsIcons.desktop;
   const warning = GetModdelacons.warning;
   return (
     <div className={`grid gap-1 w-full ${gridCols}`}>
-      {MOCK.map((schedule: SlotItem) => {
+      {sessionTypes.map((schedule: SessionTypeItem) => {
+        const Icon = getSessionTypeIcon(schedule.name);
+        const sessionTypeDescription = getSessionTypeDescription(schedule);
         return (
           <div key={schedule.id} className=" w-full  ">
             <div className="flex w-full gap-2 flex-col items-center">
-              <div className="w-full rounded-xl border-grayscale-200 px-5 py-3.75 border flex flex-col items-center gap-3 transition-all duration-300 group hover:bg-purple-100 hover:text-purple-400 hover:border-purple-300 cursor-pointer">
+              <button
+                aria-pressed={selectedSessionTypeId === schedule.id}
+                className={`w-full rounded-xl border-grayscale-200 px-5 py-3.75 border flex flex-col items-center gap-3 transition-all duration-300 group hover:bg-purple-100 hover:text-purple-400 hover:border-purple-300 cursor-pointer ${
+                  selectedSessionTypeId === schedule.id ? "bg-purple-100" : ""
+                }`}
+                onClick={() =>
+                  onSelectSessionType(schedule.id, schedule.priceModifier)
+                }
+                type="button"
+              >
                 <div className="flex flex-col gap-1.5 items-center ">
                   <Icon />
                   <h5 className="text-h5 text-grayscale-600 group-hover:text-purple-400">
-                    {schedule.name}
+                    {formatSessionTypeName(schedule.name)}
                   </h5>
                   <p className="text-helper-regular text-grayscale-600 group-hover:text-purple-400">
-                    Google Meet
+                    {sessionTypeDescription}
                   </p>
                 </div>
 
                 <p className="text-body-xs text-purple-400">
-                  {schedule.priceModifier === "0.00"
+                  {schedule.priceModifier === 0
                     ? "Included"
-                    : `price ${0}`}
+                    : `+$${Math.floor(schedule.priceModifier)}`}
                 </p>
-              </div>
+              </button>
               <div className="text-body-xs text-grayscale-700 flex gap-1 justify-center items-center">
-                {schedule.availableSeats > 3 ? (
-                  `${schedule.availableSeats} Remainded`
-                ) : (
+                {schedule.availableSeats < 5 && schedule.availableSeats != 0 ? (
                   <>
                     <img className="w-4 h-4" alt="Warning Icon" src={warning} />
                     <span>{schedule.availableSeats} left</span>
                   </>
+                ) : schedule.availableSeats == 0 ? (
+                  <>
+                    <img className="w-4 h-4" alt="Warning Icon" src={warning} />
+                    <span>Fully Booked</span>
+                  </>
+                ) : (
+                  `${schedule.availableSeats} Remainded`
                 )}
               </div>
             </div>

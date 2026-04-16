@@ -60,7 +60,11 @@ export default function TimeSlot({
             <div className="flex w-full gap-2  items-center">
               <button
                 aria-pressed={selectedTimeSlotId === schedule.id}
-                className="text-grayscale-500 w-full rounded-xl border-grayscale-200 px-5 py-3.75 border flex  items-center gap-3 transition-all duration-300 group hover:bg-purple-100 hover:text-purple-400 hover:border-purple-300 cursor-pointer"
+                className={`w-full rounded-xl border px-5 py-3.75 flex items-center gap-3 transition-all duration-300 group cursor-pointer ${
+                  selectedTimeSlotId === schedule.id
+                    ? "text-purple-800 bg-purple-200 border-purple-400"
+                    : "text-grayscale-800 border-grayscale-200 hover:bg-purple-100 hover:text-purple-400 hover:border-purple-300"
+                }`}
                 onClick={() => onSelectTimeSlot(schedule.id)}
                 type="button"
               >

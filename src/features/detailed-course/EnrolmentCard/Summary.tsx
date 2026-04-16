@@ -1,8 +1,13 @@
 type SummaryProps = {
+  sessionTypePrice: number;
   totalPrice: number;
   basePrice: number;
 };
-export default function Summary({ totalPrice, basePrice }: SummaryProps) {
+export default function Summary({
+  sessionTypePrice,
+  totalPrice,
+  basePrice,
+}: SummaryProps) {
   return (
     <div>
       <div className="bg-grayscale-50 p-10 rounded-xl flex flex-col gap-8">
@@ -24,7 +29,9 @@ export default function Summary({ totalPrice, basePrice }: SummaryProps) {
               <span className="text-body-s text-grayscale-400">
                 Session Type
               </span>
-              <span className="text-body-s text-grayscale-700">+$0</span>
+              <span className="text-body-s text-grayscale-700">
+                {sessionTypePrice === 0 ? "Included" : `+$${sessionTypePrice}`}
+              </span>
             </div>
           </div>
         </div>

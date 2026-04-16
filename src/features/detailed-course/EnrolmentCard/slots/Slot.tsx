@@ -4,16 +4,20 @@ import WeeklySchedule from "./WeeklySchedule";
 
 type SlotProps = {
   id: number;
+  onSelectSessionType: (id: number, priceModifier: number) => void;
   onSelectTimeSlot: (id: number) => void;
   onSelectWeeklySchedule: (id: number) => void;
+  selectedSessionTypeId: number | null;
   selectedTimeSlotId: number | null;
   selectedWeeklyScheduleId: number | null;
 };
 
 export default function Slot({
   id,
+  onSelectSessionType,
   onSelectTimeSlot,
   onSelectWeeklySchedule,
+  selectedSessionTypeId,
   selectedTimeSlotId,
   selectedWeeklyScheduleId,
 }: SlotProps) {
@@ -34,7 +38,14 @@ export default function Slot({
         />
       );
     case 3:
-      return <SessionType />;
+      return (
+        <SessionType
+          onSelectSessionType={onSelectSessionType}
+          selectedSessionTypeId={selectedSessionTypeId}
+          selectedTimeSlotId={selectedTimeSlotId}
+          selectedWeeklyScheduleId={selectedWeeklyScheduleId}
+        />
+      );
     default:
       return null;
   }

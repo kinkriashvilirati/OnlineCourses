@@ -34,7 +34,6 @@ function formatPrice(price: number) {
 
 export default function EnrolmentCard({ data }: EnrolmentCardProps) {
   const basePrice = formatPrice(data.basePrice);
-  const totalPrice = basePrice;
   type SlotOpen = Record<number, boolean>;
 
   const [openSlots, setOpenSlots] = useState<SlotOpen>({});
@@ -44,6 +43,11 @@ export default function EnrolmentCard({ data }: EnrolmentCardProps) {
   const [selectedTimeSlotId, setSelectedTimeSlotId] = useState<number | null>(
     null,
   );
+  const [selectedSessionTypeId, setSelectedSessionTypeId] = useState<
+    number | null
+  >(null);
+  const [selectedSessionTypePrice, setSelectedSessionTypePrice] = useState(0);
+  const totalPrice = Number(basePrice) + Number(selectedSessionTypePrice);
   return (
     <aside className="flex w-full flex-col gap-8 rounded-2xl ">
       {SLOT_SECTIONS.map((slotSection) => {
@@ -58,6 +62,7 @@ export default function EnrolmentCard({ data }: EnrolmentCardProps) {
               onClick={() => {
                 if (selectedWeeklyScheduleId === null && slotSection.id == 2)
                   return;
+                if (selectedTimeSlotId === null && slotSection.id == 3) return;
                 setOpenSlots((prev) => ({
                   ...prev,
                   [slotSection.id]: !prev[slotSection.id],
@@ -86,11 +91,22 @@ export default function EnrolmentCard({ data }: EnrolmentCardProps) {
             >
               <Slot
                 id={slotSection.id}
-                onSelectTimeSlot={setSelectedTimeSlotId}
+                onSelectSessionType={(sessionTypeId, priceModifier) => {
+                  setSelectedSessionTypeId(sessionTypeId);
+                  setSelectedSessionTypePrice(priceModifier);
+                }}
+                onSelectTimeSlot={(timeSlotId) => {
+                  setSelectedTimeSlotId(timeSlotId);
+                  setSelectedSessionTypeId(null);
+                  setSelectedSessionTypePrice(0);
+                }}
                 onSelectWeeklySchedule={(weeklyScheduleId) => {
                   setSelectedWeeklyScheduleId(weeklyScheduleId);
                   setSelectedTimeSlotId(null);
+                  setSelectedSessionTypeId(null);
+                  setSelectedSessionTypePrice(0);
                 }}
+                selectedSessionTypeId={selectedSessionTypeId}
                 selectedTimeSlotId={selectedTimeSlotId}
                 selectedWeeklyScheduleId={selectedWeeklyScheduleId}
               />
@@ -98,7 +114,11 @@ export default function EnrolmentCard({ data }: EnrolmentCardProps) {
           </div>
         );
       })}
-      <Summary totalPrice={totalPrice} basePrice={basePrice} />
+      <Summary
+        basePrice={basePrice}
+        sessionTypePrice={selectedSessionTypePrice}
+        totalPrice={totalPrice}
+      />
     </aside>
   );
 }
