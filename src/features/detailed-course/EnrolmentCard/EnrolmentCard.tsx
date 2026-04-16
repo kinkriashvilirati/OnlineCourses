@@ -61,9 +61,10 @@ export default function EnrolmentCard({ data }: EnrolmentCardProps) {
                 <img src={SlotIcon} alt="" />
                 <h3 className="text-h3 text-purple-800">{slotSection.label}</h3>
               </div>
-
               <FontAwesomeIcon
-                className="text-body-s text-purple-800"
+                className={`text-body-s text-purple-800 transition-transform duration-300 ${
+                  !isOpen ? "rotate-0" : "rotate-180"
+                }`}
                 icon={faChevronUp}
               />
             </div>
