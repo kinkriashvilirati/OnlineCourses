@@ -83,12 +83,10 @@ Add your walkthrough video link here.
 Example:
 
 ```md
-[Watch the demo video](PASTE_YOUR_VIDEO_LINK_HERE)
+[Watch the demo video](https://youtu.be/nc9XMe1BkGs)
 ```
 
 ## Screenshots
-
-Add your screenshots here.
 
 Example:
 
