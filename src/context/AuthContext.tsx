@@ -63,8 +63,8 @@ export function AuthProvider({ children }: PropsWithChildren) {
     () => ({
       clearAuthenticatedSession: () => {
         clearAccessToken();
-        queryClient.removeQueries({ queryKey: ["auth", "me"] });
         setUser(null);
+        queryClient.clear();
       },
       isAuthenticated: resolvedUser !== null,
       isAuthRestoring,

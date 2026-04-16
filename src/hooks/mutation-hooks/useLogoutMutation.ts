@@ -10,8 +10,8 @@ export function useLogoutMutation(handleClose: HandleClose) {
   return useMutation<void, LogoutMutationError, void>({
     mutationFn: logoutUser,
     onSettled: () => {
-      clearAuthenticatedSession();
       handleClose();
+      clearAuthenticatedSession();
     },
   });
 }

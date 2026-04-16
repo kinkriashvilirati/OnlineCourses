@@ -1,75 +1,105 @@
-# React + TypeScript + Vite
+# Online Courses Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern online learning platform built with React, TypeScript, Vite, and Tailwind CSS.
 
-Currently, two official plugins are available:
+This project includes a full course browsing and enrollment flow, authentication, profile completion, dashboard experiences for guests and authenticated users, and detailed course interactions such as selecting schedules, enrolling, completing a course, rating it, and retaking it.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## What I Built
 
-## React Compiler
+- A dashboard with:
+  - featured courses
+  - continue learning section
+  - enrolled courses side panel
+- A full courses catalog with:
+  - filters
+  - sorting
+  - pagination
+  - real backend integration
+- A detailed course page with:
+  - real course data
+  - weekly schedule, time slot, and session type selection
+  - enrollment flow
+  - conflict handling
+  - enrollment confirmation
+  - course completion
+  - retake flow
+  - rating flow
+- Authentication and profile-completion gating
+- Shared modal flows for important course actions
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## Tech Stack
 
-Note: This will impact Vite dev & build performances.
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Router
+- TanStack Query
+- Axios
+- Sonner
+- Font Awesome
 
-## Expanding the ESLint configuration
+## Main Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Browse featured and catalog courses
+- Filter courses by category, topic, and instructor
+- Sort and paginate courses
+- View detailed course information
+- Select weekly schedules, time slots, and session types
+- Enroll in a course with backend integration
+- Handle schedule conflicts with confirmation flow
+- Complete a course and rate the experience
+- Retake completed courses
+- Track in-progress learning from the dashboard
+- Open enrolled courses from the navigation side panel
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Getting Started
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+```bash
+npm install
+npm run dev
+npm run build
+npm run preview
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## How To Use
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- This version of the website is currently optimized for large screens and desktop/laptop devices.
+- Responsive support is coming soon.
+- If you open the project on a smaller screen, use a desktop device when possible, or zoom out the browser for a better experience.
+- Some course flows depend on backend seed data.
+- A few courses may already be enrolled, completed, or have limited / full seats.
+- To get the full experience, choose a course that still has available seats and try different schedule options if one path is already taken.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Live Demo
+
+[Open the live website](https://online-course-rk.netlify.app/)
+
+## Demo Video
+
+Add your walkthrough video link here.
+
+Example:
+
+```md
+[Watch the demo video](PASTE_YOUR_VIDEO_LINK_HERE)
 ```
+
+## Screenshots
+
+Add your screenshots here.
+
+Example:
+
+```md
+![Dashboard](./web-pngs/dashboard.png)
+![Courses Catalog](./web-pngs/catalog.png)
+![Detailed Course](./web-pngs/detailed.png)
+```
+
+## Notes
+
+- The project currently focuses on the desktop experience.
+- Backend-driven course data can affect enrollment availability, schedule conflicts, and progress states.
+- If a demo flow looks unavailable, try another course or another session type.

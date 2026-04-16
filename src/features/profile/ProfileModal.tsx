@@ -55,7 +55,7 @@ function ProfileModalContent({
 
     onClose();
   }, [onClose, profileComplete]);
-  const logoutMutation = useLogoutMutation(handleClose);
+  const logoutMutation = useLogoutMutation(onClose);
   const handleOverlayClick = useCallback(() => {
     if (profileComplete) {
       onClose();
