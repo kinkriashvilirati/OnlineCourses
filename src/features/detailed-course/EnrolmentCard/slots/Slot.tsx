@@ -4,7 +4,11 @@ import WeeklySchedule from "./WeeklySchedule";
 
 type SlotProps = {
   id: number;
-  onSelectSessionType: (id: number, priceModifier: number) => void;
+  onSelectSessionType: (
+    id: number,
+    priceModifier: number,
+    courseScheduleId: number,
+  ) => void;
   onSelectTimeSlot: (id: number) => void;
   onSelectWeeklySchedule: (id: number) => void;
   selectedSessionTypeId: number | null;

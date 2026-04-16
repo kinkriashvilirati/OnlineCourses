@@ -1,0 +1,40 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type { AxiosError } from "axios";
+import {
+  createEnrollment,
+  type CreateEnrollmentApiRequest,
+  type CreateEnrollmentApiResponse,
+} from "../../api/enrollments/createEnrollment";
+
+type EnrollmentErrorResponse = {
+  message: string;
+};
+
+export type CreateEnrollmentMutationError =
+  | AxiosError<EnrollmentErrorResponse>
+  | Error;
+
+export function useCreateEnrollmentMutation() {
+  const queryClient = useQueryClient();
+
+  return useMutation<
+    CreateEnrollmentApiResponse,
+    CreateEnrollmentMutationError,
+    CreateEnrollmentApiRequest
+  >({
+    mutationFn: createEnrollment,
+    onSuccess: (_data, variables) => {
+      // Enrollment changes both the detailed course state and the dashboard's
+      // in-progress list, so we invalidate those caches after a successful POST.
+      queryClient.invalidateQueries({
+        queryKey: ["courses", "detail", variables.courseId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["courses", "in-progress"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["enrollments"],
+      });
+    },
+  });
+}

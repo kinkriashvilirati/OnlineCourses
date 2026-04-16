@@ -1,11 +1,17 @@
 type SummaryProps = {
   canEnroll: boolean;
+  enrollErrorMessage: string | null;
+  isEnrolling: boolean;
+  onEnroll: () => void;
   sessionTypePrice: number;
   totalPrice: number;
   basePrice: number;
 };
 export default function Summary({
   canEnroll,
+  enrollErrorMessage,
+  isEnrolling,
+  onEnroll,
   sessionTypePrice,
   totalPrice,
   basePrice,
@@ -40,11 +46,16 @@ export default function Summary({
 
         <button
           className="cursor-pointer w-full  rounded-xl border-2   px-5 py-4 text-button-l border-purple-300 bg-purple-100 text-purple-600 disabled:bg-purple-50 disabled:border-purple-50 disabled:text-purple-200 disabled:cursor-auto"
-          disabled={!canEnroll}
+          disabled={!canEnroll || isEnrolling}
+          onClick={onEnroll}
           type="button"
         >
-          Enroll Now
+          {isEnrolling ? "Enrolling..." : "Enroll Now"}
         </button>
+
+        {enrollErrorMessage ? (
+          <p className="text-body-xs text-helper-error">{enrollErrorMessage}</p>
+        ) : null}
       </div>
     </div>
   );

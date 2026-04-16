@@ -7,7 +7,11 @@ import type { SessionType as SessionTypeItem } from "../../../../types/sessionTy
 import { ErrorComponent } from "../../../../components/error/Error";
 
 type SessionTypeProps = {
-  onSelectSessionType: (id: number, priceModifier: number) => void;
+  onSelectSessionType: (
+    id: number,
+    priceModifier: number,
+    courseScheduleId: number,
+  ) => void;
   selectedSessionTypeId: number | null;
   selectedTimeSlotId: number | null;
   selectedWeeklyScheduleId: number | null;
@@ -107,7 +111,11 @@ export default function SessionType({
                 }`}
                 disabled={isFullyBooked}
                 onClick={() =>
-                  onSelectSessionType(schedule.id, schedule.priceModifier)
+                  onSelectSessionType(
+                    schedule.id,
+                    schedule.priceModifier,
+                    schedule.courseScheduleId,
+                  )
                 }
                 type="button"
               >

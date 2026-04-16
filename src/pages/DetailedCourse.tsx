@@ -55,10 +55,16 @@ export default function DetailedCourse() {
           <CourseDetails data={course} />
         </section>
         <div className="flex w-132.5 flex-col gap-3">
-          <section>
-            <EnrolmentCard data={course} />
-          </section>
-          <EnrollmentAccessNotice />
+          {course.enrollment ? (
+            "enrolled"
+          ) : (
+            <>
+              <section>
+                <EnrolmentCard data={course} />
+              </section>
+              <EnrollmentAccessNotice />
+            </>
+          )}
         </div>
       </div>
     </main>

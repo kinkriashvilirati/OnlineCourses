@@ -1,7 +1,9 @@
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { isAxiosError } from "axios";
 import NumberedIcons from "../../../assets/icons/slots-number-icon/GetNumberedIcons";
 import { useAuth } from "../../../context/AuthContext";
+import { useCreateEnrollmentMutation } from "../../../hooks/mutation-hooks/useCreateEnrollmentMutation";
 import type { DetailedCourse } from "../../../types/courses-type";
 import Summary from "./Summary";
 import Slot from "./slots/Slot";
@@ -48,15 +50,27 @@ export default function EnrolmentCard({ data }: EnrolmentCardProps) {
   const [selectedSessionTypeId, setSelectedSessionTypeId] = useState<
     number | null
   >(null);
+  const [selectedCourseScheduleId, setSelectedCourseScheduleId] = useState<
+    number | null
+  >(null);
   const [selectedSessionTypePrice, setSelectedSessionTypePrice] = useState(0);
+  const createEnrollmentMutation = useCreateEnrollmentMutation();
   const totalPrice = Number(basePrice) + Number(selectedSessionTypePrice);
   const canEnroll =
     !isAuthRestoring &&
     isAuthenticated &&
     profileComplete &&
+    data.enrollment === null &&
     selectedWeeklyScheduleId !== null &&
     selectedTimeSlotId !== null &&
-    selectedSessionTypeId !== null;
+    selectedSessionTypeId !== null &&
+    selectedCourseScheduleId !== null;
+  const enrollErrorMessage = createEnrollmentMutation.isError
+    ? isAxiosError(createEnrollmentMutation.error)
+      ? createEnrollmentMutation.error.response?.data?.message ??
+        "Failed to enroll in this course."
+      : "Failed to enroll in this course."
+    : null;
 
   function getIsSectionDisabled(sectionId: number) {
     if (sectionId === 2) {
@@ -149,19 +163,26 @@ export default function EnrolmentCard({ data }: EnrolmentCardProps) {
             >
               <Slot
                 id={slotSection.id}
-                onSelectSessionType={(sessionTypeId, priceModifier) => {
+                onSelectSessionType={(
+                  sessionTypeId,
+                  priceModifier,
+                  courseScheduleId,
+                ) => {
                   setSelectedSessionTypeId(sessionTypeId);
+                  setSelectedCourseScheduleId(courseScheduleId);
                   setSelectedSessionTypePrice(priceModifier);
                 }}
                 onSelectTimeSlot={(timeSlotId) => {
                   setSelectedTimeSlotId(timeSlotId);
                   setSelectedSessionTypeId(null);
+                  setSelectedCourseScheduleId(null);
                   setSelectedSessionTypePrice(0);
                 }}
                 onSelectWeeklySchedule={(weeklyScheduleId) => {
                   setSelectedWeeklyScheduleId(weeklyScheduleId);
                   setSelectedTimeSlotId(null);
                   setSelectedSessionTypeId(null);
+                  setSelectedCourseScheduleId(null);
                   setSelectedSessionTypePrice(0);
                 }}
                 selectedSessionTypeId={selectedSessionTypeId}
@@ -175,6 +196,18 @@ export default function EnrolmentCard({ data }: EnrolmentCardProps) {
       <Summary
         basePrice={basePrice}
         canEnroll={canEnroll}
+        enrollErrorMessage={enrollErrorMessage}
+        isEnrolling={createEnrollmentMutation.isPending}
+        onEnroll={() => {
+          if (!canEnroll || selectedCourseScheduleId === null) {
+            return;
+          }
+
+          createEnrollmentMutation.mutate({
+            courseId: data.id,
+            courseScheduleId: selectedCourseScheduleId,
+          });
+        }}
         sessionTypePrice={selectedSessionTypePrice}
         totalPrice={totalPrice}
       />
