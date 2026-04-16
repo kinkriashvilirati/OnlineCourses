@@ -1,6 +1,6 @@
-import mailIcon from "../../../assets/icons/icon-set/mail.svg";
+import mailIcon from "../../../assets/icons/icon-set/Mail.svg";
 import mapPinIcon from "../../../assets/icons/icon-set/map_pin.svg";
-import phoneIcon from "../../../assets/icons/icon-set/phone.svg";
+import phoneIcon from "../../../assets/icons/icon-set/Phone.svg";
 
 const contactRows = [
   {
