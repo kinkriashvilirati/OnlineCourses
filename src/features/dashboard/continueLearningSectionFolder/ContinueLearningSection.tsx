@@ -59,8 +59,12 @@ export default function ContinueLearningSection() {
           coursesInProgressQuery.data &&
           coursesInProgress.length > 0 ? (
             <div className="flex gap-3 transition relative">
-              {coursesInProgress.map((card) => (
-                <FeaturedLearningCourse enrollment={card} key={card.id} />
+              {coursesInProgress.map((card, i) => (
+                <>
+                  {i != 3 && (
+                    <FeaturedLearningCourse enrollment={card} key={card.id} />
+                  )}
+                </>
               ))}
             </div>
           ) : null}

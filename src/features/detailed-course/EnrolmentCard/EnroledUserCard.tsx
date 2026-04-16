@@ -2,11 +2,7 @@ import { useState } from "react";
 import { isAxiosError } from "axios";
 import { toast } from "sonner";
 import type { Enrollment } from "../../../types/enrollment";
-import desktop_icon from "../../../assets/icons/schedules-secctions-icon/desktop.svg";
-import map_icon from "../../../assets/icons/icon-set/map_pin.svg";
 import check_2_icon from "../../../assets/icons/icon-set/check_2.svg";
-import clock_icon from "../../../assets/icons/icon-set/Clock.svg";
-import calendar_icon from "../../../assets/icons/icon-set/CalendarDots.svg";
 import ProgressBar from "../../../components/shared/ProgressBar";
 import retake_icon from "../../../assets/icons/icon-set/Retake.svg";
 import CourseTakeModal from "../CourseTakeModal";
@@ -14,17 +10,24 @@ import Rate from "./Rate";
 import { useCompleteEnrollmentMutation } from "../../../hooks/mutation-hooks/useCompleteEnrollmentMutation";
 import { useCreateReviewMutation } from "../../../hooks/mutation-hooks/useCreateReviewMutation";
 import { useDeleteEnrollmentMutation } from "../../../hooks/mutation-hooks/useDeleteEnrollmentMutation";
+import EnrollmentSmallDescribtion from "../../../components/shared/EnrollmentSmallDescribtion";
+
+type EnroledUserCardProps = {
+  courseId: number;
+  courseTitle: string;
+  enrollment: Enrollment;
+  isRated: boolean;
+};
 
 export default function EnroledUserCard({
   courseId,
+  courseTitle,
   enrollment,
   isRated,
-}: {
-  courseId: number;
-  enrollment: Enrollment;
-  isRated: boolean;
-}) {
-  const isCompleted = enrollment.completedAt ? true : false;
+}: EnroledUserCardProps) {
+  const SPAN_CLASSES = "text-body-l grayscale-500";
+  const ROWCONTAINER = "flex gap-3";
+  const isCompleted = Boolean(enrollment.completedAt);
   const [isCompletionModalVisible, setIsCompletionModalVisible] = useState(
     isCompleted && !isRated,
   );
@@ -37,8 +40,7 @@ export default function EnroledUserCard({
     100,
   );
   const ENROLED_CLASSES = "text-h4 inline rounded-full p-4";
-  const SPAN_CLASSES = "text-body-l grayscale-500";
-  const ROWCONTAINER = "flex gap-3";
+
   const isButtonLocked = isCompleted
     ? deleteEnrollmentMutation.isPending || deleteEnrollmentMutation.isSuccess
     : completeEnrollmentMutation.isPending ||
@@ -104,30 +106,11 @@ export default function EnroledUserCard({
             </h4>
           )}
         </div>
-        <div className={ROWCONTAINER}>
-          <img src={calendar_icon} alt="" />
-          <span className={`${SPAN_CLASSES}`}>
-            {enrollment.schedule.weeklySchedule.label}
-          </span>
-        </div>
-        <div className={ROWCONTAINER}>
-          <img src={clock_icon} alt="" />
-          <span className={`${SPAN_CLASSES}`}>
-            {enrollment.schedule.timeSlot.label}
-          </span>
-        </div>
-        <div className={ROWCONTAINER}>
-          <img src={desktop_icon} alt="" />
-          <span className={`${SPAN_CLASSES}`}>
-            {enrollment.schedule.sessionType.name.replace(/\s*\([^)]*\)/, "")}
-          </span>
-        </div>
-        <div className={ROWCONTAINER}>
-          <img src={map_icon} alt="" />
-          <span className={`${SPAN_CLASSES}`}>
-            {enrollment.schedule.location}
-          </span>
-        </div>
+        <EnrollmentSmallDescribtion
+          span_classes={SPAN_CLASSES}
+          row_cont_classes={ROWCONTAINER}
+          enrollment={enrollment}
+        />
       </div>
       <div className="flex gap-10 flex-col">
         <ProgressBar clampedProgressPercentage={clampedProgressPercentage} />
@@ -158,8 +141,7 @@ export default function EnroledUserCard({
         description={
           <p>
             You've completed{" "}
-            <span className="font-semibold">“{enrollment.course.title}”</span>{" "}
-            Course!
+            <span className="font-semibold">"{courseTitle}"</span> Course!
           </p>
         }
         icon="success"

@@ -61,6 +61,7 @@ export default function DetailedCourse() {
               <section>
                 <EnroledUserCard
                   courseId={course.id}
+                  courseTitle={course.title}
                   enrollment={course.enrollment}
                   isRated={course.isRated}
                 />
