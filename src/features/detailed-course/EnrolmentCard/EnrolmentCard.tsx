@@ -48,10 +48,44 @@ export default function EnrolmentCard({ data }: EnrolmentCardProps) {
   >(null);
   const [selectedSessionTypePrice, setSelectedSessionTypePrice] = useState(0);
   const totalPrice = Number(basePrice) + Number(selectedSessionTypePrice);
+
+  function getIsSectionDisabled(sectionId: number) {
+    if (sectionId === 2) {
+      return selectedWeeklyScheduleId === null;
+    }
+
+    if (sectionId === 3) {
+      return selectedWeeklyScheduleId === null || selectedTimeSlotId === null;
+    }
+
+    return false;
+  }
+
+  function getIsSectionFilled(sectionId: number) {
+    if (sectionId === 1) {
+      return selectedWeeklyScheduleId !== null;
+    }
+
+    if (sectionId === 2) {
+      return selectedTimeSlotId !== null;
+    }
+
+    if (sectionId === 3) {
+      return selectedSessionTypeId !== null;
+    }
+
+    return false;
+  }
+
   return (
     <aside className="flex w-full flex-col gap-8 rounded-2xl ">
       {SLOT_SECTIONS.map((slotSection) => {
-        const SlotIcon = NumberedIcons[slotSection.icon];
+        const isDisabled = getIsSectionDisabled(slotSection.id);
+        const isFilled = getIsSectionFilled(slotSection.id);
+        const iconKey = isFilled
+          ? `${slotSection.icon}_fill`
+          : slotSection.icon;
+        const SlotIcon = NumberedIcons[iconKey];
         const isOpen = openSlots[slotSection.id] ?? false;
         return (
           <div
@@ -60,23 +94,38 @@ export default function EnrolmentCard({ data }: EnrolmentCardProps) {
           >
             <div
               onClick={() => {
-                if (selectedWeeklyScheduleId === null && slotSection.id == 2)
-                  return;
-                if (selectedTimeSlotId === null && slotSection.id == 3) return;
+                if (isDisabled) return;
                 setOpenSlots((prev) => ({
                   ...prev,
                   [slotSection.id]: !prev[slotSection.id],
                 }));
               }}
-              className={`cursor-pointer flex items-center justify-between `}
+              className={`flex items-center justify-between ${
+                isDisabled ? "cursor-auto" : "cursor-pointer"
+              }`}
             >
-              <div className="flex items-center gap-3 text-purple-800">
-                <img src={SlotIcon} alt="" />
-                <h3 className="text-h3 text-purple-800">{slotSection.label}</h3>
+              <div
+                className={`flex items-center gap-3 ${
+                  isDisabled ? "text-grayscale-400" : "text-purple-800"
+                }`}
+              >
+                <img
+                  alt=""
+                  className={isDisabled ? "opacity-45" : ""}
+                  src={SlotIcon}
+                />
+                <h3
+                  className={`text-h3 ${
+                    isDisabled ? "text-grayscale-400" : "text-purple-800"
+                  }`}
+                >
+                  {slotSection.label}
+                </h3>
               </div>
-              {/* selectedWeeklyScheduleId === nul */}
               <FontAwesomeIcon
-                className={`text-body-s text-purple-800 transition-transform duration-300 ${
+                className={`text-body-s transition-transform duration-300 ${
+                  isDisabled ? "text-grayscale-400" : "text-purple-800"
+                } ${
                   !isOpen ? "rotate-0" : "rotate-180"
                 }`}
                 icon={faChevronUp}

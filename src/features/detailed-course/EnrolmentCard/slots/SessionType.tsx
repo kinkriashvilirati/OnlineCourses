@@ -90,14 +90,22 @@ export default function SessionType({
       {sessionTypes.map((schedule: SessionTypeItem) => {
         const Icon = getSessionTypeIcon(schedule.name);
         const sessionTypeDescription = getSessionTypeDescription(schedule);
+        const isFullyBooked = schedule.availableSeats === 0;
+        const isLowSeats =
+          schedule.availableSeats > 0 && schedule.availableSeats < 3;
         return (
           <div key={schedule.id} className=" w-full  ">
             <div className="flex w-full gap-2 flex-col items-center">
               <button
                 aria-pressed={selectedSessionTypeId === schedule.id}
-                className={`w-full rounded-xl border-grayscale-200 px-5 py-3.75 border flex flex-col items-center gap-3 transition-all duration-300 group hover:bg-purple-100 hover:text-purple-400 hover:border-purple-300 cursor-pointer ${
-                  selectedSessionTypeId === schedule.id ? "bg-purple-100" : ""
+                className={`w-full rounded-xl px-5 py-3.75 border flex flex-col items-center gap-3 transition-all duration-300 group ${
+                  isFullyBooked
+                    ? "cursor-auto border-grayscale-100 bg-grayscale-200"
+                    : selectedSessionTypeId === schedule.id
+                      ? " text-purple-800 bg-purple-200 border-purple-400"
+                      : "cursor-pointer text-grayscale-800 border-grayscale-200 hover:bg-purple-100 hover:text-purple-400 hover:border-purple-300"
                 }`}
+                disabled={isFullyBooked}
                 onClick={() =>
                   onSelectSessionType(schedule.id, schedule.priceModifier)
                 }
@@ -105,31 +113,46 @@ export default function SessionType({
               >
                 <div className="flex flex-col gap-1.5 items-center ">
                   <Icon />
-                  <h5 className="text-h5 text-grayscale-600 group-hover:text-purple-400">
+                  <h5
+                    className={`text-h5 ${
+                      isFullyBooked
+                        ? "text-grayscale-500"
+                        : "text-grayscale-600 group-hover:text-purple-400"
+                    }`}
+                  >
                     {formatSessionTypeName(schedule.name)}
                   </h5>
-                  <p className="text-helper-regular text-grayscale-600 group-hover:text-purple-400">
+                  <p
+                    className={`text-helper-regular ${
+                      isFullyBooked
+                        ? "text-grayscale-500"
+                        : "text-grayscale-600 group-hover:text-purple-400"
+                    }`}
+                  >
                     {sessionTypeDescription}
                   </p>
                 </div>
 
-                <p className="text-body-xs text-purple-400">
-                  {schedule.priceModifier === 0
-                    ? "Included"
-                    : `+$${Math.floor(schedule.priceModifier)}`}
+                <p
+                  className={`text-body-xs ${
+                    isFullyBooked ? "text-grayscale-500" : "text-purple-400"
+                  }`}
+                >
+                  {isFullyBooked
+                    ? "Fully Booked"
+                    : schedule.priceModifier === 0
+                      ? "Included"
+                      : `+$${Math.floor(schedule.priceModifier)}`}
                 </p>
               </button>
               <div className="text-body-xs text-grayscale-700 flex gap-1 justify-center items-center">
-                {schedule.availableSeats < 5 && schedule.availableSeats != 0 ? (
+                {isLowSeats ? (
                   <>
                     <img className="w-4 h-4" alt="Warning Icon" src={warning} />
                     <span>{schedule.availableSeats} left</span>
                   </>
-                ) : schedule.availableSeats == 0 ? (
-                  <>
-                    <img className="w-4 h-4" alt="Warning Icon" src={warning} />
-                    <span>Fully Booked</span>
-                  </>
+                ) : isFullyBooked ? (
+                  <span className="text-grayscale-500">Fully Booked</span>
                 ) : (
                   `${schedule.availableSeats} Remainded`
                 )}
