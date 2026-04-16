@@ -38,6 +38,12 @@ export default function EnrolmentCard({ data }: EnrolmentCardProps) {
   type SlotOpen = Record<number, boolean>;
 
   const [openSlots, setOpenSlots] = useState<SlotOpen>({});
+  const [selectedWeeklyScheduleId, setSelectedWeeklyScheduleId] = useState<
+    number | null
+  >(null);
+  const [selectedTimeSlotId, setSelectedTimeSlotId] = useState<number | null>(
+    null,
+  );
   return (
     <aside className="flex w-full flex-col gap-8 rounded-2xl ">
       {SLOT_SECTIONS.map((slotSection) => {
@@ -50,6 +56,8 @@ export default function EnrolmentCard({ data }: EnrolmentCardProps) {
           >
             <div
               onClick={() => {
+                if (selectedWeeklyScheduleId === null && slotSection.id == 2)
+                  return;
                 setOpenSlots((prev) => ({
                   ...prev,
                   [slotSection.id]: !prev[slotSection.id],
@@ -61,6 +69,7 @@ export default function EnrolmentCard({ data }: EnrolmentCardProps) {
                 <img src={SlotIcon} alt="" />
                 <h3 className="text-h3 text-purple-800">{slotSection.label}</h3>
               </div>
+              {/* selectedWeeklyScheduleId === nul */}
               <FontAwesomeIcon
                 className={`text-body-s text-purple-800 transition-transform duration-300 ${
                   !isOpen ? "rotate-0" : "rotate-180"
@@ -75,7 +84,16 @@ export default function EnrolmentCard({ data }: EnrolmentCardProps) {
                   : "pointer-events-none -translate-y-2 opacity-0 scale-y-95"
               }`}
             >
-              <Slot id={slotSection.id} />
+              <Slot
+                id={slotSection.id}
+                onSelectTimeSlot={setSelectedTimeSlotId}
+                onSelectWeeklySchedule={(weeklyScheduleId) => {
+                  setSelectedWeeklyScheduleId(weeklyScheduleId);
+                  setSelectedTimeSlotId(null);
+                }}
+                selectedTimeSlotId={selectedTimeSlotId}
+                selectedWeeklyScheduleId={selectedWeeklyScheduleId}
+              />
             </div>
           </div>
         );

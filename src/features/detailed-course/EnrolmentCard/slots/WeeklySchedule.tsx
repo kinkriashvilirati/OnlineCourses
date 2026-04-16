@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { useParams } from "react-router";
 import { LoadingDots } from "../../../../components/loading/Loading";
 import { useWeeklySchedulesQuery } from "../../../../hooks/query-hooks/useWeeklySchedulesQuery";
 import type { WeeklySchedule as WeeklyScheduleItem } from "../../../../types/weeklySchedule";
+import { ErrorComponent } from "../../../../components/error/Error";
 
 const shortDayMap: Record<string, string> = {
   Monday: "Mon",
@@ -20,19 +20,24 @@ function shortenDayLabel(label: string) {
     (day) => shortDayMap[day],
   );
 }
-export default function WeeklySchedule() {
+type WeeklyScheduleProps = {
+  onSelectWeeklySchedule: (id: number) => void;
+  selectedWeeklyScheduleId: number | null;
+};
+
+export default function WeeklySchedule({
+  onSelectWeeklySchedule,
+  selectedWeeklyScheduleId,
+}: WeeklyScheduleProps) {
   const { courseId } = useParams();
   const parsedCourseId = Number(courseId);
   const resolvedCourseId = Number.isInteger(parsedCourseId)
     ? parsedCourseId
     : null;
   const weeklySchedulesQuery = useWeeklySchedulesQuery(resolvedCourseId);
-  const [selectedWeeklyScheduleId, setSelectedWeeklyScheduleId] = useState<
-    number | null
-  >(null);
 
   if (resolvedCourseId === null) {
-    return <p>Failed to load schedules</p>;
+    return <ErrorComponent description="Failed to load schedules" />;
   }
 
   if (weeklySchedulesQuery.isPending) {
@@ -40,7 +45,7 @@ export default function WeeklySchedule() {
   }
 
   if (weeklySchedulesQuery.isError) {
-    return <p>Failed to load schedules</p>;
+    return <ErrorComponent description="Failed to load schedules" />;
   }
 
   const schedules = weeklySchedulesQuery.data.data;
@@ -64,7 +69,7 @@ export default function WeeklySchedule() {
                     ? "text-purple-800 bg-purple-200 border-purple-400"
                     : "text-grayscale-800 border-grayscale-200 hover:bg-purple-100 hover:text-purple-400 hover:border-purple-300"
                 }`}
-                onClick={() => setSelectedWeeklyScheduleId(schedule.id)}
+                onClick={() => onSelectWeeklySchedule(schedule.id)}
                 type="button"
               >
                 <div className="flex flex-col">
