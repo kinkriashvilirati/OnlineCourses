@@ -2,7 +2,7 @@ import { useParams } from "react-router";
 import { ErrorComponent } from "../components/error/Error";
 import { LoadingDots } from "../components/loading/Loading";
 import CourseDetails from "../features/detailed-course/CourseDetails";
-import EnrolmentCard from "../features/detailed-course/EnrolmentCard";
+import EnrolmentCard from "../features/detailed-course/EnrolmentCard/EnrolmentCard";
 import EnrollmentAccessNotice from "../features/detailed-course/EnrollmentAccessNotice";
 import Header from "../features/detailed-course/Navigation";
 import { useDetailedCourseQuery } from "../hooks/query-hooks/useDetailedCourseQuery";
