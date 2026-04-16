@@ -20,7 +20,7 @@ export default function FeaturedLearningCourse({
   );
 
   return (
-    <article className="bg-grayscale-50 min-h-5 flex w-full flex-col rounded-xl border border-grayscale-100 p-5 gap-2 justify-between hover:border-purple-200 active:border-purple-300 transition-all duration-300">
+    <article className="bg-grayscale-50 max-w-130 min-h-5 flex w-full flex-col rounded-xl border border-grayscale-100 p-5 gap-2 justify-between hover:border-purple-200 active:border-purple-300 transition-all duration-300">
       <div className="flex">
         <img
           alt={`${enrollment.course.title} course preview`}

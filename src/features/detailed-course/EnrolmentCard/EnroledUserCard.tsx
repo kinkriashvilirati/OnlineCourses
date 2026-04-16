@@ -9,6 +9,7 @@ import clock_icon from "../../../assets/icons/icon-set/Clock.svg";
 import calendar_icon from "../../../assets/icons/icon-set/CalendarDots.svg";
 import ProgressBar from "../../../components/shared/ProgressBar";
 import retake_icon from "../../../assets/icons/icon-set/Retake.svg";
+import CourseTakeModal from "../CourseTakeModal";
 import Rate from "./Rate";
 import { useCompleteEnrollmentMutation } from "../../../hooks/mutation-hooks/useCompleteEnrollmentMutation";
 import { useCreateReviewMutation } from "../../../hooks/mutation-hooks/useCreateReviewMutation";
@@ -23,7 +24,10 @@ export default function EnroledUserCard({
   enrollment: Enrollment;
   isRated: boolean;
 }) {
-  const [isRatingVisible, setIsRatingVisible] = useState(true);
+  const isCompleted = enrollment.completedAt ? true : false;
+  const [isCompletionModalVisible, setIsCompletionModalVisible] = useState(
+    isCompleted && !isRated,
+  );
   const completeEnrollmentMutation = useCompleteEnrollmentMutation();
   const createReviewMutation = useCreateReviewMutation();
   const deleteEnrollmentMutation = useDeleteEnrollmentMutation();
@@ -35,16 +39,15 @@ export default function EnroledUserCard({
   const ENROLED_CLASSES = "text-h4 inline rounded-full p-4";
   const SPAN_CLASSES = "text-body-l grayscale-500";
   const ROWCONTAINER = "flex gap-3";
-  const isCompleted = enrollment.completedAt ? true : false;
   const isButtonLocked = isCompleted
     ? deleteEnrollmentMutation.isPending || deleteEnrollmentMutation.isSuccess
-    : completeEnrollmentMutation.isPending || completeEnrollmentMutation.isSuccess;
+    : completeEnrollmentMutation.isPending ||
+      completeEnrollmentMutation.isSuccess;
   const buttonIcon = isCompleted ? retake_icon : check_2_icon;
-  const shouldShowRatingPanel =
-    isCompleted &&
-    !isRated &&
-    isRatingVisible &&
-    !createReviewMutation.isSuccess;
+  const shouldShowCompletionModal =
+    isCompletionModalVisible &&
+    (isCompleted || completeEnrollmentMutation.isSuccess);
+  const shouldShowRatingPanel = !isRated && !createReviewMutation.isSuccess;
   const actionErrorMessage = completeEnrollmentMutation.isError
     ? isAxiosError(completeEnrollmentMutation.error)
       ? (completeEnrollmentMutation.error.response?.data?.message ??
@@ -66,7 +69,11 @@ export default function EnroledUserCard({
       return;
     }
 
-    completeEnrollmentMutation.mutate(enrollment.id);
+    completeEnrollmentMutation.mutate(enrollment.id, {
+      onSuccess: () => {
+        setIsCompletionModalVisible(true);
+      },
+    });
   }
 
   const buttonLabel = isCompleted
@@ -80,6 +87,7 @@ export default function EnroledUserCard({
       : completeEnrollmentMutation.isSuccess
         ? "Updating..."
         : "Complete Course";
+
   return (
     <div className="flex flex-col gap-24.25">
       <div className="flex flex-col gap-5.5">
@@ -110,14 +118,12 @@ export default function EnroledUserCard({
         </div>
         <div className={ROWCONTAINER}>
           <img src={desktop_icon} alt="" />
-          {/* we have a Evening (time) need to delete () */}
           <span className={`${SPAN_CLASSES}`}>
             {enrollment.schedule.sessionType.name.replace(/\s*\([^)]*\)/, "")}
           </span>
         </div>
         <div className={ROWCONTAINER}>
           <img src={map_icon} alt="" />
-          {/* need , after the ciy e.g. Tbilisi, */}
           <span className={`${SPAN_CLASSES}`}>
             {enrollment.schedule.location}
           </span>
@@ -139,6 +145,30 @@ export default function EnroledUserCard({
             {actionErrorMessage}
           </p>
         ) : null}
+      </div>
+
+      <CourseTakeModal
+        actions={
+          <button
+            className="w-full cursor-pointer rounded-xl border-2 border-purple-500 bg-purple-500 px-5 py-4 text-button-l text-grayscale-50 transition-all duration-300 hover:bg-purple-600"
+            onClick={() => setIsCompletionModalVisible(false)}
+            type="button"
+          >
+            Done
+          </button>
+        }
+        description={
+          <p>
+            You've completed{" "}
+            <span className="font-semibold">“{enrollment.course.title}”</span>{" "}
+            Course!
+          </p>
+        }
+        icon="success"
+        isOpen={shouldShowCompletionModal}
+        onClose={() => setIsCompletionModalVisible(false)}
+        title="Congratulations!"
+      >
         {shouldShowRatingPanel ? (
           <Rate
             isSubmitting={createReviewMutation.isPending}
@@ -158,16 +188,16 @@ export default function EnroledUserCard({
                     toast.error(message);
                   },
                   onSuccess: () => {
-                    setIsRatingVisible(false);
                     toast.success("Thanks for rating this course!");
                   },
                 },
               );
             }}
-            setIsRatingVisible={setIsRatingVisible}
+            panelClassName="gap-6 bg-transparent p-0"
+            showCloseButton={false}
           />
         ) : null}
-      </div>
+      </CourseTakeModal>
     </div>
   );
 }

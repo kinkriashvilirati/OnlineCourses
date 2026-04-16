@@ -1,6 +1,8 @@
+import type { ReactNode } from "react";
+
 type SummaryProps = {
   canEnroll: boolean;
-  enrollErrorContent?: React.ReactNode;
+  enrollErrorContent?: ReactNode;
   isEnrolling: boolean;
   onEnroll: () => void;
   sessionTypePrice: number;

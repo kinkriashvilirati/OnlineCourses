@@ -20,8 +20,15 @@ export type CreateEnrollmentMutationError =
   | AxiosError<EnrollmentErrorResponse>
   | Error;
 
-export function useCreateEnrollmentMutation() {
+type UseCreateEnrollmentMutationOptions = {
+  invalidateOnSuccess?: boolean;
+};
+
+export function useCreateEnrollmentMutation(
+  options: UseCreateEnrollmentMutationOptions = {},
+) {
   const queryClient = useQueryClient();
+  const { invalidateOnSuccess = true } = options;
 
   return useMutation<
     CreateEnrollmentApiResponse,
@@ -30,6 +37,10 @@ export function useCreateEnrollmentMutation() {
   >({
     mutationFn: createEnrollment,
     onSuccess: (_data, variables) => {
+      if (!invalidateOnSuccess) {
+        return;
+      }
+
       // Enrollment changes both the detailed course state and the dashboard's
       // in-progress list, so we invalidate those caches after a successful POST.
       queryClient.invalidateQueries({

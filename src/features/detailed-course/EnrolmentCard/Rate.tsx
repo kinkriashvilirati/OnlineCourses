@@ -20,26 +20,40 @@ function getRatingStarIcon(starValue: number, hoveredRating: number | null) {
 type RateProps = {
   isSubmitting?: boolean;
   onRate: (rating: number) => void;
-  setIsRatingVisible: (value: boolean) => void;
+  panelClassName?: string;
+  setIsRatingVisible?: (value: boolean) => void;
+  showCloseButton?: boolean;
 };
 
 export default function Rate({
   isSubmitting = false,
   onRate,
+  panelClassName,
   setIsRatingVisible,
+  showCloseButton = true,
 }: RateProps) {
   const [hoveredRating, setHoveredRating] = useState<number | null>(null);
 
   return (
-    <div className="rounded-xl bg-grayscale-50 px-12.5 py-10 relative flex flex-col justify-center items-center gap-4.5">
-      <button
-        className="cursor-pointer absolute w-3 h-3 top-5 right-5"
-        onClick={() => setIsRatingVisible(false)}
-        disabled={isSubmitting}
-        type="button"
-      >
-        <img alt="Close rating" className="h-5 w-5" src={modal_close_icon} />
-      </button>
+    <div
+      className={[
+        "flex flex-col justify-center items-center gap-4.5",
+        showCloseButton
+          ? "relative rounded-xl bg-grayscale-50 px-12.5 py-10"
+          : "",
+        panelClassName ?? "",
+      ].join(" ")}
+    >
+      {showCloseButton && setIsRatingVisible ? (
+        <button
+          className="cursor-pointer absolute w-3 h-3 top-5 right-5"
+          onClick={() => setIsRatingVisible(false)}
+          disabled={isSubmitting}
+          type="button"
+        >
+          <img alt="Close rating" className="h-5 w-5" src={modal_close_icon} />
+        </button>
+      ) : null}
 
       <div className="flex items-start justify-between ">
         <p className="text-body-s text-grayscale-600">Rate your experience</p>
