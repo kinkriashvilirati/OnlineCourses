@@ -27,6 +27,10 @@ export default function EnroledUserCard({
   const SPAN_CLASSES = "text-body-l grayscale-500";
   const ROWCONTAINER = "flex gap-3";
   const isCompleted = enrollment.completedAt ? true : false;
+  const isCompletingLocked =
+    isCompleted ||
+    completeEnrollmentMutation.isPending ||
+    completeEnrollmentMutation.isSuccess;
   const buttonIcon = isCompleted ? retake_icon : check_2_icon;
   const shouldShowRatingPanel = isCompleted && isRatingVisible;
   const completeErrorMessage = completeEnrollmentMutation.isError
@@ -82,13 +86,15 @@ export default function EnroledUserCard({
         <ProgressBar clampedProgressPercentage={clampedProgressPercentage} />
         <button
           className="py-4.25 text-button-m flex justify-center items-center text-grayscale-50 gap-2.5 bg-purple-400 rounded-lg hover:bg-pruple-500 transition-all duration-300 cursor-pointer disabled:bg-purple-100 disabled:text-purple-300 disabled:cursor-auto"
-          disabled={isCompleted || completeEnrollmentMutation.isPending}
+          disabled={isCompletingLocked}
           onClick={() => completeEnrollmentMutation.mutate(enrollment.id)}
           type="button"
         >
           <span>
             {completeEnrollmentMutation.isPending
               ? "Completing..."
+              : completeEnrollmentMutation.isSuccess && !isCompleted
+                ? "Updating..."
               : isCompleted
                 ? "Course Completed"
                 : "Complete Course"}
