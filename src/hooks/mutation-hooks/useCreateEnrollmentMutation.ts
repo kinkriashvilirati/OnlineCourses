@@ -7,6 +7,12 @@ import {
 } from "../../api/enrollments/createEnrollment";
 
 type EnrollmentErrorResponse = {
+  conflicts?: {
+    conflictingCourseName: string;
+    conflictingEnrollmentId: number;
+    requestedCourseId: number;
+    schedule: string;
+  }[];
   message: string;
 };
 

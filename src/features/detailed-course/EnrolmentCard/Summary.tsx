@@ -1,6 +1,6 @@
 type SummaryProps = {
   canEnroll: boolean;
-  enrollErrorMessage: string | null;
+  enrollErrorContent?: React.ReactNode;
   isEnrolling: boolean;
   onEnroll: () => void;
   sessionTypePrice: number;
@@ -9,7 +9,7 @@ type SummaryProps = {
 };
 export default function Summary({
   canEnroll,
-  enrollErrorMessage,
+  enrollErrorContent,
   isEnrolling,
   onEnroll,
   sessionTypePrice,
@@ -53,9 +53,7 @@ export default function Summary({
           {isEnrolling ? "Enrolling..." : "Enroll Now"}
         </button>
 
-        {enrollErrorMessage ? (
-          <p className="text-body-xs text-helper-error">{enrollErrorMessage}</p>
-        ) : null}
+        {enrollErrorContent ?? null}
       </div>
     </div>
   );

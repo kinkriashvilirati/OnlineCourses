@@ -8,6 +8,7 @@ import type { DetailedCourse } from "../../../types/courses-type";
 import Summary from "./Summary";
 import Slot from "./slots/Slot";
 import { useState } from "react";
+import EnrollmentConflictNotice from "./EnrollmentConflictNotice";
 
 type EnrolmentCardProps = {
   data: DetailedCourse;
@@ -65,12 +66,41 @@ export default function EnrolmentCard({ data }: EnrolmentCardProps) {
     selectedTimeSlotId !== null &&
     selectedSessionTypeId !== null &&
     selectedCourseScheduleId !== null;
-  const enrollErrorMessage = createEnrollmentMutation.isError
-    ? isAxiosError(createEnrollmentMutation.error)
-      ? createEnrollmentMutation.error.response?.data?.message ??
-        "Failed to enroll in this course."
-      : "Failed to enroll in this course."
-    : null;
+  const conflictData =
+    createEnrollmentMutation.isError &&
+    isAxiosError(createEnrollmentMutation.error)
+      ? createEnrollmentMutation.error.response?.data?.conflicts?.[0] ?? null
+      : null;
+  const enrollErrorMessage =
+    createEnrollmentMutation.isError && !conflictData
+      ? isAxiosError(createEnrollmentMutation.error)
+        ? createEnrollmentMutation.error.response?.data?.message ??
+          "Failed to enroll in this course."
+        : "Failed to enroll in this course."
+      : null;
+  const enrollErrorContent = conflictData ? (
+    <EnrollmentConflictNotice
+      conflictCourseName={conflictData.conflictingCourseName}
+      conflictSchedule={conflictData.schedule}
+      isContinuing={createEnrollmentMutation.isPending}
+      onCancel={() => createEnrollmentMutation.reset()}
+      onContinueAnyway={() => {
+        if (!canEnroll || selectedCourseScheduleId === null) {
+          return;
+        }
+
+        createEnrollmentMutation.mutate({
+          courseId: data.id,
+          courseScheduleId: selectedCourseScheduleId,
+          force: true,
+        });
+      }}
+    />
+  ) : enrollErrorMessage ? (
+    <p className="text-body-xs text-helper-error text-center">
+      {enrollErrorMessage}
+    </p>
+  ) : null;
 
   function getIsSectionDisabled(sectionId: number) {
     if (sectionId === 2) {
@@ -168,17 +198,20 @@ export default function EnrolmentCard({ data }: EnrolmentCardProps) {
                   priceModifier,
                   courseScheduleId,
                 ) => {
+                  createEnrollmentMutation.reset();
                   setSelectedSessionTypeId(sessionTypeId);
                   setSelectedCourseScheduleId(courseScheduleId);
                   setSelectedSessionTypePrice(priceModifier);
                 }}
                 onSelectTimeSlot={(timeSlotId) => {
+                  createEnrollmentMutation.reset();
                   setSelectedTimeSlotId(timeSlotId);
                   setSelectedSessionTypeId(null);
                   setSelectedCourseScheduleId(null);
                   setSelectedSessionTypePrice(0);
                 }}
                 onSelectWeeklySchedule={(weeklyScheduleId) => {
+                  createEnrollmentMutation.reset();
                   setSelectedWeeklyScheduleId(weeklyScheduleId);
                   setSelectedTimeSlotId(null);
                   setSelectedSessionTypeId(null);
@@ -196,7 +229,7 @@ export default function EnrolmentCard({ data }: EnrolmentCardProps) {
       <Summary
         basePrice={basePrice}
         canEnroll={canEnroll}
-        enrollErrorMessage={enrollErrorMessage}
+        enrollErrorContent={enrollErrorContent}
         isEnrolling={createEnrollmentMutation.isPending}
         onEnroll={() => {
           if (!canEnroll || selectedCourseScheduleId === null) {
