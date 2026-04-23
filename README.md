@@ -26,7 +26,7 @@ This project includes a full course browsing and enrollment flow, authentication
   - rating flow
 - Authentication and profile-completion gating
 - Shared modal flows for important course actions
-
+- Responsive UI 
 ## Tech Stack
 
 - React 19
@@ -65,16 +65,12 @@ npm run preview
 
 ## How To Use
 
-- This version of the website is currently optimized for large screens and desktop/laptop devices.
-- Responsive support is coming soon.
-- If you open the project on a smaller screen, use a desktop device when possible, or zoom out the browser for a better experience.
 - Some course flows depend on backend seed data.
 - A few courses may already be enrolled, completed, or have limited / full seats.
 - To get the full experience, choose a course that still has available seats and try different schedule options if one path is already taken.
 
 ## Notes
 
-- The project currently focuses on the desktop experience.
 - Backend-driven course data can affect enrollment availability, schedule conflicts, and progress states.
 - If a demo flow looks unavailable, try another course or another session type.
 
