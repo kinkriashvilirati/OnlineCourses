@@ -25,22 +25,22 @@ export default function EnrolledCoursesPanel({
 
   useAuthModalLifecycle(isOpen, onClose);
 
-  if (!isOpen) {
-    return null;
-  }
-
   const enrolledCourses = enrollmentsQUery.data?.data ?? [];
   const safeEnrollments = enrolledCourses.filter(
     (enrollment) => enrollment?.course?.title,
   );
+
   return (
-    <div className="fixed inset-0 z-60 gap-10">
+    <div
+      className={`fixed inset-0 z-60 gap-10 ${isOpen ? "pointer-events-auto" : " pointer-events-none"}`}
+    >
       <button
         aria-label="Close enrolled courses panel"
-        className="absolute inset-0 bg-grayscale-950/20"
+        className={`absolute inset-0 bg-grayscale-950/20 transition-opacity duration-700 ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
         onClick={onClose}
         type="button"
       />
+
       {enrollmentsQUery.isPending ? <LoadingDots /> : null}
 
       {enrollmentsQUery.isError ? (
@@ -49,8 +49,11 @@ export default function EnrolledCoursesPanel({
           title="Failed to load courses"
         />
       ) : null}
-      <aside className="absolute right-0 top-0 flex h-screen w-full max-w-195 flex-col gap-8 overflow-y-auto border-l border-grayscale-100  px-8 py-10 bg-grayscale-100 ">
-        <div className="flex items-center justify-between gap-4 ">
+
+      <aside
+        className={`absolute top-0 right-0 flex h-screen w-full max-w-195 max-laptop:max-w-160 max-tablet:max-w-130 max-mobile:max-w-[90%] flex-col gap-8 overflow-y-auto border-l border-grayscale-100 px-8 py-10 bg-grayscale-100 transition-transform duration-700 ease-out ${!isOpen ? "translate-x-full" : "translate-x-0"}`}
+      >
+        <div className="flex items-center justify-between gap-4">
           <div className="flex justify-between w-full items-baseline">
             <h3 className="text-h3 text-grayscale-950">Enrolled Courses</h3>
             <span>Total enrollments: {safeEnrollments.length}</span>
@@ -62,7 +65,7 @@ export default function EnrolledCoursesPanel({
             type="button"
           >
             <FontAwesomeIcon
-              className="text-grayscale-500 hover:text-grayscale-700 duration:300 transition-all"
+              className="text-grayscale-500 hover:text-grayscale-700 duration-300 transition-all"
               icon={faX}
             />
           </button>
@@ -84,7 +87,7 @@ export default function EnrolledCoursesPanel({
               <Link
                 onClick={onClose}
                 to="/courses"
-                className=" px-6.25 py-4.25 inline text-grayscale-50 rounded-lg button-primary self-center"
+                className="px-6.25 py-4.25 inline text-grayscale-50 rounded-lg button-primary self-center"
               >
                 Browse Course
               </Link>
@@ -93,7 +96,7 @@ export default function EnrolledCoursesPanel({
         ) : null}
 
         {enrollmentsQUery.isSuccess && safeEnrollments.length > 0 ? (
-          <div className="flex flex-col  px-4 items-center gap-5">
+          <div className="flex flex-col px-4 items-center gap-5">
             {safeEnrollments.map((enrollemnt) => (
               <FeaturedLearningCourse
                 enrollment={enrollemnt}
