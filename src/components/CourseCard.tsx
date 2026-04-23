@@ -22,11 +22,11 @@ export default function CourseCard({
   course,
   priceLayout = "row",
 }: CourseCardProps) {
-  // Children order is: [top meta line, secondary meta line].
   const childItems = Children.toArray(children);
   const imgMeta = childItems[0] ?? null;
   const topMeta = childItems[1] ?? null;
   const secondaryMeta = childItems[2] ?? null;
+
   return (
     <>
       <div className="flex flex-col gap-4">
@@ -45,12 +45,12 @@ export default function CourseCard({
         {secondaryMeta}
       </div>
 
-      <div className="flex items-end justify-between gap-6">
+      <div className="flex items-end justify-between gap-6 max-mobile:flex-col max-mobile:items-stretch max-mobile:gap-4">
         <div
           className={`flex ${
             priceLayout === "column"
               ? "flex-col items-start gap-0.5"
-              : "items-center gap-2"
+              : "items-center gap-2 max-mobile:flex-col max-mobile:items-start max-mobile:gap-0.5"
           }`}
         >
           <span className="text-helper-medium text-grayscale-400">
@@ -62,7 +62,7 @@ export default function CourseCard({
         </div>
 
         <Link
-          className="button-primary px-6.25 py-4.25 text-button-m"
+          className="button-primary px-6.25 py-4.25 text-button-m max-mobile:w-full max-mobile:text-center"
           to={`/courses/${course.id}`}
         >
           Details
