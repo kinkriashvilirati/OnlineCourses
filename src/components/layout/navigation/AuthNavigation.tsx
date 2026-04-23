@@ -8,7 +8,7 @@ export default function AuthNavigation() {
 
   return (
     <div className="flex items-center gap-10">
-      <div className="flex items-center gap-12">
+      <div className="flex items-center gap-12 max-tablet:gap-8">
         <BrowseCourses />
         <EnrolledCoursesButton />
       </div>
