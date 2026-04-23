@@ -84,8 +84,6 @@ npm run preview
 
 ## Demo Video
 
-Add your walkthrough video link here.
-
 Example:
 
 [Watch the demo video](https://youtu.be/nc9XMe1BkGs)
