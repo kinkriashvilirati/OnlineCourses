@@ -11,7 +11,8 @@ import {
 
 export function DashboardHeroSlider() {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
-
+  const switchButtonClass =
+    "h-11 w-11 max-laptop:h-10 max-laptop:w-10 max-tablet:h-10 max-tablet:w-10 flex items-center justify-center";
   const activeSlide: DashboardHeroSlide = dashboardHeroSlides[activeSlideIndex];
   const isFirstSlide = activeSlideIndex === 0;
   const isLastSlide = activeSlideIndex === dashboardHeroSlides.length - 1;
@@ -57,16 +58,16 @@ export function DashboardHeroSlider() {
             </Link>
           </div>
 
-          <div className="flex items-end justify-between gap-6">
-            <div className="flex flex-1 justify-center mb-3 gap-2">
+          <div className="flex items-end justify-between gap-6  max-tablet:mt-2 ">
+            <div className="flex flex-1 justify-center gap-2">
               {dashboardHeroSlides.map((slide, index) => (
                 <span
                   aria-label={`Go to slide ${slide.id}`}
                   className={[
-                    "h-2 rounded-full transition-all duration-300",
+                    "h-2 rounded-full transition-all duration-300 w-14.25 max-laptop:w-13 max-tablet:w-11 ",
                     index === activeSlideIndex
-                      ? "w-14.25 bg-grayscale-50"
-                      : "w-14.25 bg-grayscale-200/55",
+                      ? " bg-grayscale-50"
+                      : "bg-grayscale-200/55",
                   ].join(" ")}
                   key={slide.id}
                 />
@@ -76,21 +77,17 @@ export function DashboardHeroSlider() {
             <div className="flex items-center absolute bottom-7 right-7 gap-7">
               <button
                 aria-label="Previous slide"
-                className="flex h-11 w-11 items-center justify-center"
+                className={switchButtonClass}
                 disabled={isFirstSlide}
                 onClick={goToPreviousSlide}
                 type="button"
               >
                 {isFirstSlide ? (
-                  <img
-                    alt=""
-                    className="h-11 w-11 "
-                    src={sliderArrowLeftDisabled}
-                  />
+                  <img alt="previous" src={sliderArrowLeftDisabled} />
                 ) : (
                   <img
-                    alt=""
-                    className="h-11 w-11  cursor-pointer"
+                    alt="previous"
+                    className="cursor-pointer"
                     src={sliderArrowLeft}
                   />
                 )}
@@ -98,21 +95,17 @@ export function DashboardHeroSlider() {
 
               <button
                 aria-label="Next slide"
-                className="flex h-11 w-11 items-center justify-center"
+                className={switchButtonClass}
                 disabled={isLastSlide}
                 onClick={goToNextSlide}
                 type="button"
               >
                 {isLastSlide ? (
-                  <img
-                    alt=""
-                    className="h-11 w-11 object-contain"
-                    src={sliderArrowRightDisabled}
-                  />
+                  <img alt="next" src={sliderArrowRightDisabled} />
                 ) : (
                   <img
-                    alt=""
-                    className="h-11 w-11 object-contain cursor-pointer"
+                    alt="next"
+                    className="cursor-pointer"
                     src={sliderArrowRight}
                   />
                 )}
