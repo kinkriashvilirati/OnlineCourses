@@ -109,6 +109,7 @@
 @theme {
   --breakpoint-laptop: 100rem;
   --breakpoint-laptopS: 90rem;
+  --breakpoint-tabletL: 70rem;
   --breakpoint-tablet: 64rem;
   --breakpoint-mobile: 48rem;
 }
