@@ -19,7 +19,7 @@ export default function Summary({
   basePrice,
 }: SummaryProps) {
   return (
-    <div>
+    <div className="max-tablet:max-w-100 max-tablet:w-full ">
       <div className="bg-grayscale-50 p-10 rounded-xl flex flex-col gap-8">
         <div className="flex flex-col gap-8">
           <div className="flex  justify-between gap-6 items-center">

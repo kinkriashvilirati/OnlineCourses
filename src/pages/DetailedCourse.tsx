@@ -51,11 +51,11 @@ export default function DetailedCourse() {
   return (
     <main className="mt-40 flex flex-col gap-6">
       <Header title={course.title} />
-      <div className="flex justify-between items-start">
-        <section className="w-225.75">
+      <div className="flex justify-between items-start gap-10 max-tablet:flex-col">
+        <section className="max-w-225.75 w-full">
           <CourseDetails data={course} />
         </section>
-        <div className="flex w-132.5 flex-col gap-3">
+        <div className="flex max-w-132.5 w-full flex-col gap-3 max-laptop:max-w-120 max-tablet:max-w-full">
           {course.enrollment ? (
             <>
               <section>
@@ -69,7 +69,7 @@ export default function DetailedCourse() {
             </>
           ) : (
             <>
-              <section>
+              <section className="max-tablet:w-full">
                 <EnrolmentCard data={course} />
               </section>
               <EnrollmentAccessNotice />

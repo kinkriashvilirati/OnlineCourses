@@ -138,102 +138,104 @@ export default function EnrolmentCard({ data }: EnrolmentCardProps) {
 
   return (
     <>
-      <aside className="flex w-full flex-col gap-8 rounded-2xl ">
-        {SLOT_SECTIONS.map((slotSection) => {
-          const isDisabled = getIsSectionDisabled(slotSection.id);
-          const isFilled = getIsSectionFilled(slotSection.id);
-          const iconKey = isFilled
-            ? `${slotSection.icon}_fill`
-            : slotSection.icon;
-          const SlotIcon = NumberedIcons[iconKey];
-          const isOpen = openSlots[slotSection.id] ?? false;
+      <aside className="flex flex-col gap-8 rounded-2xl max-tablet:flex-row w-full max-tablet:flex-wrap-reverse  max-tablet:items-center">
+        <div className="flex w-full flex-col gap-8 max-tablet:max-w-100  max-tablet:w-full">
+          {SLOT_SECTIONS.map((slotSection) => {
+            const isDisabled = getIsSectionDisabled(slotSection.id);
+            const isFilled = getIsSectionFilled(slotSection.id);
+            const iconKey = isFilled
+              ? `${slotSection.icon}_fill`
+              : slotSection.icon;
+            const SlotIcon = NumberedIcons[iconKey];
+            const isOpen = openSlots[slotSection.id] ?? false;
 
-          return (
-            <div
-              className="flex flex-col justify-center relative"
-              key={slotSection.label}
-            >
+            return (
               <div
-                onClick={() => {
-                  if (isDisabled) return;
-
-                  setOpenSlots((prev) => ({
-                    ...prev,
-                    [slotSection.id]: !prev[slotSection.id],
-                  }));
-                }}
-                className={`flex items-center justify-between ${
-                  isDisabled ? "cursor-auto" : "cursor-pointer"
-                }`}
+                className="flex flex-col justify-center relative "
+                key={slotSection.label}
               >
                 <div
-                  className={`flex items-center gap-3 ${
-                    isDisabled ? "text-grayscale-400" : "text-purple-800"
+                  onClick={() => {
+                    if (isDisabled) return;
+
+                    setOpenSlots((prev) => ({
+                      ...prev,
+                      [slotSection.id]: !prev[slotSection.id],
+                    }));
+                  }}
+                  className={`flex items-center justify-between ${
+                    isDisabled ? "cursor-auto" : "cursor-pointer"
                   }`}
                 >
-                  <img
-                    alt=""
-                    className={isDisabled ? "opacity-45" : ""}
-                    src={SlotIcon}
-                  />
-                  <h3
-                    className={`text-h3 ${
+                  <div
+                    className={`flex items-center gap-3 ${
                       isDisabled ? "text-grayscale-400" : "text-purple-800"
                     }`}
                   >
-                    {slotSection.label}
-                  </h3>
+                    <img
+                      alt=""
+                      className={isDisabled ? "opacity-45" : ""}
+                      src={SlotIcon}
+                    />
+                    <h3
+                      className={`text-h3 ${
+                        isDisabled ? "text-grayscale-400" : "text-purple-800"
+                      }`}
+                    >
+                      {slotSection.label}
+                    </h3>
+                  </div>
+                  <FontAwesomeIcon
+                    className={`text-body-s transition-transform duration-300 ${
+                      isDisabled ? "text-grayscale-400" : "text-purple-800"
+                    } ${!isOpen ? "rotate-0" : "rotate-180"}`}
+                    icon={faChevronUp}
+                  />
                 </div>
-                <FontAwesomeIcon
-                  className={`text-body-s transition-transform duration-300 ${
-                    isDisabled ? "text-grayscale-400" : "text-purple-800"
-                  } ${!isOpen ? "rotate-0" : "rotate-180"}`}
-                  icon={faChevronUp}
-                />
-              </div>
 
-              <div
-                className={`absolute top-full mt-2.5 w-full flex justify-center transition-all duration-300 origin-top ${
-                  isOpen
-                    ? "relative translate-y-0 opacity-100 scale-y-100"
-                    : "pointer-events-none -translate-y-2 opacity-0 scale-y-95"
-                }`}
-              >
-                <Slot
-                  id={slotSection.id}
-                  onSelectSessionType={(
-                    sessionTypeId,
-                    priceModifier,
-                    courseScheduleId,
-                  ) => {
-                    createEnrollmentMutation.reset();
-                    setSelectedSessionTypeId(sessionTypeId);
-                    setSelectedCourseScheduleId(courseScheduleId);
-                    setSelectedSessionTypePrice(priceModifier);
-                  }}
-                  onSelectTimeSlot={(timeSlotId) => {
-                    createEnrollmentMutation.reset();
-                    setSelectedTimeSlotId(timeSlotId);
-                    setSelectedSessionTypeId(null);
-                    setSelectedCourseScheduleId(null);
-                    setSelectedSessionTypePrice(0);
-                  }}
-                  onSelectWeeklySchedule={(weeklyScheduleId) => {
-                    createEnrollmentMutation.reset();
-                    setSelectedWeeklyScheduleId(weeklyScheduleId);
-                    setSelectedTimeSlotId(null);
-                    setSelectedSessionTypeId(null);
-                    setSelectedCourseScheduleId(null);
-                    setSelectedSessionTypePrice(0);
-                  }}
-                  selectedSessionTypeId={selectedSessionTypeId}
-                  selectedTimeSlotId={selectedTimeSlotId}
-                  selectedWeeklyScheduleId={selectedWeeklyScheduleId}
-                />
+                <div
+                  className={`absolute top-full mt-2.5 w-full flex justify-center transition-all duration-300 origin-top ${
+                    isOpen
+                      ? "relative translate-y-0 opacity-100 scale-y-100"
+                      : "pointer-events-none -translate-y-2 opacity-0 scale-y-95"
+                  }`}
+                >
+                  <Slot
+                    id={slotSection.id}
+                    onSelectSessionType={(
+                      sessionTypeId,
+                      priceModifier,
+                      courseScheduleId,
+                    ) => {
+                      createEnrollmentMutation.reset();
+                      setSelectedSessionTypeId(sessionTypeId);
+                      setSelectedCourseScheduleId(courseScheduleId);
+                      setSelectedSessionTypePrice(priceModifier);
+                    }}
+                    onSelectTimeSlot={(timeSlotId) => {
+                      createEnrollmentMutation.reset();
+                      setSelectedTimeSlotId(timeSlotId);
+                      setSelectedSessionTypeId(null);
+                      setSelectedCourseScheduleId(null);
+                      setSelectedSessionTypePrice(0);
+                    }}
+                    onSelectWeeklySchedule={(weeklyScheduleId) => {
+                      createEnrollmentMutation.reset();
+                      setSelectedWeeklyScheduleId(weeklyScheduleId);
+                      setSelectedTimeSlotId(null);
+                      setSelectedSessionTypeId(null);
+                      setSelectedCourseScheduleId(null);
+                      setSelectedSessionTypePrice(0);
+                    }}
+                    selectedSessionTypeId={selectedSessionTypeId}
+                    selectedTimeSlotId={selectedTimeSlotId}
+                    selectedWeeklyScheduleId={selectedWeeklyScheduleId}
+                  />
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
 
         <Summary
           basePrice={basePrice}
