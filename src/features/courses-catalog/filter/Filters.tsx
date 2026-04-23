@@ -31,7 +31,7 @@ export default function Filters({
     selectedFilters.instructors.length;
 
   return (
-    <aside className="flex w-full min-w-77.25 flex-col gap-6">
+    <aside className="flex w-full min-w-77.25 flex-col gap-6 ">
       <header className="flex items-center justify-between">
         <h1
           className="text-h1 text-grayscale-900 laptopS:cursor-default max-laptopS:flex max-laptopS:cursor-pointer max-laptopS:items-center max-laptopS:gap-2 max-laptopS:text-grayscale-700 max-laptopS:hover:text-grayscale-950 duration-300 transition-all
@@ -68,7 +68,7 @@ export default function Filters({
         `}
       >
         <div className="overflow-hidden">
-          <div className="flex laptopS:flex-col gap-14 max-w-77.25 max-laptopS:grid max-laptopS:max-w-full max-laptopS:grid-cols-[1fr_2fr_2fr] max-tablet:grid-cols-1">
+          <div className="flex laptopS:flex-col gap-14 max-tablet:gap-3 max-w-77.25 max-laptopS:grid max-laptopS:max-w-full max-laptopS:grid-cols-[1fr_2fr_2fr] max-tablet:grid-cols-1">
             <section className="w-full min-w-0">
               <Categories
                 onToggle={(id) => onToggleFilter("categories", id)}
@@ -94,7 +94,7 @@ export default function Filters({
         </div>
       </div>
 
-      <footer className="mt-6 border-t border-grayscale-200 pt-5">
+      <footer className=" border-t border-grayscale-200 pt-5 ">
         <p className="text-body-s text-grayscale-500">
           {totalActive} Filters Active
         </p>
