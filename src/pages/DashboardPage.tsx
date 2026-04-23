@@ -12,7 +12,7 @@ export function DashboardPage() {
       {!isAuthenticated ? (
         <>
           <StartLearningSection />
-          {/* <ContinueLearningSection /> */}
+          <ContinueLearningSection />
         </>
       ) : (
         <>
