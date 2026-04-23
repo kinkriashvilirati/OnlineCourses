@@ -9,11 +9,11 @@ export default function FeaturedCourseCard({
   course,
 }: FeaturedCourseCardProps) {
   return (
-    <article className="flex w-full flex-col rounded-xl border border-grayscale-100 bg-grayscale-50 p-5 gap-6  justify-between hover:shadow-[0_0_25px_0_rgba(138,130,212,0.1)] active:shadow-[0_0_25px_0_rgba(138,130,212,0.15)] transition-all duration-300">
+    <article className="flex max-laptop:max-w-100 max-tablet:max-w-full w-full flex-col rounded-xl border border-grayscale-100 bg-grayscale-50 p-5 gap-6  justify-between hover:shadow-[0_0_25px_0_rgba(138,130,212,0.1)] active:shadow-[0_0_25px_0_rgba(138,130,212,0.15)] transition-all duration-300">
       <CourseCard course={course}>
         <img
           alt={`${course.title} course preview`}
-          className="h-65.5 w-full rounded-2xl object-cover"
+          className="max-tablet:h-65.5 max-laptop:h-50 h-65.5 w-full rounded-2xl object-cover"
           src={course.image}
         />
         <p className="text-body-xs text-grayscale-500">

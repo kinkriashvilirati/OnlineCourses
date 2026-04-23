@@ -6,7 +6,7 @@ export default function ContinueLearningLockedModal() {
 
   return (
     <div className="absolute inset-0 z-10 flex items-center justify-center px-6">
-      <div className="box-border flex h-full w-104.5 max-w-full flex-col items-center justify-between rounded-xl border border-grayscale-200 bg-grayscale-50 px-14 py-8 text-center">
+      <div className="box-border flex h-full w-104.5 max-w-full flex-col items-center max-mobile:justify-center max-mobile:gap-2 justify-between rounded-xl border border-grayscale-200 bg-grayscale-50 px-14 py-8 text-center">
         <div className="flex flex-col items-center gap-3">
           <div className="flex h-21 w-21 items-center justify-center rounded-full bg-purple-50">
             <img alt="" className="h-8 w-8" src={lockIcon} />

@@ -106,171 +106,405 @@
     box-sizing: border-box;
   }
 }
-/* component  text styling*/
+@theme {
+  --breakpoint-laptop: 90rem; /* 1440px */
+  --breakpoint-tablet: 64rem; /* 1024px */
+  --breakpoint-mobile: 48rem; /* 768px */
+}
+
+/* component text styling */
 @layer components {
-  /* Large, bold typography for hero sections and main  */
   .text-display {
     @apply font-inter text-[24px] font-semibold text-purple-400;
+    @variant max-laptop {
+      @apply text-[22px];
+    }
+    @variant max-tablet {
+      @apply text-[20px];
+    }
+    @variant max-mobile {
+      @apply text-[18px];
+    }
   }
-  /* Secondary hero titles or large section introductio */
+
   .text-display-xl {
     @apply font-inter text-[48px] font-bold;
+    @variant max-laptop {
+      @apply text-[44px];
+    }
+    @variant max-tablet {
+      @apply text-[36px];
+    }
+    @variant max-mobile {
+      @apply text-[30px];
+    }
   }
-  /* Semibold hierarchy for section titles and content organization */
+
   .text-headings {
     @apply font-inter text-[24px] font-semibold text-purple-400;
+    @variant max-laptop {
+      @apply text-[22px];
+    }
+    @variant max-tablet {
+      @apply text-[20px];
+    }
+    @variant max-mobile {
+      @apply text-[18px];
+    }
   }
+
   .text-h1 {
-    /* Secondary hero titles or large section introductio */
     @apply font-inter text-[40px] font-semibold;
+    @variant max-laptop {
+      @apply text-[36px];
+    }
+    @variant max-tablet {
+      @apply text-[32px];
+    }
+    @variant max-mobile {
+      @apply text-[28px];
+    }
   }
+
   .text-h2 {
-    /* Section titles such as 'Continue Learning', 'Start Learning Today', and page section headers. */
     @apply font-inter text-[40px] font-semibold;
+    @variant max-laptop {
+      @apply text-[36px];
+    }
+    @variant max-tablet {
+      @apply text-[32px];
+    }
+    @variant max-mobile {
+      @apply text-[28px];
+    }
   }
+
   .text-h3 {
-    /*Content titles such as course titles, card titles, and important UI headings.*/
     @apply font-inter text-[24px] font-semibold;
+    @variant max-laptop {
+      @apply text-[22px];
+    }
+    @variant max-tablet {
+      @apply text-[20px];
+    }
+    @variant max-mobile {
+      @apply text-[18px];
+    }
   }
+
   .text-h4 {
-    /* Small section headers, sidebar titles, filter group titles, and compact UI sections. */
     @apply font-inter text-[20px] font-semibold;
+    @variant max-laptop {
+      @apply text-[18px];
+    }
+    @variant max-tablet {
+      @apply text-[17px];
+    }
+    @variant max-mobile {
+      @apply text-[16px];
+    }
   }
 
   .text-body {
-    /* Paragraph, description text for primary content and buttons */
     @apply font-inter text-[24px] font-semibold text-purple-400;
+    @variant max-laptop {
+      @apply text-[22px];
+    }
+    @variant max-tablet {
+      @apply text-[20px];
+    }
+    @variant max-mobile {
+      @apply text-[18px];
+    }
   }
+
   .text-body-light-xl {
-    /*Primary paragraph text, descriptions, modal content, and general readable content.*/
     @apply font-inter text-[24px] font-light;
+    @variant max-laptop {
+      @apply text-[22px];
+    }
+    @variant max-tablet {
+      @apply text-[20px];
+    }
+    @variant max-mobile {
+      @apply text-[18px];
+    }
   }
+
   .text-body-xl {
-    /*Primary paragraph text, descriptions, modal content, and general readable content.*/
     @apply font-inter text-[24px] font-semibold;
+    @variant max-laptop {
+      @apply text-[22px];
+    }
+    @variant max-tablet {
+      @apply text-[20px];
+    }
+    @variant max-mobile {
+      @apply text-[18px];
+    }
   }
+
   .text-body-l {
-    /* Primary UI text including main buttons, navigation links, dropdown values, and key actions. */
     @apply font-inter text-[20px] font-medium;
+    @variant max-laptop {
+      @apply text-[18px];
+    }
+    @variant max-tablet {
+      @apply text-[16px];
+    }
+    @variant max-mobile {
+      @apply text-[15px];
+    }
   }
+
   .text-body-m {
-    /* Primary paragraph text, descriptions, modal content, and general readable content. */
     @apply font-inter text-[18px] font-medium;
+    @variant max-laptop {
+      @apply text-[17px];
+    }
+    @variant max-tablet {
+      @apply text-[16px];
+    }
+    @variant max-mobile {
+      @apply text-[15px];
+    }
   }
+
   .text-body-s {
-    /* Secondary text such as instructor names, supporting descriptions, and metadata context. */
     @apply font-inter text-[16px] font-medium;
+    @variant max-laptop {
+      @apply text-[15px];
+    }
+    @variant max-tablet {
+      @apply text-[14px];
+    }
+    @variant max-mobile {
+      @apply text-[13px];
+    }
   }
+
   .text-body-xs {
-    /* Secondary text such as instructor names, supporting descriptions, and metadata context. */
     @apply font-inter text-[14px] font-medium;
+    @variant max-laptop {
+      @apply text-[13px];
+    }
+    @variant max-tablet {
+      @apply text-[12px];
+    }
+    @variant max-mobile {
+      @apply text-[12px];
+    }
   }
-  /* micro texts */
+
   .text-helper-medium {
-    /* Form field labels such as 'Email', 'Password', and input titles. */
     @apply font-inter text-[16px] font-medium;
+    @variant max-laptop {
+      @apply text-[15px];
+    }
+    @variant max-tablet {
+      @apply text-[14px];
+    }
+    @variant max-mobile {
+      @apply text-[13px];
+    }
   }
+
   .text-helper-regular {
-    /* Form helper text and validation messages such as errors, hints, and instructions. */
     @apply font-inter text-[12px] font-normal;
+    @variant max-tablet {
+      @apply text-[11px];
+    }
+    @variant max-mobile {
+      @apply text-[11px];
+    }
   }
 
-  /* underlines */
   .text-underline-m {
-    /* For Ghost Buttons */
-    @apply font-inter text-[20px] font-semibold  border-b;
-  }
-  .text-underline-s {
-    /* descriptions and introductory text */
-    @apply font-inter text-[14px] font-semibold text-grayscale-900  border-b hover:text-purple-400 duration-400;
+    @apply font-inter text-[20px] font-semibold border-b;
+    @variant max-laptop {
+      @apply text-[18px];
+    }
+    @variant max-tablet {
+      @apply text-[16px];
+    }
+    @variant max-mobile {
+      @apply text-[15px];
+    }
   }
 
-  /* buttons text */
+  .text-underline-s {
+    @apply font-inter text-[14px] font-semibold text-grayscale-900 border-b hover:text-purple-400 duration-400;
+    @variant max-laptop {
+      @apply text-[13px];
+    }
+    @variant max-tablet {
+      @apply text-[12px];
+    }
+    @variant max-mobile {
+      @apply text-[12px];
+    }
+  }
+
   .text-button-l {
-    /* Primary UI text including main buttons, navigation links, dropdown values, and key actions. */
     @apply font-inter text-[24px] font-semibold;
+    @variant max-laptop {
+      @apply text-[22px];
+    }
+    @variant max-tablet {
+      @apply text-[18px];
+    }
+    @variant max-mobile {
+      @apply text-[16px];
+    }
   }
+
   .text-button-m {
-    /* Primary UI text including main buttons, navigation links, dropdown values, and key actions. */
     @apply font-inter text-[20px] font-semibold;
+    @variant max-laptop {
+      @apply text-[18px];
+    }
+    @variant max-tablet {
+      @apply text-[16px];
+    }
+    @variant max-mobile {
+      @apply text-[15px];
+    }
   }
+
   .text-button-s {
-    /* Secondary text such as instructor names, supporting descriptions, and metadata context. */
     @apply font-inter text-[16px] font-semibold;
+    @variant max-laptop {
+      @apply text-[15px];
+    }
+    @variant max-tablet {
+      @apply text-[14px];
+    }
+    @variant max-mobile {
+      @apply text-[13px];
+    }
   }
 }
 
 /* component button */
 @layer components {
   .button-primary {
-    /* should be width (hug114px) height hug 58px */
     @apply py-3 px-5 bg-purple-500 cursor-pointer rounded-lg duration-300 border-2 border-purple-500 text-grayscale-50;
+    @variant max-laptop {
+      @apply px-4.5 py-2.75;
+    }
+    @variant max-tablet {
+      @apply px-4 py-2.5;
+    }
+    @variant max-mobile {
+      @apply px-3 py-2 rounded-md;
+    }
   }
+
   .button-primary:hover {
-    @apply bg-purple-600  border-purple-600;
+    @apply bg-purple-600 border-purple-600;
   }
+
   .button-primary:focus {
-    @apply bg-purple-600  border-purple-700;
+    @apply bg-purple-600 border-purple-700;
   }
+
   .button-primary:active {
-    @apply bg-purple-700  border-purple-700;
+    @apply bg-purple-700 border-purple-700;
   }
+
   .button-primary:disabled {
     @apply bg-grayscale-300 text-grayscale-400 cursor-not-allowed border-grayscale-300;
   }
-  /* secondary */
+
   .button-outline {
-    /* should be width (96px) height hug 48px */
     @apply py-2 px-4 bg-grayscale-50 cursor-pointer rounded-lg duration-300 border-2 border-purple-300 text-purple-500;
+    @variant max-laptop {
+      @apply px-3.5 py-1.75;
+    }
+    @variant max-tablet {
+      @apply px-3 py-2;
+    }
+    @variant max-mobile {
+      @apply px-2.5 py-1.5 rounded-md;
+    }
   }
+
   .button-outline:hover {
     @apply bg-purple-600 text-grayscale-50 border-purple-600;
   }
+
   .button-outline:focus {
-    @apply bg-purple-600  text-grayscale-50   border-purple-700;
+    @apply bg-purple-600 text-grayscale-50 border-purple-700;
   }
+
   .button-outline:active {
-    @apply bg-purple-700  text-grayscale-50   border-purple-700;
+    @apply bg-purple-700 text-grayscale-50 border-purple-700;
   }
+
   .button-outline:disabled {
-    @apply bg-grayscale-300  text-grayscale-400 cursor-auto border-grayscale-300;
+    @apply bg-grayscale-300 text-grayscale-400 cursor-auto border-grayscale-300;
   }
+
   .button-outline.pagination:disabled {
     @apply text-grayscale-200 border-grayscale-200 bg-grayscale-50;
   }
-  /* ghost */
+
   .button-ghost {
-    /* should be width (96px) height hug 48px */
     @apply py-2 px-3 bg-grayscale-50 cursor-pointer duration-300 border-b-2 border-purple-500 text-purple-500 transition-all;
+    @variant max-laptop {
+      @apply px-2.75 py-1.75;
+    }
+    @variant max-tablet {
+      @apply px-2.5 py-1.5;
+    }
+    @variant max-mobile {
+      @apply px-2 py-1.5;
+    }
   }
+
   .button-ghost:hover {
     @apply border-purple-600 text-purple-600;
   }
+
   .button-ghost:focus {
     @apply border-purple-700 text-purple-700 border-dashed;
   }
+
   .button-ghost:active {
     @apply border-purple-700 text-purple-700;
   }
+
   .button-ghost:disabled {
     @apply text-grayscale-300 cursor-not-allowed border-grayscale-300;
   }
-  /* filter */
+
   .button-filter-item {
-    @apply py-2 rounded-xl px-3 bg-grayscale-50 cursor-pointer duration-300 border-2 border-grayscale-50  transition-all text-gray-500;
+    @apply py-2 rounded-xl px-3 bg-grayscale-50 cursor-pointer duration-300 border-2 border-grayscale-50 transition-all text-gray-500;
+    @variant max-laptop {
+      @apply px-2.75 py-1.75;
+    }
+    @variant max-tablet {
+      @apply px-2.5 py-1.5 rounded-lg;
+    }
+    @variant max-mobile {
+      @apply px-2 py-1.5 rounded-md;
+    }
   }
 
   .button-filter-item:hover {
     @apply bg-grayscale-100 text-grayscale-600 border-grayscale-200;
   }
+
   .button-filter-item:focus {
     @apply bg-purple-100 border-purple-100 text-purple-600;
   }
+
   .button-filter-item.choose:active,
   .button-filter-item:active {
-    @apply bg-purple-50  border-purple-700 text-purple-600;
+    @apply bg-purple-50 border-purple-700 text-purple-600;
   }
+
   .button-filter-item.choose {
-    @apply bg-purple-100  border-purple-500 text-purple-600;
+    @apply bg-purple-100 border-purple-500 text-purple-600;
   }
 }

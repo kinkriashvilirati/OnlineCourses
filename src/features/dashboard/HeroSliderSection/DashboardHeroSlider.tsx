@@ -33,7 +33,7 @@ export function DashboardHeroSlider() {
   };
 
   return (
-    <section className="pt-6">
+    <section className="pt-6  w-full">
       <div className="relative max-h-105 overflow-hidden rounded-[20px]">
         <img
           alt={activeSlide.imageAlt}

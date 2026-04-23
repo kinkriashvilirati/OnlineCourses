@@ -6,12 +6,13 @@ import StartLearningSection from "../features/dashboard/StartLearningSectionFold
 export function DashboardPage() {
   const { isAuthenticated } = useAuth();
   return (
-    <div className="flex flex-col gap-16 pt-27">
+    <div className="flex flex-col gap-16 pt-27  w-full">
       <DashboardHeroSlider />
+
       {!isAuthenticated ? (
         <>
           <StartLearningSection />
-          <ContinueLearningSection />
+          {/* <ContinueLearningSection /> */}
         </>
       ) : (
         <>

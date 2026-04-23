@@ -20,7 +20,7 @@ export default function StartLearningSection() {
       {featuredCoursesQuery.isError ? <ErrorComponent /> : null}
 
       {featuredCoursesQuery.data ? (
-        <div className="flex gap-6">
+        <div className="flex gap-6 max-tablet:flex-wrap">
           {featuredCoursesQuery.data.data.map((course) => (
             <FeaturedCourseCard course={course} key={course.id} />
           ))}

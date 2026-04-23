@@ -4,7 +4,7 @@ import { FooterLinksColumn } from "./footer-sections/FooterLinksColumn";
 
 export default function Footer() {
   return (
-    <footer className="mt-40 border-t border-grayscale-200 bg-grayscale-10 max-laptop:px-25 px-44.25 pt-20 pb-5 flex flex-col gap-18.5">
+    <footer className="mt-40 border-t border-grayscale-200 bg-grayscale-10  max-mobile:px-2  max-tablet:px-12 max-laptop:px-25 px-44.25 pt-20 pb-5 flex flex-col gap-18.5">
       <div className="flex justify-between ">
         <FooterBrandSection />
 
