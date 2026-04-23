@@ -177,10 +177,10 @@ function ProfileModalContent({
       isOpen
       onClose={handleClose}
       onOverlayClick={handleOverlayClick}
-      panelClassName="max-w-115 p-12.25"
+      panelClassName="max-w-115 p-12.25 max-laptop:px-9 max-laptop:py-7"
       title="Profile"
     >
-      <div className="mt-6 space-y-6">
+      <div className="mt-6 space-y-6 max-laptop:space-y-3">
         <ProfileModalHeader
           isLoggingOut={logoutMutation.isPending}
           isProfileComplete={profileComplete}

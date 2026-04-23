@@ -48,7 +48,7 @@ export function ProfileInputField({
 
         <input
           className={[
-            "h-12 w-full rounded-lg border-[1.5px] border-grayscale-200 bg-grayscale-50 px-4 text-body-s text-grayscale-700 outline-none transition-colors duration-300 placeholder:text-grayscale-300 hover:border-grayscale-300 focus:border-grayscale-400",
+            "h-12 max-laptop:h-11 w-full rounded-lg border-[1.5px] border-grayscale-200 bg-grayscale-50 px-4 text-body-xs text-grayscale-700 outline-none transition-colors duration-300 placeholder:text-grayscale-300 hover:border-grayscale-300 focus:border-grayscale-400",
             prefix ? "pl-18" : "",
             rightAdornment ? "pr-11" : "",
             error

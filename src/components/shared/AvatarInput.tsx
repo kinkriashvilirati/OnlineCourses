@@ -18,7 +18,7 @@ export default function AvatarInput({
     <>
       <label
         className={[
-          "flex min-h-35 cursor-pointer flex-col items-center justify-center rounded-xl border border-grayscale-200  bg-grayscale-50 px-4 py-6 text-center transition-colors duration-500 hover:bg-purple-50 hover:border-purple-100 active:bg-purple-100 active:border-purple-200",
+          "flex min-h-35 max-laptop:min-h-30 cursor-pointer flex-col items-center justify-center rounded-xl border border-grayscale-200  bg-grayscale-50 px-4 py-6 text-center transition-colors duration-500 hover:bg-purple-50 hover:border-purple-100 active:bg-purple-100 active:border-purple-200",
           avatarError
             ? "border-helper-error"
             : "border-grayscale-200 hover:border-purple-300",

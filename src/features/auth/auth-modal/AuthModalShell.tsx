@@ -33,7 +33,7 @@ export function AuthModalShell({
   }
 
   return (
-    <div className="fixed inset-0 z-60 flex items-center justify-center">
+    <div className="fixed inset-0 z-60 flex items-center justify-center ">
       <button
         aria-label={closeAriaLabel}
         className="absolute inset-0 bg-grayscale-950/45 backdrop-blur-[3px]"
@@ -44,8 +44,8 @@ export function AuthModalShell({
       <section
         aria-modal="true"
         className={[
-          "relative z-10 w-full rounded-[20px] bg-grayscale-50 shadow-[0_30px_80px_rgba(20,20,20,0.22)]",
-          panelClassName ?? "max-w-115 p-12.25",
+          " relative z-10 w-full rounded-[20px] bg-grayscale-50 shadow-[0_30px_80px_rgba(20,20,20,0.22)]",
+          panelClassName ?? panelClassName,
         ].join(" ")}
         role="dialog"
       >

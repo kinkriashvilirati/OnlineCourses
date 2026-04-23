@@ -52,8 +52,8 @@ export function ProfileModalFields({
   values,
 }: ProfileModalFieldsProps) {
   return (
-    <div className="space-y-6">
-      <div className="space-y-5">
+    <div className="space-y-6 max-laptop:space-y-4">
+      <div className="space-y-5 max-laptop:space-y-3">
         <ProfileInputField
           error={errors.fullName}
           isValid={Boolean(blurredFields.fullName && !errors.fullName)}
