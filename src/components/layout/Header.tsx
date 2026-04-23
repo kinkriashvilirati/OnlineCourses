@@ -12,9 +12,13 @@ export function Header() {
       <nav className=" flex h-15 items-center w-full justify-between  ">
         <Link
           to={"/"}
-          className="button-primary p-0 flex items-center justify-center rounded-[14px] h-full w-15"
+          className="button-primary p-0 flex items-center justify-center rounded-[14px] h-full w-15  max-laptop:h-13.5 max-laptop:w-13.5 max-tablet:h-13 max-tablet:w-13"
         >
-          <img alt="RedClass logo" className="h-7.5 w-7.5 " src={navLogo} />
+          <img
+            alt="RedClass logo"
+            className="h-7.5 w-7.5 max-laptop:h-6.5 max-laptop:w-6.5 max-tablet:h-6 max-tablet:w-6"
+            src={navLogo}
+          />
         </Link>
 
         {isAuthenticated ? <AuthNavigation /> : <GuestNavigation />}

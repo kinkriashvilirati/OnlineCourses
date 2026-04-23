@@ -46,7 +46,13 @@ export default function ContinueLearningSection() {
                 {notAuthCourses.map((card, index) => (
                   <div
                     key={card.id}
-                    className={index > 0 ? "max-tablet:hidden" : ""}
+                    className={
+                      index > 1
+                        ? "max-laptop:hidden"
+                        : index > 0
+                          ? "max-tablet:hidden"
+                          : ""
+                    }
                   >
                     <FeaturedLearningCourse enrollment={card} />
                   </div>

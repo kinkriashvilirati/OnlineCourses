@@ -107,9 +107,9 @@
   }
 }
 @theme {
-  --breakpoint-laptop: 90rem; /* 1440px */
-  --breakpoint-tablet: 64rem; /* 1024px */
-  --breakpoint-mobile: 48rem; /* 768px */
+  --breakpoint-laptop: 100rem;
+  --breakpoint-tablet: 64rem;
+  --breakpoint-mobile: 48rem;
 }
 
 /* component text styling */
@@ -260,13 +260,13 @@
   .text-body-m {
     @apply font-inter text-[18px] font-medium;
     @variant max-laptop {
-      @apply text-[17px];
+      @apply text-[15px];
     }
     @variant max-tablet {
-      @apply text-[16px];
+      @apply text-[13px];
     }
     @variant max-mobile {
-      @apply text-[15px];
+      @apply text-[13px];
     }
   }
 
