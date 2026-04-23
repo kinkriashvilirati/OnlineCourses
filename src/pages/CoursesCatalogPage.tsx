@@ -100,7 +100,7 @@ export function CoursesCatalogPage() {
   return (
     <div className="pt-43">
       <PageLocationNav />
-      <div className="flex gap-20 mt-15.5">
+      <div className="flex gap-20 mt-15.5 max-laptopS:flex-col">
         <aside>
           <Filters
             onClearAll={clearAllFilters}
