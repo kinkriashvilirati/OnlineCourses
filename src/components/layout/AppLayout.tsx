@@ -18,7 +18,7 @@ function AppLayoutContent() {
     <div className="flex min-h-screen flex-col bg-grayscale-100">
       <Header />
 
-      <main className="flex-1 px-44.25">
+      <main className="flex-1 max-laptop:px-25 px-44.25">
         <Outlet />
       </main>
 

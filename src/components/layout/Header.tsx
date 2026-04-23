@@ -8,7 +8,7 @@ export function Header() {
   const { isAuthenticated } = useAuth();
 
   return (
-    <header className="fixed h-27 inset-x-0 top-0 z-50 border-b border-grayscale-200 bg-grayscale-100 px-44.25 flex items-center ">
+    <header className="fixed h-27 inset-x-0 top-0 z-50 border-b border-grayscale-200 bg-grayscale-100  max-mobile:px-2  max-tablet:px-12 max-laptop:px-25 px-44.25 flex items-center ">
       <nav className=" flex h-15 items-center w-full justify-between  ">
         <Link
           to={"/"}

@@ -65,6 +65,13 @@
   --color-helper-success: var(--ui-helper-success);
   --color-helper-successLight: var(--ui-helper-successLight);
 }
+/* responsive */
+@theme {
+  --breakpoint-laptop: 90rem; /* 1440px */
+  --breakpoint-tablet: 64rem; /* 1024px */
+  --breakpoint-mobile: 48rem; /* 768px */
+}
+
 /* fonts */
 @font-face {
   font-family: "Inter";
