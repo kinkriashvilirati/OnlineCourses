@@ -86,10 +86,6 @@ Example:
 
 ## Screenshots
 
-Example:
-
-## Screenshots
-
 ![Dashboard](./web-pngs/dashboard.png)
 
 ![Courses Catalog](./catalog.png)
