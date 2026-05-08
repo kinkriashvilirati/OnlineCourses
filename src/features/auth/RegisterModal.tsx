@@ -217,6 +217,7 @@ export function RegisterModal({
       onBack={step > 1 ? goToPreviousStep : undefined}
       onClose={handleClose}
       title="Create Account"
+      panelClassName="max-w-115 p-12.25 max-laptop:px-9 max-laptop:py-7"
     >
       <div className="mt-6">
         {step === 1 ? (
