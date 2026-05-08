@@ -126,6 +126,7 @@ export function LoginModal({
       description="Log in to continue your learning"
       isOpen={isOpen}
       onClose={handleClose}
+      panelClassName="max-w-115 p-12.25 max-laptop:px-9 max-laptop:py-7"
       title="Welcome Back"
     >
       <div className="mt-6">
